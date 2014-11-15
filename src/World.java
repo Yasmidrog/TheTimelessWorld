@@ -1,0 +1,63 @@
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
+
+import java.util.ArrayList;
+
+public class World {
+   public  Spudi SpiderMan;
+
+
+    public GameContainer CurrentContainer;//текущее игровое окно
+    public TiledMap CurrentMap;//карта, на которой играем
+
+    private ArrayList<Entity> Entities=new ArrayList<Entity>();//все сущности в мире
+    private boolean[][] blocked;
+
+    public void init(TiledMap Map,GameContainer Cont  )throws SlickException{
+        SpiderMan= new Spudi(-80,-80 );//наш основной герой
+        Entities.add(SpiderMan);
+Entities.add(new DrOctopus(-60,-80));
+        CurrentMap = Map;
+        CurrentContainer=Cont;
+        for(Entity ent:Entities) {
+            ent.onInit(this);//для всех сущнстей вызываем их версию методов
+        }
+    }
+
+    public void update(int delta)throws SlickException{
+        for(Entity ent:Entities) {
+            ent.onUpdate(delta);
+        }
+    }
+    public void render()throws SlickException{
+        //игрока рисуем на месте, а все остальное двигаем вокруг
+        CurrentMap.render(0-(int)SpiderMan.x, 0-(int)SpiderMan.y);
+        for(Entity ent : Entities)
+            ent.onRender();
+    }
+
+    protected void GetBlocked() {//получаем непрходиме блоки
+        blocked = new boolean[CurrentMap.getWidth()][CurrentMap.getHeight()];//массив с адресами блоков
+
+        for (int xAxis=0;xAxis<CurrentMap.getWidth(); xAxis++)
+        {
+            for (int yAxis=0;yAxis<CurrentMap.getHeight(); yAxis++)
+            {
+                int tileID = CurrentMap.getTileId(xAxis , yAxis, 0);
+                String value = CurrentMap.getTileProperty(tileID, "blocked", "false");
+                if ("true".equals(value))
+                {
+                    blocked[xAxis][yAxis] = true;
+                }
+            }
+        }
+    }
+    //проверяет, проходим ли блок в определенной точке+часть окна, которую мы отодвинули, чтоб игрок был в центре
+    public boolean isBlocked(float x, float y) {
+        int xBlock = (int) (x+CurrentContainer.getWidth()/2) / 32;
+        int yBlock = (int) (y+CurrentContainer.getHeight()/2) / 32;
+        return blocked[xBlock][yBlock];
+    }
+}

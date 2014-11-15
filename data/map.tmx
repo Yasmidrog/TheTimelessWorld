@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
+  <image source="grass.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="Type" value="None"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="ground" tilewidth="32" tileheight="32">
+  <tileoffset x="1" y="0"/>
+  <properties>
+   <property name="Type" value=""/>
+  </properties>
+  <image source="ground.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="Type" value="Ground"/>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Слой тайлов 1" width="60" height="60">
+  <properties>
+   <property name="Type" value=""/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WjQrCMAyE597/oUVUKKOr+blcNrnCgYpp8zXXtPv2HvtHj0LtB3ni0HnM8slqxhphqOJl1rOLl+HjLAOal816dd7sejNfe3lRzFbe7p7B5F0xn/326965Oq+V2XI33YXXyl+xbjdv9K30L7xn76nuPDPzeN6R3f08y5B5P1v6F1NjTZjq5kX6hblmNy97TWSObI9Xn4dX3Heczbk55qqq7+z/kf2Ysc0GmmF3xkTqGfGFZ0TOBeLMefk9Mb94x8+jtmT+iDsTNY9Vx72xnsNsj/LUGJlLhgHJu8qrKpfI/5G8Gc9UxzD9XBXv9U6lnxnx3nuXXV9E34zGVPCyFc0PycvycqYelXOv1mKwHv2MZOzea7aXrLUdvzP5O/a3s4cxz0/mjvUyrXzFqifCByyfZPPL1Otq5yjj7Q5utle9fkDOg9pTRt/t8qMkSZIkSZIkSZIkSZJ0fz0BgrzNBkA4AAA=
+  </data>
+ </layer>
+</map>
