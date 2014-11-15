@@ -1,6 +1,14 @@
+import com.sun.imageio.plugins.gif.GIFImageReader;
+import com.sun.javafx.iio.gif.GIFDescriptor;
+import com.sun.javafx.iio.gif.GIFImageLoader2;
+import javafx.animation.*;
 import org.newdawn.slick.*;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.tiled.TiledMap;
+
+
 
 
 public class Spudi extends Entity implements IControlable {
@@ -20,19 +28,21 @@ public class Spudi extends Entity implements IControlable {
 
         CurrentWorld = world;
         CurrentWorld.GetBlocked();
-        Image[] movementUp = {new Image("data/gg.png"), new Image("data/gg.png")};//спрайты для разных положений
-        Image[] movementDown = {new Image("data/gg.png"), new Image("data/gg.png")};
-        Image[] movementLeft = {new Image("data/gg.png"), new Image("data/gg.png")};
-        Image[] movementRight = {new Image("data/gg.png"), new Image("data/gg.png")};
+        Image[] movementUp = getImages("data/SpriteJump.gif");//спрайты для разных положений
+        Image[] movementDown = getImages("data/SpriteJump.gif");
+        Image[] movementLeft =  getImages("data/SpriteAnimation.gif");
+        Image[] movementRight =  getImages("data/SpriteAnimation.gif");
         SpriteSizeW = movementLeft[0].getWidth();//получаем параметры спрайта
         SpriteSizeH = movementLeft[0].getHeight();
-        int[] duration = {300, 300};
+        int[] duration = {300};
+
         up = new Animation(movementUp, duration, false);
         down = new Animation(movementDown, duration, false);
         left = new Animation(movementLeft, duration, false);
         right = new Animation(movementRight, duration, false);
         // Спарйт смотрит вправо
         sprite = right;
+
         Rect=new Rectangle(0,0,SpriteSizeW,SpriteSizeW);
 
     }
@@ -42,15 +52,16 @@ public class Spudi extends Entity implements IControlable {
     //гравитация
     public void onUpdate(int delta) {
         control(delta);
-        if (CurrentWorld.isBlocked(x, y + SpriteSizeH + 1)) {
+        if (CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
             OnEarth = true;
-        } else {
+        } else  if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)){
             OnEarth = false;
-        }
-        if (!CurrentWorld.isBlocked(x, y + SpriteSizeH +1)) {
             sprite = down;
             sprite.update(delta);
             y += -Acceleration * Speed * 0.25;
+        }
+        if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
+
         }
     }
 
@@ -77,14 +88,14 @@ public class Spudi extends Entity implements IControlable {
         }
         if (input.isKeyDown(Input.KEY_LEFT)) {
             sprite = left;
-            if (!CurrentWorld.isBlocked(x - delta * 0.1f, y)) {
+            if (!CurrentWorld.isBlocked(x - delta * 0.1f, y)&&!CurrentWorld.isBlocked(x - delta * 0.1f, y+SpriteSizeH-1)) {
                 sprite.update(delta);
                 x -= delta * 0.1f;
 
             }
         } else if (input.isKeyDown(Input.KEY_RIGHT)) {
             sprite = right;
-            if  (!CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y) && !CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y + SpriteSizeH-1)) {
+            if  (!CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y) && !CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y + SpriteSizeH-4)) {
                 sprite.update(delta);
                 x += delta * 0.1f;
             }
@@ -102,6 +113,7 @@ public class Spudi extends Entity implements IControlable {
     {
 
     }
+
 }
     
 
