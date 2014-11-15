@@ -34,9 +34,9 @@ public class Spudi extends Entity implements IControlable {
         Image[] movementRight =  getImages("data/SpriteAnimation.gif");
         SpriteSizeW = movementLeft[0].getWidth();//получаем параметры спрайта
         SpriteSizeH = movementLeft[0].getHeight();
-        int[] duration = {300};
+     int duration=200;
 
-        up = new Animation(movementUp, duration, false);
+        up = new Animation(movementUp, duration,false);
         down = new Animation(movementDown, duration, false);
         left = new Animation(movementLeft, duration, false);
         right = new Animation(movementRight, duration, false);
@@ -54,6 +54,7 @@ public class Spudi extends Entity implements IControlable {
         control(delta);
         if (CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
             OnEarth = true;
+            sprite=down;
         } else  if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)){
             OnEarth = false;
             sprite = down;
