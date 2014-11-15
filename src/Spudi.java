@@ -36,10 +36,10 @@ public class Spudi extends Entity implements IControlable {
         SpriteSizeH = movementLeft[0].getHeight();
      int duration=200;
 
-        up = new Animation(movementUp, duration,false);
-        down = new Animation(movementDown, duration, false);
-        left = new Animation(movementLeft, duration, false);
-        right = new Animation(movementRight, duration, false);
+        up = new Animation(movementUp, duration,true);
+        down = new Animation(movementDown, duration, true);
+        left = new Animation(movementLeft, duration, true);
+        right = new Animation(movementRight, duration, true);
         // Спарйт смотрит вправо
         sprite = right;
 
@@ -55,10 +55,11 @@ public class Spudi extends Entity implements IControlable {
         if (CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
             OnEarth = true;
             sprite=down;
+
         } else  if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)){
             OnEarth = false;
             sprite = down;
-            sprite.update(delta);
+
             y += -Acceleration * Speed * 0.25;
         }
         if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
@@ -90,14 +91,14 @@ public class Spudi extends Entity implements IControlable {
         if (input.isKeyDown(Input.KEY_LEFT)) {
             sprite = left;
             if (!CurrentWorld.isBlocked(x - delta * 0.1f, y)&&!CurrentWorld.isBlocked(x - delta * 0.1f, y+SpriteSizeH-1)) {
-                sprite.update(delta);
+
                 x -= delta * 0.1f;
 
             }
         } else if (input.isKeyDown(Input.KEY_RIGHT)) {
             sprite = right;
             if  (!CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y) && !CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y + SpriteSizeH-4)) {
-                sprite.update(delta);
+
                 x += delta * 0.1f;
             }
         }
