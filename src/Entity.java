@@ -14,7 +14,8 @@ import java.io.*;
 
 
 public class Entity {
-    public Animation sprite, up, down, left, right;//спрайты
+    public float  health;
+    public Animation sprite, upleft,upright, left, right;//спрайты
     public float x ,y;
     public  boolean OnEarth;//на земле ли Сущность?
     public int Speed;
@@ -35,42 +36,67 @@ public class Entity {
     public void onInit(World world) throws SlickException {}
     public void onRender(){}
     public Shape Rect;//для столкновений
-   protected void OnEntityCollide(Entity ent){}
+
+    protected void OnEntityCollide(Entity ent){}
     protected void OnBlockCollide(){}
-    protected org.newdawn.slick.Image[] getImages(String adr) {
-
-        try {
-            ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
-
-            ImageInputStream in = ImageIO.createImageInputStream(new File(adr));
-            reader.setInput(in);
-            int count = reader.getNumImages(true);
-            Texture[] textures = new Texture[count];
-            Image images[]=new Image[count];
-            for (int i = 0; i < count; i++) {
-                BufferedImage image = reader.read(i);
-                textures[i] =toT(image);
-            }
-            for (int i = 0; i < count; i++)
-                images[i]=new Image(textures[i]);
+    protected org.newdawn.slick.Image[] getImages(String adr) throws SlickException
+    {
+     String files[]=new File(adr).list();
+     Image images[]=new Image[files.length];
+            for(int i=0;i<files.length;i++)
+                images[i]=new Image(adr+"/"+files[i]);
             return images;
-        } catch (IOException ex) {
-            return null;
+    }
+    protected boolean sideLocked(final String side){
+
+
+        boolean blocked=false;
+
+        if(side.toLowerCase()=="up") {
+
+            for(int j=0;j<=SpriteSizeW;j+=60)
+            {
+                if (CurrentWorld.isBlocked(x+j, y + (Acceleration * Speed)))
+                    blocked=true;
+            }
+            return blocked;
+        }
+        if(side.toLowerCase()=="left") {
+            for(int j=2;j<=SpriteSizeH;j+=60)
+            {
+
+                if (CurrentWorld.isBlocked(x  + 1, y+j))
+                    blocked=true;
+            }
+            return blocked;
+        }
+        if(side.toLowerCase()=="right") {
+            for(int j=2;j<=SpriteSizeH;j+=60)
+            {
+
+                if (CurrentWorld.isBlocked(x + SpriteSizeW + 1, y+j))
+                    blocked=true;
+            }
+            return blocked;
+        }
+        if(side.toLowerCase()=="down") {
+
+            for(int j=4;j<=SpriteSizeW;j+=60)
+            {
+                if (CurrentWorld.isBlocked(x+j, y + SpriteSizeH + 2))
+                    blocked=true;
+            }
+            return blocked;
         }
 
+else {
+        try {
+                throw new Exception("Wrong side");
+            }catch(Exception ex) {
+                ex.printStackTrace();
+            }
+           return false;
+        }
     }
-    private Texture  toT(BufferedImage image) {
-try {
 
-    ByteArrayOutputStream os = new ByteArrayOutputStream();
-    ImageIO.write(image, "gif", os);
-    InputStream is = new ByteArrayInputStream(os.toByteArray());
-    return TextureLoader.getTexture("GIF", is);
-}catch(Exception ex) {
-    ex.printStackTrace();
-    return null;
-}
-
-
-    }
 }

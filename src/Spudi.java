@@ -1,25 +1,25 @@
-import com.sun.imageio.plugins.gif.GIFImageReader;
-import com.sun.javafx.iio.gif.GIFDescriptor;
-import com.sun.javafx.iio.gif.GIFImageLoader2;
-import javafx.animation.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 
 
 
 
 public class Spudi extends Entity implements IControlable {
 
+    public boolean invincible;
+    Graphics HealthBack=new org.newdawn.slick.Graphics();
+    Graphics HealthFore=new org.newdawn.slick.Graphics();
     public Spudi(float x, float y) {
         Acceleration = 0.4f;
-        Speed = -3;
+        Speed = -5;
         OnEarth = false;
         this.x = x;
         this.y = y;
-
+        health=100;
     }
 
     @Override
@@ -28,22 +28,24 @@ public class Spudi extends Entity implements IControlable {
 
         CurrentWorld = world;
         CurrentWorld.GetBlocked();
-        Image[] movementUp = getImages("data/SpriteJump.gif");//спрайты для разных положений
-        Image[] movementDown = getImages("data/SpriteJump.gif");
-        Image[] movementLeft =  getImages("data/SpriteAnimation.gif");
-        Image[] movementRight =  getImages("data/SpriteAnimation.gif");
+
+        Image[] movementUpLeft = getImages("data/SpriteJumpREV");//спрайты для разных положений
+        Image[] movementUpRight = getImages("data/SpriteJump");
+
+        Image[] movementLeft =  getImages("data/SpriteStaticREV");
+        Image[] movementRight =  getImages("data/SpriteStatic");
         SpriteSizeW = movementLeft[0].getWidth();//получаем параметры спрайта
         SpriteSizeH = movementLeft[0].getHeight();
-     int duration=200;
+     int duration=30;
 
-        up = new Animation(movementUp, duration,true);
-        down = new Animation(movementDown, duration, true);
+        upleft = new Animation(movementUpLeft, duration,true);
+        upright = new Animation(movementUpRight, duration, true);
         left = new Animation(movementLeft, duration, true);
         right = new Animation(movementRight, duration, true);
         // Спарйт смотрит вправо
         sprite = right;
 
-        Rect=new Rectangle(0,0,SpriteSizeW,SpriteSizeW);
+        Rect=new org.newdawn.slick.geom.Rectangle(x,y,SpriteSizeW,SpriteSizeW);
 
     }
 
@@ -51,24 +53,37 @@ public class Spudi extends Entity implements IControlable {
     //Внизу и далее мы можем увидеть материалы не для людей с неустойчивой психикой
     //гравитация
     public void onUpdate(int delta) {
+
+if(health<0)
+    CurrentWorld.CurrentContainer.exit();
+        Rect.setX(x);
+        Rect.setY(y);
         control(delta);
-        if (CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
-            OnEarth = true;
-            sprite=down;
+        OnEarth=sideLocked("down");
+        if (OnEarth) {
 
-        } else  if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)){
-            OnEarth = false;
-            sprite = down;
+            if(sprite==left||sprite==upleft)
+            sprite=left;
+            else  if(sprite==right||sprite==right)
+                sprite=right;
 
+        } else  if (!OnEarth){
+
+            if(sprite==left||sprite==upleft)
+                sprite=upleft;
+            else  if(sprite==right||sprite==right)
+                sprite=upright;
             y += -Acceleration * Speed * 0.25;
         }
-        if (!CurrentWorld.isBlocked(x, y + SpriteSizeH + 2) && !CurrentWorld.isBlocked(x + SpriteSizeW,y+SpriteSizeH + 2)) {
 
-        }
     }
 
     public void onRender() {
         sprite.draw(CurrentWorld.CurrentContainer.getWidth() / 2, CurrentWorld.CurrentContainer.getHeight() / 2);
+        HealthBack.setColor(Color.cyan);
+        HealthBack.fillRect(10, 50, 50, 10);
+        HealthFore.setColor(Color.red);
+        HealthFore.fillRect(10, 50, 50 * health / 100, 10);
     }
 
     @Override
@@ -76,30 +91,36 @@ public class Spudi extends Entity implements IControlable {
 
     public void control(int delta) {
         Input input = CurrentWorld.CurrentContainer.getInput();
-        if (input.isKeyDown(Input.KEY_UP)) {
-            if (JumpTimer < 130) {
-                if (!CurrentWorld.isBlocked(x, y + (Acceleration * Speed))&&
-                  ! CurrentWorld.isBlocked(x+SpriteSizeW, y + (Acceleration * Speed)) ) {
-                    y += Acceleration * Speed;
-                    JumpTimer++;
-                }
-
+        if (input.isKeyDown(Input.KEY_SPACE)) {
+            if (JumpTimer < 217) {
+if(!sideLocked("up")) {
+    y += Acceleration * Speed;
+    JumpTimer++;
+}
             } else if (OnEarth) {
                 JumpTimer = 0;
             }
         }
-        if (input.isKeyDown(Input.KEY_LEFT)) {
-            sprite = left;
-            if (!CurrentWorld.isBlocked(x - delta * 0.1f, y)&&!CurrentWorld.isBlocked(x - delta * 0.1f, y+SpriteSizeH-1)) {
+        if (input.isKeyDown(Input.KEY_W)) {
 
-                x -= delta * 0.1f;
+        }
+
+        if (input.isKeyDown(Input.KEY_A)) {
+            if(OnEarth) sprite=left;
+            else sprite=upleft;
+            if (!sideLocked("left")) {
+
+                x -= delta * 0.2;
 
             }
-        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-            sprite = right;
-            if  (!CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y) && !CurrentWorld.isBlocked(x + SpriteSizeW + delta * 0.1f, y + SpriteSizeH-4)) {
+        } else if (input.isKeyDown(Input.KEY_D)) {
+            if(OnEarth) sprite=right;
+            else sprite=upright;
 
-                x += delta * 0.1f;
+            if  (!sideLocked("right")) {
+
+                x += delta * 0.2;
+
             }
         }
 
@@ -109,7 +130,7 @@ public class Spudi extends Entity implements IControlable {
     public void interact(int delta) {
     }
     void onBlockCollide() {
-        Block.OnCollide(CurrentWorld.CurrentMap,(int)x+32,(int)y+32);
+        Block.OnCollide(CurrentWorld.CurrentMap,(int)x+64,(int)y+64);
     }
     void onEntityCollide()
     {

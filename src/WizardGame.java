@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 
+import javafx.scene.text.Font;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -8,7 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
-//TODO Код-сраное говно, а я нуб
 class WizardGame extends BasicGame {
 
 
@@ -24,8 +24,11 @@ class WizardGame extends BasicGame {
     public static void main(String[] arguments) {
         try {
             app = new AppGameContainer(new WizardGame());
-            app.setDisplayMode(800, 800, false);
+            app.setDisplayMode(1024,750,false);
+            app.setDefaultMouseCursor();
+            app.setShowFPS(true);
             app.start();
+
         } catch (SlickException e) {
             e.printStackTrace();
         }

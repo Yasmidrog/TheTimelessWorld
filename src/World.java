@@ -11,25 +11,34 @@ public class World {
 
     public GameContainer CurrentContainer;//текущее игровое окно
     public TiledMap CurrentMap;//карта, на которой играем
-
-    private ArrayList<Entity> Entities=new ArrayList<Entity>();//все сущности в мире
+  public ArrayList<Bullet> Bullets=new ArrayList<Bullet>();
+   public ArrayList<Entity> Entities=new ArrayList<Entity>();//все сущности в мире
     private boolean[][] blocked;
 
     public void init(TiledMap Map,GameContainer Cont  )throws SlickException{
-        SpiderMan= new Spudi(-80,-80 );//наш основной герой
+        SpiderMan= new Spudi(-80,2000 );//наш основной герой
         Entities.add(SpiderMan);
-Entities.add(new DrOctopus(-60,-80));
+
         CurrentMap = Map;
         CurrentContainer=Cont;
+        Entities.add(new DrOctopus(100,2000));
+
         for(Entity ent:Entities) {
             ent.onInit(this);//для всех сущнстей вызываем их версию методов
         }
     }
 
-    public void update(int delta)throws SlickException{
-        for(Entity ent:Entities) {
-            ent.onUpdate(delta);
-        }
+    public void update(final int delta)throws SlickException{
+        new Thread(){
+            @Override
+            public void run()
+            {
+                for(Entity ent:Entities) {
+                ent.onUpdate(delta);
+              }
+            }
+        }.start();
+
     }
     public void render()throws SlickException{
         //игрока рисуем на месте, а все остальное двигаем вокруг
@@ -56,8 +65,8 @@ Entities.add(new DrOctopus(-60,-80));
     }
     //проверяет, проходим ли блок в определенной точке+часть окна, которую мы отодвинули, чтоб игрок был в центре
     public boolean isBlocked(float x, float y) {
-        int xBlock = (int) (x+CurrentContainer.getWidth()/2) / 32;
-        int yBlock = (int) (y+CurrentContainer.getHeight()/2) / 32;
+        int xBlock = (int) (x+CurrentContainer.getWidth()/2) / 64;
+        int yBlock = (int) (y+CurrentContainer.getHeight()/2) / 64;
         return blocked[xBlock][yBlock];
     }
 }
