@@ -8,9 +8,27 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="2" name="ground" tilewidth="64" tileheight="64">
-  <image source="ground.png" width="64" height="64"/>
+ <tileset firstgid="2" name="Ground1" tilewidth="64" tileheight="64">
+  <image source="Ground1.png" width="128" height="128"/>
   <tile id="0">
+   <properties>
+    <property name="Type" value="Ground"/>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Type" value="Ground"/>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Type" value="Ground"/>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
    <properties>
     <property name="Type" value="Ground"/>
     <property name="blocked" value="true"/>
@@ -19,7 +37,7 @@
  </tileset>
  <layer name="Слой тайлов 1" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3cMRKCQBQFQfT+h/YCBlKU0H93gs4fO2CZwPs4jncorxDqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYZneY/L21XpM3b1ij4mbV+0xbe/KPe7c+sTZTOkxZecO16nv26mHvG23Hld3TXwXTN34bdMO7+D9sv2Oa1v1fK/0eOq/3U7nfabHdGd/z/JfT98PPR/rqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphqYelHpZ6WOphWe37ztOd+R537vEBFtLuMECcAAA=
+   H4sIAAAAAAAAA+3b21LCQBAAUYTy/3/ZJwqMEchld3pmOlX9iI573BACXC4etOPbED17fFloerDSg5UerPRgpQcrPVjpwUoPVnqw0oOVHqz0YKUHKz1Y6cFKD1Z6sNKDlR6s9GClBys9WOnBqoLHFTCDHr//hmsRl+wey5mvK0XP2MXjk3mz+WT1ODLrmtE7p5seQyzeGa053NPj76wjZ1yazHTI5jFrtujnmAweEXNFudA9js7033eQqCZkj7V5tn736+gMs01IHjPW94jJDJdnj9sl5vouer1JLsv9Mfv6brTviJavI8/++c8e2YvcM2fclyE9f1Rrj5UeLCc9WN1d9GDk/mClBys9WOnBSg9Weryu8/1dUr4fxcj3axlRPp+lR7yBHg8HkkVHD8p5qYvHq3vZVINqHpnWu6JHtv/5Ch6ZzzlVPLqsOd2ju8Fsj+zXPNU8PjHZW/T6ZfWIcI6eraPHXiuqXWWPo3Z6sIrw0WOfjx6sRu0dPc7z0YOTHpw8X8Wu/cjrLj22GYz+XXqsr3vU68LKHhnvTWbw6HTvl+hRYV2ze3Rdf4pH5z0Q7VHl3J7Rw7WP9XDt53p0uc6kNOL5QzuWxyi7Dn7RHqP8oufs4nG2G82vqscZfnqwOmtvbXm8HuPd9jxeD0buD1Z6sNKDlR6slh4Wnwfv+AFTpLeSQJwAAA==
   </data>
  </layer>
 </map>

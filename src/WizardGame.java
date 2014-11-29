@@ -1,13 +1,7 @@
-
-import java.util.ArrayList;
-
-import javafx.scene.text.Font;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
+
+import java.io.File;
 
 class WizardGame extends BasicGame {
 
@@ -23,8 +17,31 @@ class WizardGame extends BasicGame {
 
     public static void main(String[] arguments) {
         try {
+            try {
+
+                if (isUnix())
+                    System.setProperty("java.library.path", new File("lib/natives-linux/").getAbsolutePath());
+                else if (isMac())
+                    System.setProperty("java.library.path", new File("lib/natives-mac/").getAbsolutePath());
+                else if (isWindows())
+                    System.setProperty("java.library.path", new File("lib/natives-windows/").getAbsolutePath());
+                System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
+
+                java.lang.reflect.Field fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
+                fieldSysPath.setAccessible(true);
+                try {
+                    fieldSysPath.set(null, null);
+                } catch (Exception ex) {
+                    System.exit(1);
+                }
+
+            } catch (Exception ex) {
+                System.exit(1);
+            }
+
+
             app = new AppGameContainer(new WizardGame());
-            app.setDisplayMode(1024,750,false);
+            app.setDisplayMode(1024, 750, false);
             app.setDefaultMouseCursor();
             app.setShowFPS(true);
             app.start();
@@ -50,6 +67,20 @@ class WizardGame extends BasicGame {
         world.render();
     }
 
+    public static boolean isWindows() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("win") >= 0);
+    }
+
+    public static boolean isMac() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("mac") >= 0);
+    }
+
+    public static boolean isUnix() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0);
+    }
 }
 
 
