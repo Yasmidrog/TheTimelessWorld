@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="199" height="100" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="dirt" tilewidth="64" tileheight="64">
+  <image source="../../terrain/dirt.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="Ground3" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Ground3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="6" name="box" tilewidth="64" tileheight="64">
+  <image source="../../terrain/box.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="HealthBox"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="man" tilewidth="64" tileheight="64">
+  <image source="../../terrain/man.png" width="64" height="128"/>
+ </tileset>
+ <tileset firstgid="9" name="Tree2" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Tree2.png" width="256" height="256"/>
+  <tile id="14">
+   <properties>
+    <property name="text" value="hello.txt"/>
+    <property name="type" value="Table"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="25" name="evilguy" tilewidth="64" tileheight="64">
+  <image source="../../terrain/evilguy.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="DrOctopus"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="29" name="man" tilewidth="64" tileheight="64">
+  <image source="../../terrain/man.png" width="64" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="31" name="Sprite" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Sprite.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="HeroSpawner"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="collision" width="199" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3aywqDMBQEUO3j/3+57aLQhWJuijV2zoHgKpBAhiHqNAFLLs9xDXzClttz3AOfsGU+egE/pjdolZSN1171Bq3mKSsfeoNWadnQG7RKysZrn3qDVmnZePdGyp7pl5SNd2ck7Zl+SefEXYOKpGy4a1CRlI3Pu0bKnumXdE70BhVJ2XDfoCIpG95TUXHmc1Jdt28bVJw1Gz3r1htUnOmczAujQm9QMXo21rLwbW/AllGzsdUNPWvWG1SMmI2W9egM9jZCNnruEe4a7G2UbOw9R29QddZsVOfpDaqOzEbvu9jP+a30BlVHZ+NX8/1LRdXSPfgfh39wqTr6zPaOtX2s7VFvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHznAfIO4s7wNgEA
+  </data>
+ </layer>
+ <layer name="terrain" width="199" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3XwQqDMBBF0VDr//9ycREoMoWqDJmEc0BcOpvHbVsDIq/RB0BR79EHQFG6ATHdgJhuQEw3IKYbENMNiOkGxHQDYroBMd2AmG5ATDcgdnRjG33ETbPezRyObuyjj7jhuNk2yDRrN2yDbDN1Yz89W7MP8lTvxnkP3dZsg1wVu/FrD99sgmwVu/HPVqvdzHoqdOPcCdugggrduLPN0TezvirduMr/cLKN7MaV31AR2yDTyG48/a5tkKl3Y/U3XNW7sfobAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGc+NdBvW/A2AQA=
+  </data>
+ </layer>
+ <layer name="creatures" width="199" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3OMQEAAAgDoNWwf1HfNfAQEpAAAAAAAAAAAAAAAAAA0OY6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI8tkMIEOfA2AQA=
+  </data>
+ </layer>
+ <layer name="objects" width="199" height="100">
+  <properties>
+   <property name="type" value="LevelPortal"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VsQ3AIAwEQIooYYOU2X9LFkA04JgodwO8vrD1pQAAAAAAAAAAAAAAAAAAAADwJVd2AdhUzS7Ar53ZBQbsBhF6N7/zH/TYDWY92QWC2A1mHAsy7gUZEewGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8qwFc9T8Q8DYBAA==
+  </data>
+ </layer>
+</map>

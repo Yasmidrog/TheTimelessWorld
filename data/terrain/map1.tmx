@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="Platform1" tilewidth="64" tileheight="64">
+  <image source="Platform1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="5" name="Platform2" tilewidth="64" tileheight="64">
+  <image source="Platform2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="9" name="Platform3" tilewidth="64" tileheight="64">
+  <image source="Platform3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="13" name="Ground2" tilewidth="64" tileheight="64">
+  <image source="Ground2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="Collision" tilewidth="64" tileheight="64">
+  <image source="Collision.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="18" name="Ground1" tilewidth="64" tileheight="64">
+  <image source="Ground1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="22" name="BADSprite" tilewidth="64" tileheight="64">
+  <image source="BADSpriteShootREV/BADSpriteShootREV000.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="DrOctopus"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="26" name="Ground5" tilewidth="64" tileheight="64">
+  <image source="Ground5.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="30" name="Ground4" tilewidth="64" tileheight="64">
+  <image source="Ground4.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="34" name="Ground3" tilewidth="64" tileheight="64">
+  <image source="Ground3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="38" name="Sprite" tilewidth="64" tileheight="64">
+  <image source="SpriteStatic/SpriteStatic000.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="HeroSpawner"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="42" name="HealthBox" tilewidth="64" tileheight="64">
+  <image source="HealthBox.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="HealthBox"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="43" name="Teleport" tilewidth="64" tileheight="64">
+  <image source="Teleport.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="collision" width="200" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3YTQqAIBAGUK/g/Tcdta0QNWZgY70H39JfGJEpBQB4Qw0CAMCRPxMAkE3m3s6s/tOd+TPeE0ArejuDbL25WP9szNO9dWdFfz77TF+qj9HzrEh9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAuB3GEQliQJwAAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="200" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3YXWvCMBQG4DqYsIFO5naz6ebH/P9/cefCQAk9YBFsCs8DL6E9hzTJVWjXAQBTWESeIi+R1974HFlOuC4AgJaVO5Q7EwDQivofT0v3lEf9fxpzBu5zQOvWkdV1PEXOkffItvdc6vX7rK+u/0R+B779FfkeMU/Wl/Vn9TJm62pdObdb91uf29z3/0ibyNt1/ItcIh+Rz95zqdfvs766fogcB769i+xHzJP1Zf1ZvYzZulpXzu3W/dbnNvf9AwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAvf4BsqVc9kCcAAA=
+  </data>
+ </layer>
+ <layer name="objects" width="200" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3VOwqAQBBEwT2Nf73/8RwwnmiVWbAKOu/stcZf7LGj+gQM6oxd1SdgUPoBOf2AnH5ATj8gpx+Q049+U2yuPvGyrfrAIPSj3xJbq0/wCf2AnH5ATj8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOBxAzVuVMJAnAAA
+  </data>
+ </layer>
+ <layer name="creatures" width="200" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OyQkAMAwEMVeRo/9G4y7WEAnmP1UAAAAAAACkrG6nJ2Co0930BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfesw73epAnAAA
+  </data>
+ </layer>
+</map>
