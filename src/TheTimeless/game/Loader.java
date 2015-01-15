@@ -83,7 +83,6 @@ getStrings();
                   AudioLoader.getAudio("OGG", new FileInputStream(new File("data/sounds/" + adr))));
              }
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
