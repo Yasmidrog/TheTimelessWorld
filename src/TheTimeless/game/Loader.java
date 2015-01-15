@@ -123,8 +123,8 @@ private void getPicts(){
         String pictures[] = new File("data/strings/smallpictures").list();
         for (String str:pictures){
             if(str.contains(".png")) {
-                System.out.print("data/strings/strings/smallpictures/" + str + "\n");
-                System.out.print(str.substring(0, str.indexOf(".png")) + "\n");
+                picts.put(str.substring(0, str.indexOf(".png")),
+                        new Image("data/strings/smallpictures/" + str));
             }
         }
         Smallpictures = picts;
@@ -161,12 +161,15 @@ private void getPicts(){
             String value = strings.get(index).substring(strings.get(index).indexOf(":") + 1,
                     strings.get(index).length());//get what he said
             if (speaker.equals("Me")) {
+                Smallpictures.get("Me").draw(5,Display.getHeight() - 79);
                 TextRender.drawString(value, 75, Display.getHeight() - 40, Color.white);
 
             } else if (!speaker.equals("Me"))//draw on the left or right
             {
+                Smallpictures.get(speaker).draw(Display.getWidth() - 5-64,Display.getHeight() - 79);
                 TextRender.drawString(value,
-                        Display.getWidth() - 75 - TextRender.getWidth(value), Display.getHeight() - 40, Color.white);
+                        Display.getWidth() - 75 - TextRender.getWidth(value),
+                        Display.getHeight() - 40, Color.white);
                 //draw text
             }
         } catch (Exception e) {
