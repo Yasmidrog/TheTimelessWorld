@@ -12,6 +12,7 @@ public class Counter implements Serializable{
     {
         name=Name;
         Period =period;
+        Ticks=Period;
     }
     /**
      * Is the time over

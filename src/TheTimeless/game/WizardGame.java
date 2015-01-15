@@ -13,11 +13,8 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-class WizardGame extends BasicGame {
-    private  guiContainer gui,params;
-    private boolean ShowMenu;//is the menu shown
-    private static AppGameContainer app;
-    transient public VTextRender mainFont;//font to draw menu
+public class WizardGame extends BasicGame {
+    private  Menu MainMenu;
     public int Level =1;//current level
     public World world;//current world
     private TiledMap GrassMap;//current map
@@ -27,7 +24,9 @@ class WizardGame extends BasicGame {
 
     public static void main(String[] arguments)throws Exception {
             try {
+                AppGameContainer app;
                 setNatives();
+
             //set application parameters
             app = new AppGameContainer(new WizardGame());
             app.setTitle("The Timeless");
@@ -36,19 +35,20 @@ class WizardGame extends BasicGame {
             app.setMouseGrabbed(false);
             app.setDefaultMouseCursor();
             app.setTargetFrameRate(150);
+            app.setIcon("data/icons/icon.png");
             app.start();
-            setParams();
+            setParams(app);
         } catch (SlickException e) {
             e.printStackTrace();
         }
     }
-    private static void setParams() {
+    public static void setParams(GameContainer cntr) {
         if(!ConfigReader.getConf("fps").equals("null"))
-        app.setShowFPS(Boolean.valueOf(ConfigReader.getConf("fps")));
+        cntr.setShowFPS(Boolean.valueOf(ConfigReader.getConf("fps")));
         if(!ConfigReader.getConf("updateonlyifvisible").equals("null"))
-        app.setUpdateOnlyWhenVisible(Boolean.valueOf(ConfigReader.getConf("updateonlyifvisible")));
+        cntr.setUpdateOnlyWhenVisible(Boolean.valueOf(ConfigReader.getConf("updateonlyifvisible")));
         if(!ConfigReader.getConf("smoothdeltas").equals("null"))
-        app.setSmoothDeltas(Boolean.valueOf(ConfigReader.getConf("smoothdeltas")));
+        cntr.setSmoothDeltas(Boolean.valueOf(ConfigReader.getConf("smoothdeltas")));
 
     }
     private static void  setNatives() {
@@ -92,9 +92,7 @@ class WizardGame extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
-
-        mainFont=new VTextRender(46,"Sans");
-        setGui();
+        MainMenu=new Menu(this,container);
         GrassMap = new TiledMap("data/levels/"+ Level +"/"+"world.tmx");
         world = new World();
         world.init(GrassMap, container);
@@ -103,38 +101,34 @@ class WizardGame extends BasicGame {
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        if(!app.isPaused()) {
+        if(!container.isPaused()) {
             world.update(delta);
         }
-        Input input = app.getInput();
+        Input input = container.getInput();
 
         if(input.isKeyPressed(Input.KEY_P))
             save("world.sss");
         if(input.isKeyPressed(Input.KEY_O))
-            load("world.sss");
+            load("world.sss",container);
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
-           if(!app.isPaused()){
-               app.pause(); ShowMenu =true;//pause or continue game
-               gui.setShown(true);
+           if(!container.isPaused()){
+               container.pause(); //pause or continue game
+               MainMenu.setShown(true);
            }
-            else if(app.isPaused()){
-               app.setPaused(false);
-               ShowMenu =false;
-               gui.setShown(false);
-               params.setShown(false);
+            else if(container.isPaused()){
+               container.setPaused(false);
+               MainMenu.setShown(false);
            }
         }
-        if(!ShowMenu){
-            if(app.isFullscreen()) {
+        if(MainMenu.isShown()){
+            if(container.isFullscreen()) {
                 Mouse.setCursorPosition(0, 0);
             }
-            gui.setShown(false);
-            params.setShown(false);
         }
         if(!world.IsExists) {
             try {
-                app.pause();
+                container.pause();
                 try {
                     Level++;
                     GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
@@ -146,7 +140,7 @@ class WizardGame extends BasicGame {
                     world = new World();
                     world.init(GrassMap, container);
                 }
-                app.pause();
+                container.pause();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -155,19 +149,15 @@ class WizardGame extends BasicGame {
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-
         GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-
         try {
             GL11.glColor3f(255, 255, 255);
             world.render();
-            gui.render();
-            params.render();
         }catch(Exception e){
             GL11.glColor3f(255, 255, 255);
-            gui.render();
             e.printStackTrace();
         }
+        MainMenu.render();
     }//render world&objects or menu
 
     /**
@@ -186,16 +176,16 @@ class WizardGame extends BasicGame {
     /**
      * Restore map and objects from serialization file
      */
-    private void load(String adress)
+    private void load(String adress,GameContainer cntr)
     {
         //i don't know how it works
-        app.pause();
+        cntr.pause();
           try {
           ObjectInputStream wldin = new ObjectInputStream(new FileInputStream(adress));
           Serializator s = (Serializator) wldin.readObject();//get serializator
               GrassMap = new TiledMap(s.Map);//create map from string
               world = new World();
-              world.init(GrassMap, app);//init new world
+              world.init(GrassMap,cntr);//init new world
               world.Creatures = new ArrayList<Creature>();//replace world new lists
               world.StaticObjects= new ArrayList<Entity>();
               for (int i=0;i<s.SCrts.size();i++)
@@ -229,64 +219,12 @@ class WizardGame extends BasicGame {
                   if((cr instanceof Spudi)&& world.SpMn!=cr)
                       world.Creatures.remove(cr);
               }//delete all other heroes
-              app.setPaused(false);
+              cntr.setPaused(false);
            }
           catch (ConcurrentModificationException s){}
           catch(Exception e){
               e.printStackTrace();
           }
     }
-    public void setGui(){
-        gui =new guiContainer(app);
-        gui.setShown(false);
-        params =new guiContainer(app);
-        params.setShown(false);
 
-        gui.add(new guiButton(app,"Resume", mainFont,app.getWidth()/2-  mainFont.getWidth("Resume")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2-150){
-            @Override
-            public void onClicked(){
-                app.setPaused(false);
-                ShowMenu =false;
-                gui.setShown(false);
-                World.ResLoader.playSound("click",1,1,false);
-            }
-        });
-
-        gui.add(new guiButton(app,"Parameters",  mainFont,app.getWidth()/2-  mainFont.getWidth("Parameters")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2){
-            @Override
-            public void onClicked(){
-                gui.setShown(false);
-                params.setShown(true);
-                World.ResLoader.playSound("click",1,1,false);
-            }
-        });
-
-
-        gui.add(new guiButton(app,"Exit", mainFont,app.getWidth()/2-  mainFont.getWidth("Exit")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2+150){
-            @Override
-            public void onClicked(){
-                app.exit();
-                World.ResLoader.playSound("click",1,1,false);
-            }
-        });
-        params.add(new guiCheckBox(app,"FPS", mainFont,app.getWidth()/2-  mainFont.getWidth("FPS")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2-150,app.isShowingFPS()){
-            @Override
-                public void onClicked (){
-                if (active) {
-                  active=false;
-                    ConfigReader.setConfig("fps","false");
-                    setParams();
-                }else {
-                    active = true;
-                    ConfigReader.setConfig("fps", "true");
-                    setParams();
-                }
-                World.ResLoader.playSound("click",1,1,false);
-            }
-        });
-    }
 }

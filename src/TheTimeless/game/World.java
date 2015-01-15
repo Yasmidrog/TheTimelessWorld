@@ -32,7 +32,7 @@ public class World implements Serializable {
 
     private javax.swing.Timer EntityTimer;
     private javax.swing.Timer BulletTimer;
-    private int delta=1;
+    public int delta=1;
     private boolean[][] HardBlocks;
     transient VTextRender TextRender;
     transient private Image BackgroundImage;
@@ -51,7 +51,13 @@ public class World implements Serializable {
             Bullets = new ArrayList<Bullet>();
             Creatures = new ArrayList<Creature>();
             StaticObjects = new ArrayList<Entity>();
-            BackgroundImage = new Image("data/Background.png").getScaledCopy(Display.getWidth(),Display.getHeight());
+            try{
+               BackgroundImage= new Image("data/Backgroundold.png");
+            }
+            catch (Exception ex){
+             BackgroundImage = new Image("data/Background.png").getScaledCopy(Display.getWidth(),
+                                                                              Display.getHeight());
+            }
             CurrentMap = Map;
             CrCntr = Cont;
             Creatures.addAll(ResLoader.getCreatures(CurrentMap));

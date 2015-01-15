@@ -21,23 +21,23 @@ public class DrOctopus extends Creature implements IAgressive {
         this.x = x;
         this.y = y;
         Health = 50;
-        Name = "TheTimeless.game.DrOctopus";
-        Counters = new HashMap<String, Counter>();
-        Counters.put("shoot", new Counter("shoot", 100));
-        Counters.put("patrol", new Counter("patrol", 110));
+        Name = "DrOctopus";
         MAXENERGY=80;Flight=MAXENERGY;
-        Counters.put("bulletshoot", new Counter("bulletshoot", 40) {
+        Counters = new HashMap<String, Counter>();
+        Counters.put("patrol", new Counter("patrol", 110));
+        Counters.put("shoot", new Counter("shoot", 100){
+            @Override
             public void tick() {
-                if (!is()) {
-                    if (Side == sides.RIGHT)
-                        sprite = Shootright;
-                    if (Side == sides.LEFT)
-                        sprite = Shootleft;
+                super.tick();
+                if(Ticks<50) {
+                    if(Side==sides.RIGHT)
+                    vx -= (Ticks * 0.170 - 0.1);
+                    if(Side==sides.LEFT)
+                        vx += (Ticks * 0.170 - 0.1);
+
                 }
-                Ticks++;
             }
         });
-
     }
 
     @Override
@@ -56,7 +56,6 @@ public class DrOctopus extends Creature implements IAgressive {
             SzH = Right.getHeight();
             SzW = Right.getWidth();
             Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
-            Counters.get("bulletshoot").Ticks += 30;
         } catch (Exception ex) {
         }
 
@@ -94,6 +93,7 @@ public class DrOctopus extends Creature implements IAgressive {
     }
 
     public void onRender() {
+        sprite.update(CrWld.delta);
             sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
                     -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2);
             HealthBack.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
@@ -158,10 +158,8 @@ public class DrOctopus extends Creature implements IAgressive {
 
                 if (Side == sides.RIGHT) {
                     bullet = new Bullet(x + SzW - 15, y, this, 0.4f, -21);
-                    Counters.get("bulletshoot").restoreTime();
                 } else if (Side == sides.LEFT) {
                     bullet = new Bullet(x - 30, y, this, 0.4f, 21);
-                    Counters.get("bulletshoot").restoreTime();
                 }
                 bullet.onInit(CrWld);
                 CrWld.Bullets.add(bullet);

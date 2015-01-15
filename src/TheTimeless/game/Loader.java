@@ -31,6 +31,7 @@ public class Loader {
             Map<String, Animation> Animations = new HashMap<String, Animation>();
     Map<String, Audio> Sounds = new HashMap<String, Audio>();
     ArrayList<String> strings=new ArrayList<String>();
+    Map<String, Image> Smallpictures= new HashMap<String, Image>();
     public Loader() {
                 setSprites();
         new Thread() {
@@ -45,6 +46,13 @@ public class Loader {
 getStrings();
             }
         }.start();
+        new Thread() {
+            @Override
+            public void start() {
+                getPicts();
+            }
+        }.start();
+
     }
 
     /**
@@ -52,10 +60,11 @@ getStrings();
      */
     private void setSprites() {
         try {
+
             Map<String, Animation> anims = new HashMap<String, Animation>();
             String files[] = new File("data/sprites").list();//get folders' names
             for(String adr:files) {
-             anims.put(adr, new Animation(getImages("data/sprites/" + adr), 120));//create animation and put into list
+             anims.put(adr, new Animation(getImages("data/sprites/" + adr), 200,false));//create animation and put into list
              Animations=anims;
             }
         } catch (Exception ex) {
@@ -69,8 +78,10 @@ getStrings();
         try {
             String files[] = new File("data/sounds").list();
          for(String adr:files) {
-           Sounds.put(adr.substring(0, adr.indexOf(".ogg")),// get every ogg sound and write into list under name of file
-                        AudioLoader.getAudio("OGG", new FileInputStream(new File("data/sounds/" + adr))));
+             if(adr.contains(".ogg")) {
+                 Sounds.put(adr.substring(0, adr.indexOf(".ogg")),// get every ogg sound and write into list under name of file
+                  AudioLoader.getAudio("OGG", new FileInputStream(new File("data/sounds/" + adr))));
+             }
             }
 
         } catch (Exception ex) {
@@ -82,10 +93,13 @@ getStrings();
      */
     protected org.newdawn.slick.Image[] getImages(String adr) throws SlickException {
         String files[] = new File(adr).list();
-        Image images[] = new Image[files.length];
-        for (int i = 0; i < files.length; i++)
-            images[i] = new Image(adr + "/" + files[i]);
-        return images;
+        ArrayList<Image> imgs=new ArrayList<Image>();
+        for (String str:files) {
+            if(str.contains(".png"))
+            imgs.add(new Image(adr+"/"+str));
+        }
+        Image images[]=new Image[imgs.size()];
+        return imgs.toArray(images);
     }
     /**
      * Gets all strings for the level
@@ -103,7 +117,21 @@ getStrings();
           ex.printStackTrace();
         }
     }
-
+private void getPicts(){
+    try {
+        Map<String, Image> picts = new HashMap<String, Image>();
+        String pictures[] = new File("data/strings/smallpictures").list();
+        for (String str:pictures){
+            if(str.contains(".png")) {
+                System.out.print("data/strings/strings/smallpictures/" + str + "\n");
+                System.out.print(str.substring(0, str.indexOf(".png")) + "\n");
+            }
+        }
+        Smallpictures = picts;
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
 
     public Animation getSprite(String index)
     {
@@ -128,20 +156,18 @@ getStrings();
     public void  renderString(int index) {
         try {
             g.setColor(new Color(0, 0, 0, 60));
-            g.fillRect(2, Display.getHeight() - 80, Display.getWidth(), 80);//draw a background for messages
+            g.fillRect(2, Display.getHeight() - 80, Display.getWidth(), 80);//draw a background for message yb`
             String speaker = strings.get(index).substring(0, strings.get(index).indexOf(":"));//get speaker
             String value = strings.get(index).substring(strings.get(index).indexOf(":") + 1,
                     strings.get(index).length());//get what he said
             if (speaker.equals("Me")) {
                 TextRender.drawString(value, 75, Display.getHeight() - 40, Color.white);
-                new Image("data/strings/smallpictures/" + speaker + ".png").draw(5, Display.getHeight() - 70);
+
             } else if (!speaker.equals("Me"))//draw on the left or right
             {
                 TextRender.drawString(value,
                         Display.getWidth() - 75 - TextRender.getWidth(value), Display.getHeight() - 40, Color.white);
                 //draw text
-                new Image("data/strings/smallpictures/" + speaker + ".png").draw(Display.getWidth() - 5 - 64,
-                        Display.getHeight() - 70);//draw icon
             }
         } catch (Exception e) {
             e.printStackTrace();

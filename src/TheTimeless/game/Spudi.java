@@ -16,21 +16,32 @@ public class Spudi extends Creature implements IControlable {
     Image mana=CrWld.ResLoader.getSprite("Mana").getImage(0);
     Image energy=CrWld.ResLoader.getSprite("Energy").getImage(0);
 
-    public Spudi(float x, float y) {
+    public Spudi(float X, float Y) {
         Acceleration = 0.3f;
         Speed = 15;
         OnEarth = false;
-        this.x = x;
-        this.y = y;
+        this.x = X;
+        this.y = Y;
         Health = 100;
-        Name = "TheTimeless.game.Spudi";
-         MAXMANA =150; MAXHEALTH =100;
-         MAXENERGY=80;
-         Mana =150;//current mana
-          Manaregenstep =0.027f;//shows how fast will mana regenerate
-          Flight =80;//amount of remaining energy
-        Counters.put("shoot",new Counter("shoot",60));//delays between shoots
-
+        Name = "Spudi";
+        MAXMANA =150; MAXHEALTH =100;
+        MAXENERGY=80;
+        Mana =150;//current mana
+        Manaregenstep =0.027f;//shows how fast will mana regenerate
+        Flight =80;//amount of remaining energy
+        Counters.put("shoot",new Counter("shoot",60){
+            @Override
+            public void tick() {
+                super.tick();
+                if(Ticks<50) {
+                    if(Side==sides.RIGHT)
+                        vx -= (Ticks * 0.170 - 0.1);
+                    if(Side==sides.LEFT)
+                        vx += (Ticks * 0.170 - 0.1);
+                }
+            }
+        });
+        //delays between shoots
     }
 
     @Override
@@ -90,8 +101,10 @@ public class Spudi extends Creature implements IControlable {
     public void onRender() {
         try {
 
-            if (sprite != null)
+            if (sprite != null) {
+                sprite.update(CrWld.delta);
                 sprite.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+            }
             indicators.setColor(new Color(Color.green.getRed(), Color.green.getGreen(), Color.green.getBlue(), 120));
             indicators.fillRect(64 + 10, 82, 150 - 44, 13);
             indicators.fillRect(64 + 10, 82, (150 - 44) * Flight / MAXENERGY, 12,energy,1,1);
@@ -143,33 +156,32 @@ public class Spudi extends Creature implements IControlable {
     public void shoot() {
         try {
             Input input = CrWld.CrCntr.getInput();
-            if (input.isKeyDown(Input.KEY_W)&& Mana >5) {
-
-                if (Counters.get("shoot").is()) {
-                    Bullet bullet = null;
-                    if (Side == sides.RIGHT) {
-                        bullet = new Bullet(x + SzW - 15, y, this, 0.4f, -21);
-                    } else if (Side == sides.LEFT)
-                        bullet = new Bullet(x - 30, y, this, 0.4f, 21);
-                      CrWld.ResLoader.playSound("shoot",1,2,false,2,2,10);
-
-                    bullet.onInit(CrWld);
-                    CrWld.Bullets.add(bullet);
-                    Counters.get("shoot").restoreTime();
-                    Mana -=5;
-
+            if (input.isKeyDown(Input.KEY_W)) {
+                if (Side == sides.RIGHT) {
+                    if (sprite != Shootright)
+                        sprite = Shootright;
                 }
-               if(!Counters.get("shoot").is()){
-                   if (Side == sides.RIGHT) {
-                       if(sprite!=Shootright)
-                       sprite = Shootright;
-                   }
-                   if (Side == sides.LEFT){
-                       if(sprite!=Shootleft)
-                           sprite = Shootleft;
-                   }
-               }
+                if (Side == sides.LEFT) {
+                    if (sprite != Shootleft)
+                        sprite = Shootleft;
+                }
+                if (Mana > 5) {
+                    if (Counters.get("shoot").is()) {
+                        Bullet bullet = null;
+                        if (Side == sides.RIGHT) {
+                            bullet = new Bullet(x + SzW - 15, y, this, 0.4f, -21);
+                        } else if (Side == sides.LEFT)
+                            bullet = new Bullet(x - 30, y, this, 0.4f, 21);
+                        CrWld.ResLoader.playSound("shoot", 1, 2, false, 2, 2, 10);
+
+                        bullet.onInit(CrWld);
+                        CrWld.Bullets.add(bullet);
+                        Counters.get("shoot").restoreTime();
+                        Mana -= 5;
+                    }
+                }
             }
+
         } catch (Exception e) {
         }
     }
