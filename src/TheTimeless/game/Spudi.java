@@ -103,7 +103,6 @@ public class Spudi extends Creature implements IControlable {
             indicators.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
             indicators.fillRect(64 + 10, 57, 150 - 44, 13);
             indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12,health ,1,1);
-
             boowIcon.draw(5,30);
 
         } catch(Exception e){
