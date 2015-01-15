@@ -62,7 +62,7 @@ public class Spudi extends Creature implements IControlable {
             CrWld.CrCntr.exit();
         }
     if(Flight ==75|| Flight ==25) {
-        CrWld.ResLoader.playSound("fly", 1, 1, false, 2, 2, 15);
+        CrWld.ResLoader.playSound("fly", 1, 1, false, 1,1,80 );
     }
 
         checkCounters();
@@ -103,11 +103,7 @@ public class Spudi extends Creature implements IControlable {
             indicators.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
             indicators.fillRect(64 + 10, 57, 150 - 44, 13);
             indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12,health ,1,1);
-/*
-            CrWld.TextRender.drawString("Health "+(int) Health +"/"+(int) MAXHEALTH,13+64,55,Color.white);
-            CrWld.TextRender.drawString("Energy "+ (int)Flight +"/"+(int)MAXENERGY,13+64,80,Color.blue);
-            CrWld.TextRender.drawString("Mana "+(int) Mana +"/"+(int) MAXMANA,13+64,28,Color.yellow);
-            */
+
             boowIcon.draw(5,30);
 
         } catch(Exception e){
@@ -173,10 +169,8 @@ public class Spudi extends Creature implements IControlable {
                        if(sprite!=Shootleft)
                            sprite = Shootleft;
                    }
-
                }
             }
-
         } catch (Exception e) {
         }
     }
@@ -189,14 +183,10 @@ public class Spudi extends Creature implements IControlable {
             sprite = Left;
         if (Side ==sides.RIGHT)
             sprite = Right;
-
         Flight=MAXENERGY;
-
     }
 @Override
-    public void onEntityCollide(final Creature ent) {
-
-    }
+    public void onEntityCollide(final Creature ent) {}
 }
 
 

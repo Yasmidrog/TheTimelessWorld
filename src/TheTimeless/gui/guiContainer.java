@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.openal.Audio;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ public class guiContainer extends guiElement{
         ve.add(e);
     }
     private int elementNumber=0;
-
+    private Audio mus;
 public guiContainer(GameContainer container){
     input=container.getInput();
     listener=null;
@@ -28,14 +29,20 @@ public guiContainer(GameContainer container){
                 if(elementNumber!=0)
                     elementNumber--;
                 else elementNumber=ve.size()-1;
+                if(mus!=null)
+                    mus.playAsMusic(1,1,false);
             }
             if (input.isKeyPressed(Input.KEY_DOWN)) {
                 if(elementNumber<ve.size()-1)
                     elementNumber++;
                 else elementNumber=0;
+                if(mus!=null)
+                    mus.playAsMusic(1,1,false);
             }
             if(input.isKeyPressed(Input.KEY_ENTER))
+            {
                 ve.get(elementNumber).onClicked();
+            }
 
             guiElement e=ve.get(elementNumber);
             guiElement f=ve.get(ve.size()-1);
@@ -55,6 +62,9 @@ public guiContainer(GameContainer container){
                 }
             }
         }
+    }
+    public void setSound(Audio a){
+        mus=a;
     }
     public void remove(guiElement e) {
         ve.remove(e);

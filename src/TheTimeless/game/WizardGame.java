@@ -8,7 +8,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 
-import java.awt.*;
 import java.io.*;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -20,7 +19,7 @@ class WizardGame extends BasicGame {
     private static AppGameContainer app;
     transient public VTextRender mainFont;//font to draw menu
     public int Level =1;//current level
-    public World World;//current world
+    public World world;//current world
     private TiledMap GrassMap;//current map
     public WizardGame() {
        super("Timeless");
@@ -97,15 +96,15 @@ class WizardGame extends BasicGame {
         mainFont=new VTextRender(46,"Sans");
         setGui();
         GrassMap = new TiledMap("data/levels/"+ Level +"/"+"world.tmx");
-        World = new World();
-        World.init(GrassMap, container);
+        world = new World();
+        world.init(GrassMap, container);
 
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         if(!app.isPaused()) {
-            World.update(delta);
+            world.update(delta);
         }
         Input input = app.getInput();
 
@@ -133,20 +132,19 @@ class WizardGame extends BasicGame {
             gui.setShown(false);
             params.setShown(false);
         }
-        if(!World.IsExists) {
+        if(!world.IsExists) {
             try {
                 app.pause();
                 try {
                     Level++;
                     GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
-                    World = new World();
-                    World.init(GrassMap, container);
+                    world = new World();
+                    world.init(GrassMap, container);
 
                 } catch (Exception e) {
-
                     GrassMap = new TiledMap("data/levels/" + 1+ "/" + "world.tmx");
-                    World = new World();
-                    World.init(GrassMap, container);
+                    world = new World();
+                    world.init(GrassMap, container);
                 }
                 app.pause();
             } catch (Exception e) {
@@ -162,7 +160,7 @@ class WizardGame extends BasicGame {
 
         try {
             GL11.glColor3f(255, 255, 255);
-            World.render();
+            world.render();
             gui.render();
             params.render();
         }catch(Exception e){
@@ -179,7 +177,7 @@ class WizardGame extends BasicGame {
     {
         try {
         ObjectOutputStream wldout = new ObjectOutputStream(new FileOutputStream(adress));
-        wldout.writeObject(new Serializator(World, Level));
+        wldout.writeObject(new Serializator(world, Level));
         //Create SerializableOnes for each object and write to file
        }catch(Exception e){
             e.printStackTrace();
@@ -196,10 +194,10 @@ class WizardGame extends BasicGame {
           ObjectInputStream wldin = new ObjectInputStream(new FileInputStream(adress));
           Serializator s = (Serializator) wldin.readObject();//get serializator
               GrassMap = new TiledMap(s.Map);//create map from string
-              World = new World();
-              World.init(GrassMap, app);//init new world
-              World.Creatures = new ArrayList<Creature>();//replace world new lists
-              World.StaticObjects= new ArrayList<Entity>();
+              world = new World();
+              world.init(GrassMap, app);//init new world
+              world.Creatures = new ArrayList<Creature>();//replace world new lists
+              world.StaticObjects= new ArrayList<Entity>();
               for (int i=0;i<s.SCrts.size();i++)
               {
                   Constructor c = Class.forName(s.SCrts.get(i).Type).getConstructor(Float.TYPE, Float.TYPE);
@@ -207,29 +205,29 @@ class WizardGame extends BasicGame {
                   ent.Counters = s.SCrts.get(i).Cntrs;
                   ent.Health = s.SCrts.get(i).sHealth;
                   ent.Side = s.SCrts.get(i).Side;
-                  ent.onInit(World);
-                  World.Creatures.add(i, ent);
+                  ent.onInit(world);
+                  world.Creatures.add(i, ent);
                   //get all parameters from serializableOne and add new creature to the  world's list
               }
               for (int i=0;i<s.SEnts.size();i++) {
                   if(s.SEnts.get(i).Type.equals("Table"))
                   {
                       Entity ent=new Table(s.SEnts.get(i).sx, s.SEnts.get(i).sy,s.SEnts.get(i).tableText);
-                      ent.onInit(World);
-                      World.StaticObjects.add(i, ent);
+                      ent.onInit(world);
+                      world.StaticObjects.add(i, ent);
                   }else if(!(s.SEnts.get(i).Type.equals("Table"))) {
                       Constructor c = Class.forName(s.SEnts.get(i).Type).getConstructor(Float.TYPE, Float.TYPE);
                       Entity ent = (Entity) c.newInstance(s.SEnts.get(i).sx, s.SEnts.get(i).sy);
-                      ent.onInit(World);
-                      World.StaticObjects.add(i, ent);
+                      ent.onInit(world);
+                      world.StaticObjects.add(i, ent);
                       //get all parameters from serializableOne and add new object to the  world's list
                   }
               }
-              World.SpMn=(Spudi) World.Creatures.get(0);//get main hero
-              for (Creature cr: World.Creatures)
+              world.SpMn=(Spudi) world.Creatures.get(0);//get main hero
+              for (Creature cr: world.Creatures)
               {
-                  if((cr instanceof Spudi)&& World.SpMn!=cr)
-                      World.Creatures.remove(cr);
+                  if((cr instanceof Spudi)&& world.SpMn!=cr)
+                      world.Creatures.remove(cr);
               }//delete all other heroes
               app.setPaused(false);
            }
@@ -251,6 +249,7 @@ class WizardGame extends BasicGame {
                 app.setPaused(false);
                 ShowMenu =false;
                 gui.setShown(false);
+                World.ResLoader.playSound("click",1,1,false);
             }
         });
 
@@ -258,8 +257,9 @@ class WizardGame extends BasicGame {
                 app.getHeight()/2-  mainFont.getHeight()/2){
             @Override
             public void onClicked(){
-gui.setShown(false);
+                gui.setShown(false);
                 params.setShown(true);
+                World.ResLoader.playSound("click",1,1,false);
             }
         });
 
@@ -269,6 +269,7 @@ gui.setShown(false);
             @Override
             public void onClicked(){
                 app.exit();
+                World.ResLoader.playSound("click",1,1,false);
             }
         });
         params.add(new guiCheckBox(app,"FPS", mainFont,app.getWidth()/2-  mainFont.getWidth("FPS")/2,
@@ -284,6 +285,7 @@ gui.setShown(false);
                     ConfigReader.setConfig("fps", "true");
                     setParams();
                 }
+                World.ResLoader.playSound("click",1,1,false);
             }
         });
     }
