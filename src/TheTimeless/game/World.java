@@ -34,7 +34,7 @@ public class World implements Serializable {
     private javax.swing.Timer BulletTimer;
     public int delta=1;
     private boolean[][] HardBlocks;
-    transient VTextRender TextRender;
+
     transient private Image BackgroundImage;
     transient public GameContainer CrCntr;//текущее игровое окно
     transient public TiledMap CurrentMap;//карта, на которой играем
@@ -45,7 +45,7 @@ public class World implements Serializable {
     private static enum  states{FIGHTING,SPEAKING};
     private states state;
     private int dialognumber=0;
-    static  final long serialVersionUID=22814881337l;
+
     public void init(TiledMap Map, GameContainer Cont) throws SlickException {
         try {
             Bullets = new ArrayList<Bullet>();
@@ -62,7 +62,6 @@ public class World implements Serializable {
             CrCntr = Cont;
             Creatures.addAll(ResLoader.getCreatures(CurrentMap));
             StaticObjects.addAll(ResLoader.getObjects(CurrentMap));
-            TextRender = new VTextRender(12, "Sans");
             for (Entity ent : StaticObjects)
                 ent.onInit(this);
             for (Creature ent : Creatures) {

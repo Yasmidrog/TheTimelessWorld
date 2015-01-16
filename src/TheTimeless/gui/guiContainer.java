@@ -16,8 +16,9 @@ public class guiContainer extends guiElement{
     public void add(guiElement e) {
         ve.add(e);
     }
-    private int elementNumber=0;
-    private Audio mus;
+    protected int elementNumber=0;
+    protected Audio mus;
+    protected guiContainer(){}
 public guiContainer(GameContainer container){
     input=container.getInput();
     listener=null;

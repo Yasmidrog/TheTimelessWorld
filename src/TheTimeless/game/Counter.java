@@ -29,7 +29,7 @@ public class Counter implements Serializable{
      */
     public void tick()
     {
-        if( Ticks <= Period )
+        if(Ticks<Period+10)
         Ticks++;
     }
       public void restoreTime()

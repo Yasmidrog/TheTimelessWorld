@@ -7,12 +7,12 @@ import java.util.Map;
 /**
  * A class with main parameters of an Creature or Entity
  */
-public class SerializableOne extends Entity implements Serializable{
+public class SerializableOne  implements Serializable{
     public float sx,sy;
     public String tableText;
     public float sHealth =0;
     public Map<String,Counter> Cntrs=new HashMap<String, Counter>();//counters
-    public sides Side;
+    public Entity.sides Side;
     String Type;
     public SerializableOne(Entity ent)
     {

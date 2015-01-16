@@ -44,22 +44,22 @@ public class Bullet extends Creature {
             if (this.Rect.intersects(ent.Rect) ) {
                 if(ent.getClass().getName()!=Killer.getClass().getName()) {
                     ent.Health -= 5;
-                    ent.Counters.put("collide",new Counter("collide",40){
-                        public void tick(){
-                            if(!is()) {
-                                Ticks++;
-                                if(ent.x<x) {
-                                    ent.vx -= 5;
-                                }
-                                else if(ent.x>x)
-                                {
-                                    ent.vx+=5;
+                    ent.Counters.put("collide",new Counter("collide",40) {
+                                private int distance = 0;
+                                public void tick() {
+                                    super.tick();
+                                    if (distance <= Period*(Ticks*0.3-0.12)) {
+                                        if (ent.x < x) {
+                                            ent.vx -= (Math.sqrt(Ticks*0.3-0.12));
+                                        }
+                                        if (ent.x > x) {
+                                            ent.vx += (Math.sqrt(Ticks*0.3-0.12));
+                                        }
+                                        distance += Ticks*0.3-0.12;
+                                    }
                                 }
                             }
-                            if(is() || ent.sideLocked(sides.RIGHT,ent.vx)||ent.sideLocked(sides.LEFT,-ent.vx)) {
-                                ent.Counters.remove(this);
-                            }
-                        }});
+                        );
                     CrWld.Bullets.remove(this);
                 }//if this collider intersects some mob, and the mob is not the shooter, push him and decrease health
             }

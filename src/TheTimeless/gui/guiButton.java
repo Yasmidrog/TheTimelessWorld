@@ -17,23 +17,17 @@ public class guiButton extends guiElement {
         setLocation(x, y);
         listener.start();
     }
-        public guiButton(GameContainer container, Image mg, int x, int y) {
-            this.container = container;
-            img=mg;
-            input = container.getInput();
-            rect=new Rectangle(x,y,img.getWidth(),img.getHeight());
 
-            setLocation(x, y);
-            listener.start();
-        }
-
-        public void render() throws SlickException{
+    public void render() throws SlickException{
             if(shown) {
-                if (string == "")
-                    img.draw(rect.getX(), rect.getY());
-                else render.drawString( string, (int) rect.getX(), (int) rect.getY(),Color.white);
-            }
-        }
+                if(active){
+                    render.drawString( string, (int) rect.getX(), (int) rect.getY(),Color.white);
+             }else {
+             render.drawString( string, (int) rect.getX(), (int) rect.getY(),
+                                                  new Color(275,255,254,70));
+             }
+          }
+      }
 
 
         public void setLocation(int x, int y){

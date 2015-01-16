@@ -11,8 +11,11 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.io.*;
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Date;
+
 public class WizardGame extends BasicGame {
     private  Menu MainMenu;
     public int Level =1;//current level
@@ -29,8 +32,8 @@ public class WizardGame extends BasicGame {
 
             //set application parameters
             app = new AppGameContainer(new WizardGame());
-            app.setTitle("The Timeless");
-            app.setDisplayMode(1000, 1000,false);
+            app.setTitle("The Timeless World");
+            app.setDisplayMode(1000, 900,false);
             app.setUpdateOnlyWhenVisible(true);
             app.setMouseGrabbed(false);
             app.setDefaultMouseCursor();
@@ -106,10 +109,16 @@ public class WizardGame extends BasicGame {
         }
         Input input = container.getInput();
 
-        if(input.isKeyPressed(Input.KEY_P))
-            save("world.sss");
-        if(input.isKeyPressed(Input.KEY_O))
-            load("world.sss",container);
+        if(input.isKeyPressed(Input.KEY_P)){
+            Date d = new Date();
+            SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy_hh:mm");
+            save("data/saves/world_lev." + Level + "_" + format1.format(d));
+        }
+
+        if(input.isKeyPressed(Input.KEY_O)) {
+            String[] saves=new File("data/saves").list();
+            load("data/saves/"+saves[0], container);
+        }
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
            if(!container.isPaused()){
@@ -163,11 +172,22 @@ public class WizardGame extends BasicGame {
     /**
      * Save game
      */
-    private void save(String adress)
+    public void save(String adress)
     {
         try {
         ObjectOutputStream wldout = new ObjectOutputStream(new FileOutputStream(adress));
-        wldout.writeObject(new Serializator(world, Level));
+            Serializator ser=new Serializator();
+            ser.Map="data/levels/"+Level+"/"+"world.tmx";
+            ser.SCrts.add(0,new SerializableOne(world.SpMn));
+            for(Entity ent:world.StaticObjects)
+            {
+                ser.SEnts.add(new SerializableOne(ent));
+            }
+            for(Creature ent:world.Creatures)
+            {
+                ser.SCrts.add(new SerializableOne(ent));
+            }
+        wldout.writeObject(ser);
         //Create SerializableOnes for each object and write to file
        }catch(Exception e){
             e.printStackTrace();
@@ -176,7 +196,7 @@ public class WizardGame extends BasicGame {
     /**
      * Restore map and objects from serialization file
      */
-    private void load(String adress,GameContainer cntr)
+    public void load(String adress,GameContainer cntr)
     {
         //i don't know how it works
         cntr.pause();

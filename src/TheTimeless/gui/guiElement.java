@@ -14,15 +14,14 @@ public class guiElement {
         protected Input input=new Input(Display.getHeight());
         protected GameContainer container;
         protected Shape rect;
-        public Image img;
         public String string="";
-        protected boolean shown=true;
+        protected boolean shown=true,active=true;
         protected Graphics graphics=new Graphics();
         protected VTextRender render=new VTextRender(16,"Sans");
        protected  javax.swing.Timer listener=new Timer(5, new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               if(mouseClicked())
+               if(mouseClicked()&&active)
                    onClicked();
            }
        });

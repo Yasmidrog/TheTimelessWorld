@@ -12,10 +12,10 @@ import org.newdawn.slick.Graphics;
 public class Spudi extends Creature implements IControlable {
     transient  Image boowIcon;
     transient Graphics indicators = new org.newdawn.slick.Graphics();
-    Image health=CrWld.ResLoader.getSprite("Health").getImage(0);
-    Image mana=CrWld.ResLoader.getSprite("Mana").getImage(0);
-    Image energy=CrWld.ResLoader.getSprite("Energy").getImage(0);
-
+    transient Image health=CrWld.ResLoader.getSprite("Health").getImage(0);
+    transient Image mana=CrWld.ResLoader.getSprite("Mana").getImage(0);
+    transient Image energy=CrWld.ResLoader.getSprite("Energy").getImage(0);
+    static  final long serialVersionUID=2281488l;
     public Spudi(float X, float Y) {
         Acceleration = 0.3f;
         Speed = 15;
@@ -29,7 +29,7 @@ public class Spudi extends Creature implements IControlable {
         Mana =150;//current mana
         Manaregenstep =0.027f;//shows how fast will mana regenerate
         Flight =80;//amount of remaining energy
-        Counters.put("shoot",new Counter("shoot",60){
+        Counters.put("shoot",new Counter("shoot",70){
             @Override
             public void tick() {
                 super.tick();
