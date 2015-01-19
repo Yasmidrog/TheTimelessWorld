@@ -15,7 +15,6 @@ public class Table extends Entity {
     ArrayList<String> list =new ArrayList();
     private boolean showText=false;
     private transient Graphics gr=new Graphics(Display.getWidth()/2,Display.getHeight()/2);
-    static  final long serialVersionUID=1488228l;
     public Table(float x, float y,String text) {
         try {
             FileReader fin = new FileReader("data/hints/"+text);
@@ -52,6 +51,9 @@ public class Table extends Entity {
            if(!showText)
             {
                 showText=true;
+            }else if(showText)
+            {
+                showText=false;
             }
         }
         if(CrWld.CrCntr.getInput().isKeyPressed(Input.KEY_E)){
@@ -69,10 +71,10 @@ public class Table extends Entity {
     public void drawTable() {
         if (showText) {
             gr.setColor(new Color(Color.white.getRed(), Color.white.getGreen(), Color.white.getBlue(), 40));
-            String result = vr.splitString(Text, Display.getWidth() - 275, false);
+            String result = vr.splitString(Text, 400, false);
             int height = result.split("\n").length * vr.getHeight() + 20;
-            gr.fillRect(200, 150, vr.getWidth(result) + 15, height);
-            vr.drawString(result, 208, 160, Color.white);
+            gr.fillRect(Display.getWidth()/2-vr.getWidth(result)/2-20, 150, vr.getWidth(result) + 40, height);
+            vr.drawString(result, Display.getWidth()/2-vr.getWidth(result)/2, 160, Color.white);
         }
     }
 }

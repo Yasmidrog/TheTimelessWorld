@@ -222,7 +222,7 @@ private void getPicts(){
                     if (!("".equals(value))) {
                         Constructor c=Class.forName("TheTimeless.game."+value).getConstructors()[0];
                         Creature objs=(Creature)c.newInstance((xAxis-Display.getWidth()/2/64)*64,
-                                (yAxis-Display.getWidth()/2/64)*64);//get the coords of th object
+                                (yAxis-Display.getHeight()/2/64)*64);//get the coords of th object
                         crts.add(objs);
                     }//if block has a type, create an creature with the value of "type"
                 }

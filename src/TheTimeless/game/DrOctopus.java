@@ -31,10 +31,9 @@ public class DrOctopus extends Creature implements IAgressive {
                 super.tick();
                 if(Ticks<50) {
                     if(Side==sides.RIGHT)
-                    vx -= (Ticks * 0.170 - 0.1);
+                    vx -= (Ticks * 0.05 - 0.1);
                     if(Side==sides.LEFT)
-                        vx += (Ticks * 0.170 - 0.1);
-
+                        vx += (Ticks * 0.05 - 0.1);
                 }
             }
         });

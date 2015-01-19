@@ -33,7 +33,7 @@ public class WizardGame extends BasicGame {
             //set application parameters
             app = new AppGameContainer(new WizardGame());
             app.setTitle("The Timeless World");
-            app.setDisplayMode(1000, 900,false);
+            app.setDisplayMode(app.getScreenWidth()-50,app.getScreenHeight()-50 ,false);
             app.setUpdateOnlyWhenVisible(true);
             app.setMouseGrabbed(false);
             app.setDefaultMouseCursor();

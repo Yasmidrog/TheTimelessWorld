@@ -26,8 +26,7 @@
   <image source="../../terrain/Tree2.png" width="256" height="256"/>
   <tile id="14">
    <properties>
-    <property name="text" value="hello.txt"/>
-    <property name="type" value="Table"/>
+    <property name="text" value=""/>
    </properties>
   </tile>
  </tileset>
@@ -55,19 +54,37 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="32" name="Platform1" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Platform1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="36" name="Platform2" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Platform2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="40" name="Platform3" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Platform3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="44" name="table" tilewidth="64" tileheight="64">
+  <image source="../../terrain/table.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="text" value="hello.txt"/>
+    <property name="type" value="Table"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="collision" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3aywqDMBQEUO3j/3+57aLQhWJuijV2zoHgKpBAhiHqNAFLLs9xDXzClttz3AOfsGU+egE/pjdolZSN1171Bq3mKSsfeoNWadnQG7RKysZrn3qDVmnZePdGyp7pl5SNd2ck7Zl+SefEXYOKpGy4a1CRlI3Pu0bKnumXdE70BhVJ2XDfoCIpG95TUXHmc1Jdt28bVJw1Gz3r1htUnOmczAujQm9QMXo21rLwbW/AllGzsdUNPWvWG1SMmI2W9egM9jZCNnruEe4a7G2UbOw9R29QddZsVOfpDaqOzEbvu9jP+a30BlVHZ+NX8/1LRdXSPfgfh39wqTr6zPaOtX2s7VFvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHznAfIO4s7wNgEA
+   H4sIAAAAAAAAA+3aWwrCQBAEwMTH/a9s8iGIqJlZH0G6ChZ/BDPQzbCSaQIeOSznGPgJW07LOQd+wpZ57wf4MXuDqqRurLPaG1TNU1Y/7A2q0rphb1CV1I11TnuDqrRuXPdGysyMS+rGdWckzcy4pJy4a9CR1A13DTqSunF710iZmXFJObE36EjqhvsGHUndmO8OvJKUE72gIykr9gYdSTnRCzqSsqIbdCRlRTfo+Jes3N8VXp2t70PFnnmp5vzTvwMV38rLLzI/+jxQkZIX3aArJS+6QVdKXtYZvUtFR+f/n38+3sGla+/Mjp5nczyb0Tu4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO+5APGRDWjwNgEA
   </data>
  </layer>
  <layer name="terrain" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3XwQqDMBBF0VDr//9ycREoMoWqDJmEc0BcOpvHbVsDIq/RB0BR79EHQFG6ATHdgJhuQEw3IKYbENMNiOkGxHQDYroBMd2AmG5ATDcgdnRjG33ETbPezRyObuyjj7jhuNk2yDRrN2yDbDN1Yz89W7MP8lTvxnkP3dZsg1wVu/FrD99sgmwVu/HPVqvdzHoqdOPcCdugggrduLPN0TezvirduMr/cLKN7MaV31AR2yDTyG48/a5tkKl3Y/U3XNW7sfobAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGc+NdBvW/A2AQA=
+   H4sIAAAAAAAAA+3XQYrCQBCG0UbHe0RwYLz/BU0WLpRfmCJqG/s9KLLQRQtdfqQ1INn1PgB8qJ/eB4APpRuQ6QZkugGZbkCmG5DpBmS6AdlI3Tj0PgCbMlI37AYVugGZbkCmG5At3dj3PsSb2A0qlm6McmdG+Z08h25AphuQ6QZkugHZVroxzXOc5+/BnOc5zfMbvr98dmh2g5qe3Zhavu/39/wZ7AZVr+rG1G7/t1915//LblA1yvuG3aBqK+8ba9kNqkbqBlRcu/HtT6i6duPbnwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACscwENKEcF8DYBAA==
   </data>
  </layer>
  <layer name="creatures" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3OMQEAAAgDoNWwf1HfNfAQEpAAAAAAAAAAAAAAAAAA0OY6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI8tkMIEOfA2AQA=
+   H4sIAAAAAAAAA+3UuQ0AMAgEQdrw03+dpgBCJBzMSJtfdBEAAAAAAAAAAAAAAAAAAECHle3pEfChk93pEdDE10PN1wMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ0eRLEVIPA2AQA=
   </data>
  </layer>
  <layer name="objects" width="199" height="100">
@@ -75,7 +92,7 @@
    <property name="type" value="LevelPortal"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VsQ3AIAwEQIooYYOU2X9LFkA04JgodwO8vrD1pQAAAAAAAAAAAAAAAAAAAADwJVd2AdhUzS7Ar53ZBQbsBhF6N7/zH/TYDWY92QWC2A1mHAsy7gUZEewGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8qwFc9T8Q8DYBAA==
+   H4sIAAAAAAAAA+3UsRHAIAwEQQLGXRgacP/1UYJRoMHW7MYfXPStAQAAAAAAAAAAAAAAAAAAGa7g/k6pgP8bpwPgRfTvAQCAGubpAPigvrF50isAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAKFrqKNSjwNgEA
   </data>
  </layer>
 </map>
