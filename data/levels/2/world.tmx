@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="199" height="100" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="dirt" tilewidth="64" tileheight="64">
+  <image source="../../terrain/dirt.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="Ground3" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Ground3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="6" name="box" tilewidth="64" tileheight="64">
+  <image source="../../terrain/box.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="HealthBox"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="man" tilewidth="64" tileheight="64">
+  <image source="../../terrain/man.png" width="64" height="128"/>
+ </tileset>
+ <tileset firstgid="9" name="Tree2" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Tree2.png" width="256" height="256"/>
+  <tile id="14">
+   <properties>
+    <property name="text" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="25" name="evilguy" tilewidth="64" tileheight="64">
+  <image source="../../terrain/evilguy.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="DrOctopus"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="29" name="man" tilewidth="64" tileheight="64">
+  <image source="../../terrain/man.png" width="64" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="31" name="Sprite" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Sprite.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="HeroSpawner"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="32" name="Platform1" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Platform1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="36" name="Platform2" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Platform2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="40" name="Platform3" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Platform3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="44" name="table" tilewidth="64" tileheight="64">
+  <image source="../../terrain/table.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="text" value="hello.txt"/>
+    <property name="type" value="Table"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="collision" width="199" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3aywqDQAwFUO3j/3+5uhCKaJ1MaQXvORDcGsglBGYYgC23qe6BXzjymOoZ+IUj49k/8Gf2Bq2SsjH3am/Qahyy8mFv0CotG/YGrZKyMfdpb9AqLRvL3kjpmX5J2Vh2RlLP9EuaE7cGFUnZcGtQkZSN91sjpWf6Jc2JvUFFUjbcG1QkZWNcFXySNCdyQUXSrNgbVCTNiVxQkTQrskFF0qzIBhUpsyIXVK3v06veq1fsid/6NC9XmiPZoEo2YJtswLakbHhLRcXRLX6V8gaXqrNntrf2+tjr0RtcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgO+8AGT6F7bwNgEA
+  </data>
+ </layer>
+ <layer name="terrain" width="199" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Z3UoDMRAG0EXtjYKCgt6uoKDv/4JmLwLrMv0Zbc2aPQeGJdNepJDpR9phACJXrTcAK3XTegOwUnIDYnIDYnIDYnIDYnIDYnIDYnIDYlvKjV3rDfCvbCk3zAYZcgNicgNicgNiU25ct97EHzEbZEy5sZUzs5XPyXnIDYjV3LgtdTfrL9c9MBtk1Ny4L/Uw6y/XPTAbZNTceCz1NOsv1z0wG2TU3Hgu9TLrL9etjaVeS33sqc9Sb6Xeg/dPr+0Gs0FOzY19dUnjEJ/35Tk/B7NB1qHfqaI7+qnG4fv39qXO/KnMBlmH/t+Y+r3cyc0GWcdyo5c7udkg61hurO1O/lPmgqyaG70/IavmRu9PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH7nC/MniKjwNgEA
+  </data>
+ </layer>
+ <layer name="creatures" width="199" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgztOyt88DYBAA==
+  </data>
+ </layer>
+ <layer name="objects" width="199" height="100">
+  <properties>
+   <property name="type" value="LevelPortal"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3OMREAIAwEsA7YoPh3iQH273GJglQBAAAAAAAAAAAAAAAAAAAT7HQAhup0AAAAAB5OOgADrXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4xgVXOmli8DYBAA==
+  </data>
+ </layer>
+</map>
