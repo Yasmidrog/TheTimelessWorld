@@ -14,12 +14,12 @@ public class guiCheckBox extends guiElement {
         setLocation(x, y);
         shown=true;
         this.active=active;
-        listener.start();
     }
 
 
     public void render() throws SlickException{
         if(shown) {
+            super.update();
             if (active) {
 
                 render.drawString( string, (int) rect.getX(), (int) rect.getY(),Color.yellow);

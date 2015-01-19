@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Rectangle;
  * A portal to the next level
  */
 public class LevelPortal extends Entity{
+    static  final long serialVersionUID=1488228l;
     public LevelPortal(float x, float y){
         this.x = x;
         this.y = y;

@@ -11,7 +11,7 @@ public class DrOctopus extends Creature implements IAgressive {
 
     transient Graphics HealthBack = new org.newdawn.slick.Graphics();
     transient Graphics HealthFore = new org.newdawn.slick.Graphics();
-
+    static  final long serialVersionUID=1488228l;
     private boolean Following = true;
 
     public DrOctopus(float x, float y) {

@@ -47,8 +47,8 @@ public class Menu {
         saves.setShown(false);
         params.setSound(World.ResLoader.getSound("click"));
         gui.setSound(World.ResLoader.getSound("click"));
-        gui.add(new guiButton(app,"Resume", mainFont,app.getWidth()/2-  mainFont.getWidth("Resume")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2-300){
+        gui.add(new guiButton(app,"Resume", mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2-300+30){
             @Override
             public void onClicked(){
                Shown=false;
@@ -57,8 +57,8 @@ public class Menu {
             }
         });
 
-        gui.add(new guiButton(app,"Load", mainFont,app.getWidth()/2-  mainFont.getWidth("Load")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2-150){
+        gui.add(new guiButton(app,"Load", mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2-150+30){
             @Override
             public void onClicked(){
                 try {
@@ -71,8 +71,8 @@ e.printStackTrace();
                 }
             }
         });
-        gui.add(new guiButton(app,"Save", mainFont,app.getWidth()/2-  mainFont.getWidth("Save")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2){
+        gui.add(new guiButton(app,"Save", mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2+30){
             @Override
             public void onClicked(){
                 try {
@@ -80,8 +80,8 @@ e.printStackTrace();
                     Shown=false;
                     app.setPaused(false);
                     Date d = new Date();
-                    SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy_hh:mm");
-                    Game.save("data/saves/world_lev."+Game.Level+"_"+format1.format(d));
+                    SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmm");
+                    Game.save("data/saves/world_lev." + Game.Level + "_" + format1.format(d) + ".ttws");
                     World.ResLoader.playSound("click",1,1,false);
                 }catch(Exception e){
 e.printStackTrace();
@@ -89,8 +89,8 @@ e.printStackTrace();
             }
         });
 
-        gui.add(new guiButton(app,"Parameters",  mainFont,app.getWidth()/2-  mainFont.getWidth("Parameters")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2+150){
+        gui.add(new guiButton(app,"Parameters",  mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2+150+30){
             @Override
             public void onClicked(){
                 gui.setShown(false);
@@ -100,16 +100,16 @@ e.printStackTrace();
         });
 
 
-        gui.add(new guiButton(app,"Exit", mainFont,app.getWidth()/2-  mainFont.getWidth("Exit")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2+300){
+        gui.add(new guiButton(app,"Exit", mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2+300+30){
             @Override
             public void onClicked(){
                 app.exit();
                 World.ResLoader.playSound("click",1,1,false);
             }
         });
-        params.add(new guiCheckBox(app,"FPS", mainFont,app.getWidth()/2-  mainFont.getWidth("FPS")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2-150,app.isShowingFPS()){
+        params.add(new guiCheckBox(app,"FPS", mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2-150+30,app.isShowingFPS()){
             @Override
             public void onClicked (){
                 if (active) {
@@ -124,8 +124,8 @@ e.printStackTrace();
                 World.ResLoader.playSound("click",1,1,false);
             }
         });
-        params.add(new guiButton(app,"Return", mainFont,app.getWidth()/2-  mainFont.getWidth("Return")/2,
-                app.getHeight()/2-  mainFont.getHeight()/2- mainFont.getHeight()/2-10){
+        params.add(new guiButton(app,"Return", mainFont,4,
+                app.getHeight()/2-  mainFont.getHeight()/2- mainFont.getHeight()/2-10+30){
             @Override
             public void onClicked(){
                 params.setShown(false);

@@ -14,6 +14,7 @@ public class SerializableOne  implements Serializable{
     public Map<String,Counter> Cntrs=new HashMap<String, Counter>();//counters
     public Entity.sides Side;
     String Type;
+    static  final long serialVersionUID=1488228l;
     public SerializableOne(Entity ent)
     {
         if(ent instanceof  Table){

@@ -138,7 +138,6 @@ public void startTimers() {
 }
 
     public void render() throws SlickException {
-
           BackgroundImage.draw(
          0,0,
           new Color(Color.red.getRed(), Color.red.getGreen(),

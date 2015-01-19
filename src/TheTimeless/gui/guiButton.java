@@ -15,11 +15,11 @@ public class guiButton extends guiElement {
         input = container.getInput();
         rect=new Rectangle(x,y,vr.getWidth(str),vr.getHeight());
         setLocation(x, y);
-        listener.start();
     }
 
     public void render() throws SlickException{
             if(shown) {
+                super.update();
                 if(active){
                     render.drawString( string, (int) rect.getX(), (int) rect.getY(),Color.white);
              }else {
@@ -28,16 +28,10 @@ public class guiButton extends guiElement {
              }
           }
       }
-
-
         public void setLocation(int x, int y){
             rect.setX(x);
             rect.setY(y);
         }
-
-
-
-
 }
 
 

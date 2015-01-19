@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Counter implements Serializable{
     public int Ticks =0, Period =0;
     String name;
+    static  final long serialVersionUID=1488228l;
     public Counter(String Name,int period)
     {
         name=Name;

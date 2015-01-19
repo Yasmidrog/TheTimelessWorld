@@ -15,6 +15,7 @@ public class Table extends Entity {
     ArrayList<String> list =new ArrayList();
     private boolean showText=false;
     private transient Graphics gr=new Graphics(Display.getWidth()/2,Display.getHeight()/2);
+    static  final long serialVersionUID=1488228l;
     public Table(float x, float y,String text) {
         try {
             FileReader fin = new FileReader("data/hints/"+text);

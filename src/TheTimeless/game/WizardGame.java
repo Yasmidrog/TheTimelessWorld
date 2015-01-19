@@ -111,8 +111,8 @@ public class WizardGame extends BasicGame {
 
         if(input.isKeyPressed(Input.KEY_P)){
             Date d = new Date();
-            SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy_hh:mm");
-            save("data/saves/world_lev." + Level + "_" + format1.format(d));
+            SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmm");
+            save("data/saves/world_lev." + Level + "_" + format1.format(d)+".ttws");
         }
 
         if(input.isKeyPressed(Input.KEY_O)) {
@@ -177,7 +177,7 @@ public class WizardGame extends BasicGame {
         try {
         ObjectOutputStream wldout = new ObjectOutputStream(new FileOutputStream(adress));
             Serializator ser=new Serializator();
-            ser.Map="data/levels/"+Level+"/"+"world.tmx";
+            ser.Map="data/levels/"+Integer.toString(Level)+"/"+"world.tmx";
             ser.SCrts.add(0,new SerializableOne(world.SpMn));
             for(Entity ent:world.StaticObjects)
             {

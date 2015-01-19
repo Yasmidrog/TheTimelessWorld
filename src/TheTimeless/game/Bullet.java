@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 public class Bullet extends Creature {
 
     public Creature Killer;//The bad(or good) guy who shot.
-
+    static  final long serialVersionUID=1488228l;
     public Bullet(float x, float y, Creature killer, float acceleration, float speed) {
         Acceleration = acceleration;
         Speed = speed;

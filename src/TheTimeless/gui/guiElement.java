@@ -17,16 +17,13 @@ public class guiElement {
         public String string="";
         protected boolean shown=true,active=true;
         protected Graphics graphics=new Graphics();
-        protected VTextRender render=new VTextRender(16,"Sans");
-       protected  javax.swing.Timer listener=new Timer(5, new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
+        protected VTextRender render;
+       protected  void update(){
                if(mouseClicked()&&active)
                    onClicked();
            }
-       });
         public void render()throws SlickException {
-
+            update();
         }
         public void onClicked() {
 
@@ -58,15 +55,5 @@ public class guiElement {
     }
     public void setShown(boolean show){
         this.shown=show;
-    }
-    public void addListener(ActionListener al){
-        listener.addActionListener(al);
-    }
-    public void removeListener(ActionListener al){
-        try {
-            listener.removeActionListener(al);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 }
