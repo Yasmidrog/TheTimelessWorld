@@ -241,12 +241,12 @@ public void startTimers() {
         return blocked;
     }
     private void checkSpudies(){
-try {
+   try {
     for (Creature cr: Creatures)
     {
         if ((cr instanceof Spudi) && SpMn != cr)
             throw new Exception("It seems that there are more than one HeroSpawner on map");
-    }
+      }
 }catch(Exception e){
     e.printStackTrace();
 }
