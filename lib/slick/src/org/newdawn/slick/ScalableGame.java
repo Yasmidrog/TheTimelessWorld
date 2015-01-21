@@ -7,7 +7,7 @@ import org.newdawn.slick.opengl.renderer.SGL;
 /**
  * A wrapper to allow any game to be scalable. This relies on knowing the 
  * normal width/height of the game - i.e. the dimensions that the game is
- * expecting to be run at. The wrapper then takes the size of the container
+ * expecting to be calss at. The wrapper then takes the size of the container
  * and scales rendering and input based on the ratio.
  *
  * Note: Using OpenGL directly within a ScalableGame can break it

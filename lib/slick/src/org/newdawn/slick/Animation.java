@@ -230,7 +230,7 @@ public class Animation implements Renderable {
 	/**
 	  * Adjust the overall speed of the animation.
 	  *
-	  * @param spd The speed to run the animation. Default: 1.0
+	  * @param spd The speed to calss the animation. Default: 1.0
 	  */
 	public void setSpeed(float spd) {
 		if (spd > 0) {

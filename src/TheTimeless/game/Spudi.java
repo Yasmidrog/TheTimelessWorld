@@ -1,10 +1,8 @@
 package TheTimeless.game;
 
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-
 
 /**
  * our main hero

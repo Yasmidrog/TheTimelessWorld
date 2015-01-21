@@ -162,7 +162,7 @@ public class OggInputStream extends InputStream implements AudioInputStream {
 
 		// Get the first page.
 		if (syncState.pageout(page) != 1) {
-			// have we simply run out of data?  If so, we're done.
+			// have we simply calss out of data?  If so, we're done.
 			if (bytes < 4096)
 				return false;
 

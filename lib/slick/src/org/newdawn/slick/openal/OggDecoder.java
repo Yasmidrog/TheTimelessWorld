@@ -76,7 +76,7 @@ public class OggDecoder {
 //
 //			// Get the first page.
 //			if (oy.pageout(og) != 1) {
-//				// have we simply run out of data?  If so, we're done.
+//				// have we simply calss out of data?  If so, we're done.
 //				if (bytes < 4096)
 //					break;
 //

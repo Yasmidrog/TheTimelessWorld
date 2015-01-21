@@ -11,4 +11,5 @@ import java.util.ArrayList;
     public ArrayList<SerializableOne> SEnts=new ArrayList<SerializableOne>();
     public String Map;
     static  final long serialVersionUID=22814881337l;
+    public int level;
 }

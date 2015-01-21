@@ -180,6 +180,7 @@ private void getPicts(){
      */
     public ArrayList<Entity> getObjects(TiledMap map) {
         try {
+
             ArrayList<Entity> crts=new ArrayList<Entity>();
             for (int xAxis = 0; xAxis < map.getWidth(); xAxis++) {
                 for (int yAxis = 0; yAxis < map.getHeight(); yAxis++) {

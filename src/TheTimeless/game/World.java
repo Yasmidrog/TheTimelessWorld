@@ -34,9 +34,10 @@ public class World implements Serializable {
     private javax.swing.Timer BulletTimer;
     public int delta=1;
     private boolean[][] HardBlocks;
-
+    static  final long serialVersionUID=1488228l;
     transient private Image BackgroundImage;
     transient public GameContainer CrCntr;//текущее игровое окно
+    public int CrLvl;
     transient public TiledMap CurrentMap;//карта, на которой играем
     transient public static Loader ResLoader =new Loader();
     public ArrayList<Bullet> Bullets ;
@@ -46,7 +47,7 @@ public class World implements Serializable {
     private states state;
     private int dialognumber=0;
 
-    public void init(TiledMap Map, GameContainer Cont) throws SlickException {
+    public void init(TiledMap Map, GameContainer Cont,int level) throws SlickException {
         try {
             Bullets = new ArrayList<Bullet>();
             Creatures = new ArrayList<Creature>();
@@ -67,6 +68,7 @@ public class World implements Serializable {
             for (Creature ent : Creatures) {
                 ent.onInit(this);//для всех сущнстей вызываем их версию методов
             }
+            CrLvl=level;
             checkSpudies();
             GetBlocked();
             startTimers();
@@ -92,7 +94,7 @@ public void startTimers() {
             }
         }
     });
-  BulletTimer = new javax.swing.Timer(8, new ActionListener() {
+  BulletTimer = new javax.swing.Timer(4, new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
           try {
@@ -114,14 +116,9 @@ public void startTimers() {
     public void update(final int Delta) throws SlickException {
         Input in=CrCntr.getInput();
         delta=Delta;
-        if(CrCntr.getFPS()>0) {
-            EntityTimer.setDelay((int) (8));
-            BulletTimer.setDelay((int) (4));
-        }
         try {
             if (state == states.SPEAKING) {
                 EntityTimer.stop();
-                BulletTimer.stop();
                 if (in.isKeyPressed(Input.KEY_TAB)) {
                     dialognumber++;
                 }

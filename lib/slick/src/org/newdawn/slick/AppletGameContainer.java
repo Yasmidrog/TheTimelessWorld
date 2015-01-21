@@ -79,7 +79,7 @@ public class AppletGameContainer extends Applet {
    }
    
    /**
-    * Start a thread to run LWJGL in
+    * Start a thread to calss LWJGL in
     */
    public void startLWJGL() {
       if (gameThread != null) {

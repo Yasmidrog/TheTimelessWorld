@@ -51,8 +51,7 @@ public class Table extends Entity {
            if(!showText)
             {
                 showText=true;
-            }else if(showText)
-            {
+            }else if(showText) {
                 showText=false;
             }
         }

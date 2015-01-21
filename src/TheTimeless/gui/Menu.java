@@ -80,9 +80,11 @@ e.printStackTrace();
                     Shown=false;
                     app.setPaused(false);
                     Date d = new Date();
-                    SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmm");
+                    SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
                     Game.save("data/saves/world_lev." + Game.Level + "_" + format1.format(d) + ".ttws");
                     World.ResLoader.playSound("click",1,1,false);
+                    list=new SavesList(app,Game,thism);
+                    list.setShown(false);
                 }catch(Exception e){
 e.printStackTrace();
                 }

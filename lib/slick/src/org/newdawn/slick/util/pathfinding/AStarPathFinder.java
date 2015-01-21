@@ -187,7 +187,7 @@ public class AStarPathFinder implements PathFinder, PathFindingContext {
 			}
 		}
 
-		// since we've got an empty open list or we've run out of search 
+		// since we've got an empty open list or we've calss out of search
 		// there was no path. Just return null
 		if (nodes[tx][ty].parent == null) {
 			return null;

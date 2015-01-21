@@ -1,13 +1,12 @@
 package TheTimeless.game;
-
 import TheTimeless.gui.*;
+import TheTimeless.scripts.calss;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
-
 import java.io.*;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -15,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
-
 public class WizardGame extends BasicGame {
     private  Menu MainMenu;
     public int Level =1;//current level
@@ -29,7 +27,6 @@ public class WizardGame extends BasicGame {
             try {
                 AppGameContainer app;
                 setNatives();
-
             //set application parameters
             app = new AppGameContainer(new WizardGame());
             app.setTitle("The Timeless World");
@@ -41,18 +38,19 @@ public class WizardGame extends BasicGame {
             app.setIcon("data/icons/icon.png");
             app.start();
             setParams(app);
+
         } catch (SlickException e) {
             e.printStackTrace();
         }
     }
     public static void setParams(GameContainer cntr) {
+
         if(!ConfigReader.getConf("fps").equals("null"))
         cntr.setShowFPS(Boolean.valueOf(ConfigReader.getConf("fps")));
         if(!ConfigReader.getConf("updateonlyifvisible").equals("null"))
         cntr.setUpdateOnlyWhenVisible(Boolean.valueOf(ConfigReader.getConf("updateonlyifvisible")));
         if(!ConfigReader.getConf("smoothdeltas").equals("null"))
         cntr.setSmoothDeltas(Boolean.valueOf(ConfigReader.getConf("smoothdeltas")));
-
     }
     private static void  setNatives() {
         //set path to the natives
@@ -98,7 +96,7 @@ public class WizardGame extends BasicGame {
         MainMenu=new Menu(this,container);
         GrassMap = new TiledMap("data/levels/"+ Level +"/"+"world.tmx");
         world = new World();
-        world.init(GrassMap, container);
+        world.init(GrassMap, container,Level);
 
     }
 
@@ -107,17 +105,18 @@ public class WizardGame extends BasicGame {
         if(!container.isPaused()) {
             world.update(delta);
         }
+        calss.voidf();
         Input input = container.getInput();
 
         if(input.isKeyPressed(Input.KEY_P)){
             Date d = new Date();
-            SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmm");
-            save("data/saves/world_lev." + Level + "_" + format1.format(d)+".ttws");
+            SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
+            save("data/saves/world_lev." + Level + "_" + format1.format(d)+"-fast"+".ttws");
         }
 
         if(input.isKeyPressed(Input.KEY_O)) {
             String[] saves=new File("data/saves").list();
-            load("data/saves/"+saves[0], container);
+            load("data/saves/"+saves[saves.length-1], container);
         }
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -142,14 +141,14 @@ public class WizardGame extends BasicGame {
                     Level++;
                     GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
                     world = new World();
-                    world.init(GrassMap, container);
+                    world.init(GrassMap, container,Level);
 
                 } catch (Exception e) {
                     GrassMap = new TiledMap("data/levels/" + 1+ "/" + "world.tmx");
                     world = new World();
-                    world.init(GrassMap, container);
+                    world.init(GrassMap, container,1);
                 }
-                container.pause();
+                container.setPaused(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -187,6 +186,7 @@ public class WizardGame extends BasicGame {
             {
                 ser.SCrts.add(new SerializableOne(ent));
             }
+            ser.level=Level;
         wldout.writeObject(ser);
         //Create SerializableOnes for each object and write to file
        }catch(Exception e){
@@ -198,14 +198,15 @@ public class WizardGame extends BasicGame {
      */
     public void load(String adress,GameContainer cntr)
     {
-        //i don't know how it works
+        //I don't know anything about how it works
         cntr.pause();
           try {
           ObjectInputStream wldin = new ObjectInputStream(new FileInputStream(adress));
           Serializator s = (Serializator) wldin.readObject();//get serializator
+              Level=s.level;
               GrassMap = new TiledMap(s.Map);//create map from string
               world = new World();
-              world.init(GrassMap,cntr);//init new world
+              world.init(GrassMap,cntr,Level);//init new world
               world.Creatures = new ArrayList<Creature>();//replace world new lists
               world.StaticObjects= new ArrayList<Entity>();
               for (int i=0;i<s.SCrts.size();i++)
@@ -239,7 +240,9 @@ public class WizardGame extends BasicGame {
                   if((cr instanceof Spudi)&& world.SpMn!=cr)
                       world.Creatures.remove(cr);
               }//delete all other heroes
+
               cntr.setPaused(false);
+
            }
           catch (ConcurrentModificationException s){}
           catch(Exception e){

@@ -16,11 +16,13 @@ public class Bullet extends Creature {
         Acceleration = acceleration;
         Name = "Lazer";
         Killer = killer;
+
     }
 
     @Override
     public void onInit(World world) {
         try {
+
             CrWld = world;
             sprite = CrWld.ResLoader.getSprite("Lazer");
 
