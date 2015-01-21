@@ -240,9 +240,7 @@ public class WizardGame extends BasicGame {
                   if((cr instanceof Spudi)&& world.SpMn!=cr)
                       world.Creatures.remove(cr);
               }//delete all other heroes
-
               cntr.setPaused(false);
-
            }
           catch (ConcurrentModificationException s){}
           catch(Exception e){
