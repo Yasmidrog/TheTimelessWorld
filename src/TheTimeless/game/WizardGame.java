@@ -1,6 +1,5 @@
 package TheTimeless.game;
 import TheTimeless.gui.*;
-import TheTimeless.scripts.calss;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -105,7 +104,6 @@ public class WizardGame extends BasicGame {
         if(!container.isPaused()) {
             world.update(delta);
         }
-        calss.voidf();
         Input input = container.getInput();
 
         if(input.isKeyPressed(Input.KEY_P)){
@@ -116,7 +114,7 @@ public class WizardGame extends BasicGame {
 
         if(input.isKeyPressed(Input.KEY_O)) {
             String[] saves=new File("data/saves").list();
-            load("data/saves/"+saves[saves.length-1], container);
+            load("data/saves/"+saves[0], container);
         }
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -242,6 +240,7 @@ public class WizardGame extends BasicGame {
               }//delete all other heroes
               cntr.setPaused(false);
            }
+
           catch (ConcurrentModificationException s){}
           catch(Exception e){
               e.printStackTrace();

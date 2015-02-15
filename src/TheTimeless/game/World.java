@@ -15,6 +15,7 @@ import org.newdawn.slick.particles.ParticleIO;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.tiled.TiledMap;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,7 +40,7 @@ public class World implements Serializable {
     transient public GameContainer CrCntr;//текущее игровое окно
     public int CrLvl;
     transient public TiledMap CurrentMap;//карта, на которой играем
-    transient public static Loader ResLoader =new Loader();
+    transient public static Loader ResLoader=new Loader();
     public ArrayList<Bullet> Bullets ;
     public ArrayList<Creature> Creatures ;
     public ArrayList<Entity> StaticObjects ;
@@ -49,6 +50,7 @@ public class World implements Serializable {
 
     public void init(TiledMap Map, GameContainer Cont,int level) throws SlickException {
         try {
+            ResLoader=new Loader();
             Bullets = new ArrayList<Bullet>();
             Creatures = new ArrayList<Creature>();
             StaticObjects = new ArrayList<Entity>();
@@ -113,6 +115,13 @@ public void startTimers() {
     BulletTimer.restart();
 }
 
+    public javax.swing.Timer GetBulletTimer(){
+        return BulletTimer;
+    }
+    public javax.swing.Timer GetEntityTimer(){
+        return EntityTimer;
+    }
+
     public void update(final int Delta) throws SlickException {
         Input in=CrCntr.getInput();
         delta=Delta;
@@ -157,11 +166,21 @@ public void startTimers() {
        Entity [] entz=new Entity[StaticObjects.size()];
         System.arraycopy(StaticObjects.toArray(), 0, entz, 0, StaticObjects.size());
         for(Entity ent:entz) {
+            if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
+                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
+                    ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
+                    ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
+            ))
             ent.onRender();
         }
-        for (Creature ent : ents)
+        for (Creature ent : ents) {
+            if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
+                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
+                    ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
+                    ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
+            ))
             ent.onRender();
-
+        }
         for(Entity ent:entz) {
             if(ent instanceof Table)
                 ((Table)ent).drawTable();
@@ -172,8 +191,14 @@ public void startTimers() {
         try {
             Bullet[] ents = new Bullet[Bullets.size()];
             System.arraycopy(Bullets.toArray(), 0, ents, 0, Bullets.size());
-            for (Creature ent : ents)
+            for (Creature ent : ents) {
+                if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
+                        || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
+                        ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
+                        ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
+                ))
                 ent.onRender();
+            }
         }catch(Exception e){
             Bullets=new ArrayList<Bullet>();
         }

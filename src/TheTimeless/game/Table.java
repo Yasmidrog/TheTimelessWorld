@@ -47,24 +47,26 @@ public class Table extends Entity {
     @Override
 
   public void onUpdate(int delta) {
+        if (showText&&(CrWld.SpMn.x - x > SzW + 40|| x - CrWld.SpMn.x > SzW + 40)){
+            showText=false;
+            return;
+        }
         if(this.Rect.intersects(CrWld.SpMn.Rect)&& CrWld.CrCntr.getInput().isKeyPressed(Input.KEY_E)) {
            if(!showText)
             {
                 showText=true;
             }else if(showText) {
-                showText=false;
+               showText=false;
             }
+
         }
-        if(CrWld.CrCntr.getInput().isKeyPressed(Input.KEY_E)){
-            if(showText) {
-                showText=false;
-            }
-        }
+
     }
     public void onRender() {
         if (sprite != null)
             sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW /2,
                     -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH /2);
+
     }
     public void drawTable() {
         if (showText) {
