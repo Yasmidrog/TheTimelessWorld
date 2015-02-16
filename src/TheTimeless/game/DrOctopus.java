@@ -25,7 +25,6 @@ public class DrOctopus extends Creature implements IAgressive {
         MAXENERGY=80;Flight=MAXENERGY;
         Counters = new HashMap<String, Counter>();
         Counters.put("patrol", new Counter("patrol", 110));
-
     }
 
     @Override
