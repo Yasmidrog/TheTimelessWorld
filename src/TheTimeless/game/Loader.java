@@ -173,7 +173,6 @@ public class Loader {
                 TextRender.drawString(value,
                         Display.getWidth() - 75 - TextRender.getWidth(value),
                         Display.getHeight() - 40, Color.white);
-                //draw text
             }
         } catch (Exception e) {
             e.printStackTrace();
