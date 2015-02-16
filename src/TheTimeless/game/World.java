@@ -82,7 +82,7 @@ public class World implements Serializable {
 
 public void startTimers() {
 
-     EntityTimer = new javax.swing.Timer(8, new ActionListener() {
+     EntityTimer = new javax.swing.Timer(10, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -96,7 +96,7 @@ public void startTimers() {
             }
         }
     });
-  BulletTimer = new javax.swing.Timer(4, new ActionListener() {
+  BulletTimer = new javax.swing.Timer(9, new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
           try {

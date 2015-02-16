@@ -15,8 +15,8 @@ public class DrOctopus extends Creature implements IAgressive {
     private boolean Following = true;
 
     public DrOctopus(float x, float y) {
-        Acceleration = 0.2f;
-        Speed = 15;
+        Acceleration = 0.3f;
+        Speed = 18;
         OnEarth = false;
         this.x = x;
         this.y = y;
@@ -25,18 +25,7 @@ public class DrOctopus extends Creature implements IAgressive {
         MAXENERGY=80;Flight=MAXENERGY;
         Counters = new HashMap<String, Counter>();
         Counters.put("patrol", new Counter("patrol", 110));
-        Counters.put("shoot", new Counter("shoot", 100){
-            @Override
-            public void tick() {
-                super.tick();
-                if(Ticks<50) {
-                    if(Side==sides.RIGHT)
-                    vx -= (Ticks * 0.05 - 0.1);
-                    if(Side==sides.LEFT)
-                        vx += (Ticks * 0.05 - 0.1);
-                }
-            }
-        });
+
     }
 
     @Override
@@ -49,7 +38,22 @@ public class DrOctopus extends Creature implements IAgressive {
             Upright = CrWld.ResLoader.getSprite("DrOctUp");
             Left = CrWld.ResLoader.getSprite("DrOctLeft");
             Right = CrWld.ResLoader.getSprite("DrOctRight");
-
+            Counters.put("shoot", new Counter("shoot", 100){
+                @Override
+                public void tick() {
+                    super.tick();
+                    if(Ticks<50) {
+                        if(Side==sides.RIGHT) {
+                            sprite=Shootright;
+                            vx -= (Ticks * 0.05 - 0.1);
+                        }
+                        if(Side==sides.LEFT) {
+                            sprite=Shootleft;
+                            vx += (Ticks * 0.05 - 0.1);
+                        }
+                    }
+                }
+            });
             // Спарйт смотрит вправо
             sprite = Right;
             SzH = Right.getHeight();
@@ -73,7 +77,6 @@ public class DrOctopus extends Creature implements IAgressive {
 
         if(sideLocked(Side,Acceleration*Speed) && Following)
             jump();
-
         OnEarth = sideLocked(sides.DOWN, 1);
         if (OnEarth) {
           onBlockCollide();

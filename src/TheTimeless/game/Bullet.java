@@ -42,6 +42,7 @@ public class Bullet extends Creature {
         FlyForward();
         Rect.setY(y);
         Rect.setX(x);
+
         for (final Creature ent : CrWld.Creatures) {
             if (this.Rect.intersects(ent.Rect) ) {
                 if(ent.getClass().getName()!=Killer.getClass().getName()) {

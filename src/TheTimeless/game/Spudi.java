@@ -15,15 +15,15 @@ public class Spudi extends Creature implements IControlable {
     transient Image energy=CrWld.ResLoader.getSprite("Energy").getImage(0);
     static  final long serialVersionUID=2281488l;
     public Spudi(float X, float Y) {
-        Acceleration = 0.3f;
-        Speed = 15;
+        Acceleration = 0.4f;
+        Speed = 18;
         OnEarth = false;
         this.x = X;
         this.y = Y;
         Health = 100;
         Name = "Spudi";
         MAXMANA =150; MAXHEALTH =100;
-        MAXENERGY=80;
+        MAXENERGY=67;
         Mana =150;//current mana
         Manaregenstep =0.027f;//shows how fast will mana regenerate
         Flight =80;//amount of remaining energy
