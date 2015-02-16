@@ -54,7 +54,6 @@ public class DrOctopus extends Creature implements IAgressive {
                     }
                 }
             });
-            // Спарйт смотрит вправо
             sprite = Right;
             SzH = Right.getHeight();
             SzW = Right.getWidth();
