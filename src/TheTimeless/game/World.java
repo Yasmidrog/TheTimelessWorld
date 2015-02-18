@@ -34,17 +34,17 @@ public class World implements Serializable {
     private javax.swing.Timer EntityTimer;
     private javax.swing.Timer BulletTimer;
     public int delta=1;
-    private boolean[][] HardBlocks;
+    private boolean[][] HardBlocks;//solid blocks
     static  final long serialVersionUID=1488228l;
     transient private Image BackgroundImage;
-    transient public GameContainer CrCntr;//текущее игровое окно
-    public int CrLvl;
-    transient public TiledMap CurrentMap;//карта, на которой играем
-    transient public static Loader ResLoader=new Loader();
+    transient public GameContainer CrCntr;//current window with game
+    public int CrLvl;//level of the game
+    transient public TiledMap CurrentMap;//map that you playing on
+    transient public static Loader ResLoader=new Loader();//loader of resources
     public ArrayList<Bullet> Bullets ;
     public ArrayList<Creature> Creatures ;
     public ArrayList<Entity> StaticObjects ;
-    private static enum  states{FIGHTING,SPEAKING};
+    private static enum  states{FIGHTING,SPEAKING}//states of the game
     private states state;
     private int dialognumber=0;
 
@@ -61,18 +61,19 @@ public class World implements Serializable {
              BackgroundImage = new Image("data/Background.png").getScaledCopy(Display.getWidth(),
                                                                               Display.getHeight());
             }
+            //try to set bckground image
             CurrentMap = Map;
             CrCntr = Cont;
-            Creatures.addAll(ResLoader.getCreatures(CurrentMap));
+            Creatures.addAll(ResLoader.getCreatures(CurrentMap));//add al objects and creatures from map
             StaticObjects.addAll(ResLoader.getObjects(CurrentMap));
             for (Entity ent : StaticObjects)
                 ent.onInit(this);
             for (Creature ent : Creatures) {
-                ent.onInit(this);//для всех сущнстей вызываем их версию методов
+                ent.onInit(this);
             }
             CrLvl=level;
-            checkSpudies();
-            GetBlocked();
+            checkSpudies();//check if there are more thn one hero on the screen
+            GetBlocked();//get hard blocks
             startTimers();
         }
    catch(Exception e){
@@ -130,7 +131,7 @@ public void startTimers() {
                 EntityTimer.stop();
                 if (in.isKeyPressed(Input.KEY_TAB)) {
                     dialognumber++;
-                }
+                }//stop all timers and start to render the string under dialognumber
                 if (ResLoader.getString(dialognumber)==null||
                              in.isKeyDown(Input.KEY_ESCAPE)||
                         ResLoader.getString(dialognumber).isEmpty()) {
@@ -148,13 +149,12 @@ public void startTimers() {
          0,0,
           new Color(Color.red.getRed(), Color.red.getGreen(),
           Color.red.getBlue(), 110));
-            CurrentMap.render(-(int) SpMn.x - SpMn.SzW / 2, -(int) SpMn.y - SpMn.SzH / 2,1);
-
+          CurrentMap.render(-(int) SpMn.x - SpMn.SzW / 2, -(int) SpMn.y - SpMn.SzH / 2,1);
             renderEntities();
             renderBullets();
         if(state==states.SPEAKING)
         {
-            ResLoader.renderString(dialognumber);
+            ResLoader.renderString(dialognumber);//if the state is SPEAKING, render current string from dialog
         }
     }
     //rendering
@@ -162,7 +162,7 @@ public void startTimers() {
     {
         Creature[] ents=new Creature[Creatures.size()];
         System.arraycopy(Creatures.toArray(),0,ents,0, Creatures.size());
-
+//copy to the local list to avoid ConcurrentModificationException
        Entity [] entz=new Entity[StaticObjects.size()];
         System.arraycopy(StaticObjects.toArray(), 0, entz, 0, StaticObjects.size());
         for(Entity ent:entz) {
@@ -172,7 +172,7 @@ public void startTimers() {
                     ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
             ))
             ent.onRender();
-        }
+        }//render if the object is on the string
         for (Creature ent : ents) {
             if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
                     || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
@@ -190,6 +190,7 @@ public void startTimers() {
     {
         try {
             Bullet[] ents = new Bullet[Bullets.size()];
+            //copy to the local list to avoid ConcurrentModificationException
             System.arraycopy(Bullets.toArray(), 0, ents, 0, Bullets.size());
             for (Creature ent : ents) {
                 if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
@@ -197,7 +198,7 @@ public void startTimers() {
                         ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
                         ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
                 ))
-                ent.onRender();
+                ent.onRender();//render if the object is on the string
             }
         }catch(Exception e){
             Bullets=new ArrayList<Bullet>();
@@ -232,8 +233,10 @@ public void startTimers() {
             ex.printStackTrace();
         }
     }
-
-    private void GetBlocked() {//получаем непрходиме блоки
+/*
+get solid blocks array
+ */
+    private void GetBlocked() {
         HardBlocks = new boolean[CurrentMap.getWidth()+1][CurrentMap.getHeight()+1];//массив с адресами блоков
 
         for (int xAxis = 0; xAxis < CurrentMap.getWidth(); xAxis++) {
@@ -249,8 +252,8 @@ public void startTimers() {
   public void startSpeaking(int dialogIndex){
     dialognumber=dialogIndex;
     state=states.SPEAKING;
+      //set state to speaking and start to render string
 }
-    //проверяет, проходим ли блок в определенной точке+часть окна, которую мы отодвинули, чтоб игрок был в центре
     public boolean isBlocked(float x, float y) {
         boolean blocked;
         try {
@@ -262,8 +265,11 @@ public void startTimers() {
         }
         return blocked;
     }
+    /*
+    check if there are more than hero on the map
+    */
     private void checkSpudies(){
-   try {
+        try {
     for (Creature cr: Creatures)
     {
         if ((cr instanceof Spudi) && SpMn != cr)
