@@ -33,7 +33,6 @@ public class WizardGame extends BasicGame {
             app.setUpdateOnlyWhenVisible(true);
             app.setMouseGrabbed(false);
             app.setDefaultMouseCursor();
-
             app.setIcon("data/icons/icon.png");
             app.start();
             setParams(app);
