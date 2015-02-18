@@ -36,7 +36,6 @@ public class WizardGame extends BasicGame {
             app.setIcon("data/icons/icon.png");
             app.start();
             setParams(app);
-
         } catch (SlickException e) {
             e.printStackTrace();
         }
