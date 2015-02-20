@@ -166,18 +166,18 @@ public void startTimers() {
        Entity [] entz=new Entity[StaticObjects.size()];
         System.arraycopy(StaticObjects.toArray(), 0, entz, 0, StaticObjects.size());
         for(Entity ent:entz) {
-            if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
-                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
-                    ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
-                    ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
+            if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()
+                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()
+                    ||SpMn.y - ent.y > ent.SzH + Display.getHeight()
+                    ||ent.y - SpMn.y > ent.SzH + Display.getHeight()
             ))
             ent.onRender();
         }//render if the object is on the string
         for (Creature ent : ents) {
-            if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
-                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
-                    ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
-                    ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
+            if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()
+                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()
+                    ||SpMn.y - ent.y > ent.SzH + Display.getHeight()
+                    ||ent.y - SpMn.y > ent.SzH + Display.getHeight()
             ))
             ent.onRender();
         }
@@ -193,10 +193,10 @@ public void startTimers() {
             //copy to the local list to avoid ConcurrentModificationException
             System.arraycopy(Bullets.toArray(), 0, ents, 0, Bullets.size());
             for (Creature ent : ents) {
-                if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()/2
-                        || ent.x - SpMn.x > ent.SzW + Display.getWidth()/2
-                        ||SpMn.y - ent.y > ent.SzH + Display.getHeight()/2
-                        ||ent.y - SpMn.y > ent.SzH + Display.getHeight()/2
+                if(!(   SpMn.x - ent.x > ent.SzW + Display.getWidth()
+                        || ent.x - SpMn.x > ent.SzW + Display.getWidth()
+                        ||SpMn.y - ent.y > ent.SzH + Display.getHeight()
+                        ||ent.y - SpMn.y > ent.SzH + Display.getHeight()
                 ))
                 ent.onRender();//render if the object is on the string
             }

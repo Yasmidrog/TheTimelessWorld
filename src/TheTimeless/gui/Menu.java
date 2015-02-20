@@ -5,6 +5,7 @@ import TheTimeless.game.Fonts;
 import TheTimeless.game.WizardGame;
 import TheTimeless.game.World;
 import org.ietf.jgss.GSSManager;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
 
 import java.awt.*;
@@ -22,6 +23,7 @@ public class Menu {
     private Menu thism=this;
     private SavesList list;
     public boolean Shown=false;
+    private int s_height=Display.getDesktopDisplayMode().getHeight();
     public  Menu(WizardGame game,GameContainer cntr){
        mainFont = Fonts.mainFont;
         app=cntr;
@@ -48,7 +50,7 @@ public class Menu {
         params.setSound(World.ResLoader.getSound("click"));
         gui.setSound(World.ResLoader.getSound("click"));
         gui.add(new guiButton(app,"Resume", mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2-300+30){
+                s_height/2-  mainFont.getHeight()/2-300+30){
             @Override
             public void onClicked(){
                Shown=false;
@@ -58,7 +60,7 @@ public class Menu {
         });
 
         gui.add(new guiButton(app,"Load", mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2-150+30){
+                s_height/2-  mainFont.getHeight()/2-150+30){
             @Override
             public void onClicked(){
                 try {
@@ -72,7 +74,7 @@ e.printStackTrace();
             }
         });
         gui.add(new guiButton(app,"Save", mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2+30){
+                s_height/2-  mainFont.getHeight()/2+30){
             @Override
             public void onClicked(){
                 try {
@@ -92,7 +94,7 @@ e.printStackTrace();
         });
 
         gui.add(new guiButton(app,"Parameters",  mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2+150+30){
+                s_height/2-  mainFont.getHeight()/2+150+30){
             @Override
             public void onClicked(){
                 gui.setShown(false);
@@ -103,15 +105,17 @@ e.printStackTrace();
 
 
         gui.add(new guiButton(app,"Exit", mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2+300+30){
+                s_height/2-  mainFont.getHeight()/2+300+30){
             @Override
             public void onClicked(){
+                ConfigReader.setConfig("width", String.valueOf(Display.getWidth()));
+                ConfigReader.setConfig("height", String.valueOf(Display.getHeight()));
                 app.exit();
                 World.ResLoader.playSound("click",1,1,false);
             }
         });
         params.add(new guiCheckBox(app,"FPS", mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2-150+30,app.isShowingFPS()){
+                s_height/2-  mainFont.getHeight()/2-150+30,app.isShowingFPS()){
             @Override
             public void onClicked (){
                 if (active) {
@@ -127,7 +131,7 @@ e.printStackTrace();
             }
         });
         params.add(new guiButton(app,"Return", mainFont,4,
-                app.getHeight()/2-  mainFont.getHeight()/2- mainFont.getHeight()/2-10+30){
+                s_height/2-  mainFont.getHeight()/2- mainFont.getHeight()/2-10+30){
             @Override
             public void onClicked(){
                 params.setShown(false);

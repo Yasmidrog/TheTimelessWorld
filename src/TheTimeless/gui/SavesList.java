@@ -20,7 +20,7 @@ public class SavesList extends guiContainer {
     private VTextRender Font=Fonts.regulartext;
     private WizardGame WGame;
     public SavesList(GameContainer container,WizardGame game,final Menu menu){
-        int y=container.getHeight()/2-100;
+        int y=Display.getDesktopDisplayMode().getHeight()/2-100;
         input=container.getInput();
         WGame=game;
         elem=0;

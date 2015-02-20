@@ -23,10 +23,10 @@ public class Spudi extends Creature implements IControlable {
         Health = 100;
         Name = "Spudi";
         MAXMANA =150; MAXHEALTH =100;
-        MAXENERGY=67;
+        MAXENERGY=70;
         Mana =150;//current mana
         Manaregenstep =0.027f;//shows how fast will mana regenerate
-        Flight =80;//amount of remaining energy
+        Flight =MAXENERGY;//amount of remaining energy
         Counters.put("shoot",new Counter("shoot",70){
             @Override
             public void tick() {

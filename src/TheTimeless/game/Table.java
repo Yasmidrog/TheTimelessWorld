@@ -33,10 +33,8 @@ public class Table extends Entity {
         try {
             CrWld = world;
             sprite = CrWld.ResLoader.getSprite("Table");
-
             SzW = sprite.getWidth()+45;//get collider
             SzH = sprite.getHeight()+45;
-
             Rect = new Rectangle(x-20, y-20, SzW, SzH);
 
         } catch (Exception ex) {
@@ -58,9 +56,7 @@ public class Table extends Entity {
             }else if(showText) {
                showText=false;
             }
-
         }
-
     }
     public void onRender() {
         if (sprite != null)
@@ -69,12 +65,16 @@ public class Table extends Entity {
 
     }
     public void drawTable() {
+        int swidth=Display.getDesktopDisplayMode().getWidth();
+        int sheight=Display.getDesktopDisplayMode().getHeight();
         if (showText) {
             gr.setColor(new Color(Color.white.getRed(), Color.white.getGreen(), Color.white.getBlue(), 40));
-            String result = vr.splitString(Text, 400, false);
+            String result = vr.splitString(Text, swidth/3, false);
             int height = result.split("\n").length * vr.getHeight() + 20;
-            gr.fillRect(Display.getWidth()/2-vr.getWidth(result)/2-20, 150, vr.getWidth(result) + 40, height);
-            vr.drawString(result, Display.getWidth()/2-vr.getWidth(result)/2, 160, Color.white);
+            gr.fillRect(swidth/2-40-vr.getWidth(result)/2-20,
+                    sheight/7, vr.getWidth(result) + 40, height);
+            vr.drawString(result, swidth/2-40-vr.getWidth(result)/2,
+                    sheight/7, Color.white);
         }
     }
 }

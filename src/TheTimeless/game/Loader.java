@@ -158,21 +158,23 @@ public class Loader {
      */
     public void renderString(int index) {
         try {
+            int swidth=Display.getDesktopDisplayMode().getWidth();
+            int sheight=Display.getDesktopDisplayMode().getHeight();
             g.setColor(new Color(0, 0, 0, 60));
-            g.fillRect(2, Display.getHeight() - 80, Display.getWidth(), 80);//draw a background for message yb`
+            g.fillRect(2, sheight - 140, swidth, 140);//draw a background for message yb`
             String speaker = strings.get(index).substring(0, strings.get(index).indexOf(":"));//get speaker
             String value = strings.get(index).substring(strings.get(index).indexOf(":") + 1,
                     strings.get(index).length());//get what he said
             if (speaker.equals("Me")) {
-                Smallpictures.get("Me").draw(5, Display.getHeight() - 79);
-                TextRender.drawString(value, 75, Display.getHeight() - 40, Color.white);
+                Smallpictures.get("Me").draw(10, sheight - 130);
+                TextRender.drawString(value, 80, sheight - 115, Color.white);
 
             } else if (!speaker.equals("Me"))//draw on the left or right
             {
-                Smallpictures.get(speaker).draw(Display.getWidth() - 5 - 64, Display.getHeight() - 79);
+                Smallpictures.get(speaker).draw(swidth - 5 - 125, sheight- 130);
                 TextRender.drawString(value,
-                        Display.getWidth() - 75 - TextRender.getWidth(value),
-                        Display.getHeight() - 40, Color.white);
+                        swidth -5-130 - TextRender.getWidth(value),
+                        sheight - 115, Color.white);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,8 +211,8 @@ DO NOT READ THE THE CODE BELOW
                     Entity objs = null;
                     if (!("".equals(value))) {
                         Constructor c = Class.forName("TheTimeless.game." + value).getConstructors()[0];
-                        objs = (Entity) c.newInstance((xAxis - Display.getWidth() / 2 / 64) * 64,
-                                (yAxis - Display.getHeight() / 2 / 64) * 64);//get the coords of th object
+                        objs = (Entity) c.newInstance((xAxis -  Display.getDesktopDisplayMode().getWidth() / 2 / 64) * 64,
+                                (yAxis -  Display.getDesktopDisplayMode().getHeight() / 2 / 64) * 64);//get the coords of th object
                         if (!(objs instanceof Creature))
                             crts.add(objs);
                         else
@@ -238,8 +240,8 @@ DO NOT READ THE THE CODE BELOW
                     String value = map.getTileProperty(tileID, "type", "");//check the type of block with ID
                     if (!("".equals(value))) {
                         Constructor c = Class.forName("TheTimeless.game." + value).getConstructors()[0];
-                        Creature objs = (Creature) c.newInstance((xAxis - Display.getWidth() / 2 / 64) * 64,
-                                (yAxis - Display.getHeight() / 2 / 64) * 64);//get the coords of th object
+                        Creature objs = (Creature) c.newInstance((xAxis -  Display.getDesktopDisplayMode().getWidth() / 2 / 64) * 64,
+                                (yAxis - Display.getDesktopDisplayMode().getHeight() / 2 / 64) * 64);//get the coords of th object
                         crts.add(objs);
                     }//if block has a type, create an creature with the value of "type"
                 }
@@ -260,15 +262,14 @@ private ArrayList<Entity> getScriptsAndTables(TiledMap map){
         for (int i = 0; i < count; i++) {
 
             Constructor c = Class.forName("TheTimeless.game.Table").getConstructors()[0];
-            crts.add((Entity) c.newInstance((map.getObjectX(0, i) - Display.getWidth() / 2-64) ,
-                        ((map.getObjectY(0, i) - Display.getHeight() / 2 )-64 ),
+            crts.add((Entity) c.newInstance((map.getObjectX(0, i) - Display.getDesktopDisplayMode().getWidth() / 2-32) ,
+                        ((map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2 )-32 ),
                           map.getObjectProperty(0, i, "text", "hello.txt")));
 
         }
     }catch(Exception e){
         e.printStackTrace();
     }
-
     return crts;
-}
+    }
 }

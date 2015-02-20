@@ -6,14 +6,14 @@ public class Bullet extends Creature {
 
     public Creature Killer;//The bad(or good) guy who shot.
     static  final long serialVersionUID=1488228l;
-    public Bullet(float x, float y, Creature killer, float acceleration, float speed) {
-        Acceleration = acceleration;
+    protected Bullet(){}
+    public Bullet(float x, float y, Creature killer, float acceleration,float speed) {
         Speed = speed;
         OnEarth = false;
         this.x = x;
         this.y = y;
+        Acceleration=acceleration;
         Speed = speed;
-        Acceleration = acceleration;
         Name = "Lazer";
         Killer = killer;
 

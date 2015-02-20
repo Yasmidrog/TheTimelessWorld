@@ -2,6 +2,7 @@ package TheTimeless.game;
 import TheTimeless.gui.*;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -41,13 +42,21 @@ public class WizardGame extends BasicGame {
         }
     }
     public static void setParams(GameContainer cntr) {
-
-        if(!ConfigReader.getConf("fps").equals("null"))
+try {
+    if (!ConfigReader.getConf("fps").equals("null"))
         cntr.setShowFPS(Boolean.valueOf(ConfigReader.getConf("fps")));
-        if(!ConfigReader.getConf("updateonlyifvisible").equals("null"))
+    if (!ConfigReader.getConf("updateonlyifvisible").equals("null"))
         cntr.setUpdateOnlyWhenVisible(Boolean.valueOf(ConfigReader.getConf("updateonlyifvisible")));
-        if(!ConfigReader.getConf("smoothdeltas").equals("null"))
+    if (!ConfigReader.getConf("smoothdeltas").equals("null"))
         cntr.setSmoothDeltas(Boolean.valueOf(ConfigReader.getConf("smoothdeltas")));
+    if (!ConfigReader.getConf("width").equals("null") && !ConfigReader.getConf("height").equals("null")) {
+        int width = Integer.valueOf(ConfigReader.getConf("width"));
+        int height = Integer.valueOf(ConfigReader.getConf("height"));
+        Display.setDisplayMode(new DisplayMode(width, height));
+    }
+}catch(Exception e){
+    e.printStackTrace();
+}
     }
     private static void  setNatives() {
         //set path to the natives
@@ -94,7 +103,12 @@ public class WizardGame extends BasicGame {
         GrassMap = new TiledMap("data/levels/"+ Level +"/"+"world.tmx");
         world = new World();
         world.init(GrassMap, container,Level);
+        try {
 
+            Display.setResizable(true);
+        }catch(Exception e){
+e.printStackTrace();
+        }
     }
 
     @Override
@@ -153,6 +167,7 @@ public class WizardGame extends BasicGame {
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
+        g.scale(1, 1);
         GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
         try {
             GL11.glColor3f(255, 255, 255);
