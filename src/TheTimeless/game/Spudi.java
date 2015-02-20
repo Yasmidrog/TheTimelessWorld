@@ -32,6 +32,7 @@ public class Spudi extends Creature implements IControlable {
             public void tick() {
                 super.tick();
                 if(Ticks<50) {
+
                     if(Side==sides.RIGHT)
                         vx -= (Ticks * 0.05 - 0.1);
                     if(Side==sides.LEFT)
@@ -154,7 +155,13 @@ public class Spudi extends Creature implements IControlable {
     public void shoot() {
         try {
             Input input = CrWld.CrCntr.getInput();
-            if (input.isKeyDown(Input.KEY_W)) {
+            if (input.isMouseButtonDown(0)) {
+                if(Side==sides.RIGHT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2>input.getMouseX()) {
+                    Side = sides.LEFT;
+                }
+                if(Side==sides.LEFT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2<input.getMouseX()) {
+                    Side = sides.RIGHT;
+                }
                 if (Side == sides.RIGHT) {
                     if (sprite != Shootright)
                         sprite = Shootright;
@@ -166,10 +173,12 @@ public class Spudi extends Creature implements IControlable {
                 if (Mana > 5) {
                     if (Counters.get("shoot").is()) {
                         Bullet bullet = null;
+
                         if (Side == sides.RIGHT) {
-                            bullet = new Bullet(x + SzW - 15, y, this, 0.4f, -21);
-                        } else if (Side == sides.LEFT)
-                            bullet = new Bullet(x - 30, y, this, 0.4f, 21);
+                            bullet = new HeroBullet(x + SzW - 15, y,input.getMouseX(),input.getMouseY(),  this, -21);
+                        } else if (Side == sides.LEFT) {
+                            bullet = new HeroBullet(x - 30, y,input.getMouseX(),input.getMouseY(),  this, 21);
+                        }
                         CrWld.ResLoader.playSound("shoot", 1, 2, false, 2, 2, 10);
 
                         bullet.onInit(CrWld);
