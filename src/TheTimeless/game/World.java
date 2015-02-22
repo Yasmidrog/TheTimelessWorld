@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
+import static org.lwjgl.opengl.GL11.*;
+
 /**
  *A world with map,objects, creatures etc.
  */
@@ -124,31 +126,25 @@ public void startTimers() {
     }
 
     public void update(final int Delta) throws SlickException {
-        Input in=CrCntr.getInput();
-        delta=Delta;
-        try {
-            if (state == states.SPEAKING) {
-                EntityTimer.stop();
-                if (in.isKeyPressed(Input.KEY_TAB)) {
-                    dialognumber++;
-                }//stop all timers and start to render the string under dialognumber
-                if (ResLoader.getString(dialognumber)==null||
-                             in.isKeyDown(Input.KEY_ESCAPE)||
-                        ResLoader.getString(dialognumber).isEmpty()) {
-                    state = states.FIGHTING;
-                    startTimers();
-                    return;
-                }
-            }
-        }catch (Exception e){}
 
+        delta=Delta;
+        if (state == states.SPEAKING) {
+            try {
+             HandleSpeaking();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 }
 
     public void render() throws SlickException {
-          BackgroundImage.draw(
-         0,0,
-          new Color(Color.red.getRed(), Color.red.getGreen(),
-          Color.red.getBlue(), 110));
+        if (BackgroundImage != null){
+            BackgroundImage.draw(
+                    0, 0,
+                    new Color(Color.red.getRed(), Color.red.getGreen(),
+                            Color.red.getBlue(),
+                            110));
+        }
           CurrentMap.render(-(int) SpMn.x - SpMn.SzW / 2, -(int) SpMn.y - SpMn.SzH / 2,1);
             renderEntities();
             renderBullets();
@@ -157,6 +153,9 @@ public void startTimers() {
             ResLoader.renderString(dialognumber);//if the state is SPEAKING, render current string from dialog
         }
     }
+
+
+
     //rendering
     private void renderEntities()
     {
@@ -264,6 +263,21 @@ get solid blocks array
             blocked=true;
         }
         return blocked;
+    }
+
+    private void HandleSpeaking(){
+        Input in=CrCntr.getInput();
+            EntityTimer.stop();
+            if (in.isKeyPressed(Input.KEY_TAB)) {
+                dialognumber++;
+            }//stop all timers and start to render the string under dialognumber
+            if (ResLoader.getString(dialognumber)==null||
+                    in.isKeyDown(Input.KEY_ESCAPE)||
+                    ResLoader.getString(dialognumber).isEmpty()) {
+                state = states.FIGHTING;
+                startTimers();
+                return;
+            }
     }
     /*
     check if there are more than hero on the map

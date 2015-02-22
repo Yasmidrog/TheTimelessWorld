@@ -40,7 +40,7 @@ public class HealthBox extends Entity{
             if( CrWld.SpMn.Health <=90) {
                 CrWld.SpMn.Health = 100;
                 CrWld.StaticObjects.remove(this);
-                //increase hero's health if the box is taken by him
+                //increase hero's healthImage if the box is taken by him
             }
         }
     }

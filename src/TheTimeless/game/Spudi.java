@@ -10,9 +10,9 @@ import org.newdawn.slick.Graphics;
 public class Spudi extends Creature implements IControlable {
     transient  Image boowIcon;
     transient Graphics indicators = new org.newdawn.slick.Graphics();
-    transient Image health=CrWld.ResLoader.getSprite("Health").getImage(0);
-    transient Image mana=CrWld.ResLoader.getSprite("Mana").getImage(0);
-    transient Image energy=CrWld.ResLoader.getSprite("Energy").getImage(0);
+    transient Image healthImage =CrWld.ResLoader.getSprite("Health").getImage(0);
+    transient Image manaImage =CrWld.ResLoader.getSprite("Mana").getImage(0);
+    transient Image energyImage =CrWld.ResLoader.getSprite("Energy").getImage(0);
     static  final long serialVersionUID=2281488l;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
@@ -22,11 +22,11 @@ public class Spudi extends Creature implements IControlable {
         this.y = Y;
         Health = 100;
         Name = "Spudi";
-        MAXMANA =150; MAXHEALTH =100;
-        MAXENERGY=70;
-        Mana =150;//current mana
-        Manaregenstep =0.027f;//shows how fast will mana regenerate
-        Flight =MAXENERGY;//amount of remaining energy
+        MAXMANA =150; MAXHEALTH =100;MAXENERGY=70;
+        MANAREGENSTEP =0.027f;
+        ENERGYREGENSTEP=0.016f;
+        Mana =MAXMANA;//current mana
+        Energy =MAXENERGY;//amount of remaining energy
         Counters.put("shoot",new Counter("shoot",70){
             @Override
             public void tick() {
@@ -71,14 +71,18 @@ public class Spudi extends Creature implements IControlable {
             System.out.print("********Health=0********");
             CrWld.CrCntr.exit();
         }
-    if(Flight ==75|| Flight ==25) {
+    if(Energy ==75|| Energy ==25) {
         CrWld.ResLoader.playSound("fly", 1, 1, false, 1,1,80 );
     }
 
         checkCounters();
         control(delta);
-     if(Mana <= MAXMANA - Manaregenstep)
-      Mana += Manaregenstep;
+     if(Mana <MAXMANA) {
+         Mana += MANAREGENSTEP;
+     }
+        if(Energy <MAXENERGY) {
+            Energy+=ENERGYREGENSTEP;
+        }
         if(Rect!=null) {
             Rect.setY(y);
             Rect.setX(x);
@@ -106,15 +110,15 @@ public class Spudi extends Creature implements IControlable {
             }
             indicators.setColor(new Color(Color.green.getRed(), Color.green.getGreen(), Color.green.getBlue(), 120));
             indicators.fillRect(64 + 10, 82, 150 - 44, 13);
-            indicators.fillRect(64 + 10, 82, (150 - 44) * Flight / MAXENERGY, 12,energy,1,1);
+            indicators.fillRect(64 + 10, 82, (150 - 44) * Energy / MAXENERGY, 12, energyImage,1,1);
 
             indicators.setColor(new Color(Color.blue.getRed(), Color.blue.getGreen(), Color.blue.getBlue(), 80));
             indicators.fillRect(64 + 10, 30, 150 - 44, 13);
-            indicators.fillRect(64 + 10, 30, (150 - 44) * Mana / MAXMANA, 12,mana,1,1);
+            indicators.fillRect(64 + 10, 30, (150 - 44) * Mana / MAXMANA, 12, manaImage,1,1);
 
             indicators.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
             indicators.fillRect(64 + 10, 57, 150 - 44, 13);
-            indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12,health ,1,1);
+            indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12, healthImage,1,1);
             boowIcon.draw(5,30);
 
         } catch(Exception e){
@@ -201,7 +205,7 @@ public class Spudi extends Creature implements IControlable {
             sprite = Left;
         if (Side ==sides.RIGHT)
             sprite = Right;
-        Flight=MAXENERGY;
+        Energy =MAXENERGY;
     }
 @Override
     public void onEntityCollide(final Creature ent) {}

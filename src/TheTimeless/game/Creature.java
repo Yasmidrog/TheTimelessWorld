@@ -1,6 +1,5 @@
 package TheTimeless.game;
 
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Animation;
 
 import java.util.HashMap;
@@ -17,11 +16,11 @@ public class Creature extends Entity{
     protected float Acceleration;
     public sides Side = sides.RIGHT;
     protected Map<String,Counter> Counters=new HashMap<String,Counter>();//the counters of an object
-    protected   float MAXMANA , MAXHEALTH ;
-    protected int MAXENERGY;
-    protected float Mana ;//current mana
-    protected float Manaregenstep;//shows how fast will mana regenerate
-   protected   int Flight;//amount of remaining energy
+    protected   float MAXMANA , MAXHEALTH, MAXENERGY;
+
+    protected float Mana,Energy ;//current mana
+    protected float MANAREGENSTEP,ENERGYREGENSTEP;//shows how fast will mana regenerate
+
     public float getAccelration() {
         return Acceleration;
     }
@@ -90,9 +89,9 @@ public class Creature extends Entity{
             return false;
         }
     protected void jump(){
-        if (Flight>0) {
-            vy -= (Acceleration * Speed * +Math.sqrt(Flight*0.1));
-            Flight--;
+        if (Energy >0) {
+            vy -= (Acceleration * Speed * +Math.sqrt(Energy *0.1));
+            Energy--;
         }
     }
 

@@ -40,6 +40,7 @@ public class Bullet extends Creature {
 
     public void onUpdate(int delta) {
         FlyForward();
+        checkvx();
         Rect.setY(y);
         Rect.setX(x);
 
@@ -68,7 +69,7 @@ public class Bullet extends Creature {
             }
         }
     }
-
+    @Override
     public void onRender() {
         if (sprite != null) {
             sprite.draw(-CrWld.SpMn.x + Rect.getX() + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW / 2,

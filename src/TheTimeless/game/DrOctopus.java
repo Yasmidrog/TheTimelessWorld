@@ -22,7 +22,8 @@ public class DrOctopus extends Creature implements IAgressive {
         this.y = y;
         Health = 50;
         Name = "DrOctopus";
-        MAXENERGY=80;Flight=MAXENERGY;
+        MAXENERGY=80;
+        Energy =MAXENERGY;
         Counters = new HashMap<String, Counter>();
         Counters.put("patrol", new Counter("patrol", 110));
     }
@@ -44,11 +45,11 @@ public class DrOctopus extends Creature implements IAgressive {
                     if(Ticks<50) {
                         if(Side==sides.RIGHT) {
                             sprite=Shootright;
-                            vx -= (Ticks * 0.05 - 0.1);
+                            vx -= (Ticks * 0.06 - 0.1);
                         }
                         if(Side==sides.LEFT) {
                             sprite=Shootleft;
-                            vx += (Ticks * 0.05 - 0.1);
+                            vx += (Ticks * 0.06 - 0.1);
                         }
                     }
                 }
@@ -111,7 +112,7 @@ public class DrOctopus extends Creature implements IAgressive {
             sprite = Left;
         if (Side == sides.RIGHT)
             sprite = Right;
-       Flight=MAXENERGY;
+       Energy =MAXENERGY;
     }
 
     @Override
