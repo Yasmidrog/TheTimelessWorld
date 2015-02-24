@@ -3,6 +3,8 @@ package TheTimeless.game;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
+import java.util.Objects;
+
 public class HeroBullet extends Bullet {
     static  final long serialVersionUID=1488228l;
     private float cosx,siny;
@@ -23,7 +25,7 @@ public class HeroBullet extends Bullet {
         try {
 
             CrWld = world;
-            sprite = CrWld.ResLoader.getSprite("Lazer").copy();
+            sprite = World.ResLoader.getSprite("Lazer").copy();
 
             SzW = sprite.getWidth()+5;    //get collider
             SzH = sprite.getHeight()+45;
@@ -47,7 +49,7 @@ public class HeroBullet extends Bullet {
                     -CrWld.SpMn.y + Rect.getY() + (Killer.SzH / 3) +
                             CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, Rect.getWidth(), 13);
         }else {
-            sprite= CrWld.ResLoader.getSprite("Lazer").copy();
+            sprite= World.ResLoader.getSprite("Lazer").copy();
         }
     }
     @Override
@@ -59,20 +61,20 @@ public class HeroBullet extends Bullet {
 
         for (final Creature ent : CrWld.Creatures) {
             if (this.Rect.intersects(ent.Rect) ) {
-                if(ent.getClass().getName()!=Killer.getClass().getName()) {
+                if(!Objects.equals(ent.getClass().getName(), Killer.getClass().getName())) {
                     ent.Health -= 5;
                     ent.Counters.put("collide",new Counter("collide",40) {
                                 private int distance = 0;
                                 public void tick() {
                                     super.tick();
-                                    if (distance <= Period*(Ticks*0.9-0.12)) {
+                                    if (distance <= Period*(Ticks*0.9-ent.weight/100)) {
                                         if (ent.x < x) {
-                                            ent.vx -= (Math.sqrt(Ticks*0.9-0.12));
+                                            ent.vx -= (Math.sqrt(Ticks*0.9-ent.weight/100));
                                         }
                                         if (ent.x > x) {
-                                            ent.vx += (Math.sqrt(Ticks*0.9-0.12));
+                                            ent.vx += (Math.sqrt(Ticks*0.9-ent.weight/100));
                                         }
-                                        distance += Ticks*0.9-0.12;
+                                        distance += Ticks*0.9-ent.weight/100;
                                     }
                                 }
                             }

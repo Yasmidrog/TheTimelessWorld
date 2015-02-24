@@ -20,7 +20,7 @@ public class SavesList extends guiContainer {
     private VTextRender Font=Fonts.regulartext;
     private WizardGame WGame;
     public SavesList(GameContainer container,WizardGame game,final Menu menu){
-        int y=Display.getDesktopDisplayMode().getHeight()/2-100;
+        int y=150;
         input=container.getInput();
         WGame=game;
         elem=0;
@@ -109,7 +109,7 @@ public class SavesList extends guiContainer {
        graphics.setColor(Color.white);
        graphics.drawRect(e.getX() - 3, e.getY() - 3, e.getWidth() + 6, e.getHeight() + 6);
 
-       if (buttons.size() < 24)
+
            for (guiElement element : buttons) {
                try {
                    if (element.getShown())
@@ -118,16 +118,6 @@ public class SavesList extends guiContainer {
                    ex.printStackTrace();
                }
            }
-       else {
-           for (guiElement element : buttons.subList(elem, 23)) {
-               try {
-                   if (element.getShown())
-                       element.render();
-               } catch (Exception ex) {
-                   ex.printStackTrace();
-               }
-           }
-       }
    }
     private void exit(Menu menu){
         menu.setShown(false);

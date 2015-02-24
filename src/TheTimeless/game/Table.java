@@ -32,7 +32,7 @@ public class Table extends Entity {
     public void onInit(World world) {
         try {
             CrWld = world;
-            sprite = CrWld.ResLoader.getSprite("Table");
+            sprite = World.ResLoader.getSprite("Table");
             SzW = sprite.getWidth()+45;//get collider
             SzH = sprite.getHeight()+45;
             Rect = new Rectangle(x-20, y-20, SzW, SzH);

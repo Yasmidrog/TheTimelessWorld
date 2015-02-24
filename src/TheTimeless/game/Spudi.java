@@ -8,11 +8,12 @@ import org.newdawn.slick.Graphics;
  * our main hero
  */
 public class Spudi extends Creature implements IControlable {
-    transient  Image boowIcon;
-    transient Graphics indicators = new org.newdawn.slick.Graphics();
-    transient Image healthImage =CrWld.ResLoader.getSprite("Health").getImage(0);
-    transient Image manaImage =CrWld.ResLoader.getSprite("Mana").getImage(0);
-    transient Image energyImage =CrWld.ResLoader.getSprite("Energy").getImage(0);
+
+    Graphics indicators = new org.newdawn.slick.Graphics();
+       Image healthImage = World.ResLoader.getSprite("Health").getImage(0);
+       Image manaImage = World.ResLoader.getSprite("Mana").getImage(0);
+       Image energyImage = World.ResLoader.getSprite("Energy").getImage(0);
+    Image boowIcon= World.ResLoader.getSprite("HeroIcon").getImage(0);
     static  final long serialVersionUID=2281488l;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
@@ -22,7 +23,8 @@ public class Spudi extends Creature implements IControlable {
         this.y = Y;
         Health = 100;
         Name = "Spudi";
-        MAXMANA =150; MAXHEALTH =100;MAXENERGY=70;
+        weight=60;
+        MAXMANA =150; MAXHEALTH =100;MAXENERGY=55;
         MANAREGENSTEP =0.027f;
         ENERGYREGENSTEP=0.016f;
         Mana =MAXMANA;//current mana
@@ -47,17 +49,18 @@ public class Spudi extends Creature implements IControlable {
     public void onInit(World world) {
         CrWld = world;
         try {
-            boowIcon=new Image("data/strings/smallpictures/Me.png");
-            Shootleft = CrWld.ResLoader.getSprite("BoowShootLeft");
-            Shootright = CrWld.ResLoader.getSprite("BoowShootRight");
-            Upleft = CrWld.ResLoader.getSprite("BoowJumpLeft");
-            Upright =CrWld.ResLoader.getSprite("BoowJumpRight");
-            Left = CrWld.ResLoader.getSprite("BoowLeft");
-            Right = CrWld.ResLoader.getSprite("BoowRight");
-            SzW = Right.getWidth();//получаем параметры спрайта
-            SzH = Right.getHeight();
+
+            Shootleft = World.ResLoader.getSprite("BoowShootLeft");
+            Shootright = World.ResLoader.getSprite("BoowShootRight");
+            Upleft = World.ResLoader.getSprite("BoowJumpLeft");
+            Upright = World.ResLoader.getSprite("BoowJumpRight");
+            Left = World.ResLoader.getSprite("BoowLeft");
+            Right = World.ResLoader.getSprite("BoowRight");
+
             // Спарйт смотрит вправо
             sprite = Right;
+            SzW = sprite.getWidth();//получаем параметры спрайта
+            SzH = sprite.getHeight();
             Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
             CrWld.startSpeaking(0);
         } catch (Exception ex) {
@@ -67,12 +70,15 @@ public class Spudi extends Creature implements IControlable {
 
     @Override
     public void onUpdate(int delta) {
+        SzW = sprite.getWidth();//получаем параметры спрайта
+        SzH = sprite.getHeight();
+        Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
         if (Health <=  0) {
             System.out.print("********Health=0********");
             CrWld.CrCntr.exit();
         }
     if(Energy ==75|| Energy ==25) {
-        CrWld.ResLoader.playSound("fly", 1, 1, false, 1,1,80 );
+        World.ResLoader.playSound("fly", 1, 1, false, 1, 1, 80);
     }
 
         checkCounters();
@@ -83,20 +89,7 @@ public class Spudi extends Creature implements IControlable {
         if(Energy <MAXENERGY) {
             Energy+=ENERGYREGENSTEP;
         }
-        if(Rect!=null) {
-            Rect.setY(y);
-            Rect.setX(x);
-        }
-        OnEarth = sideLocked(sides.DOWN, Acceleration * Speed * 0.5f+1);
-        if (OnEarth) {
-           onBlockCollide();
-        } else if (!OnEarth) {
-            if (Side ==sides.LEFT)
-                sprite = Upleft;
-            if (Side ==sides.RIGHT)
-                sprite = Upright;
-           vy+=Acceleration * Speed * 0.7f;
-        }
+       Gravity();
         shoot();
         checkvx();
     }
@@ -171,8 +164,9 @@ public class Spudi extends Creature implements IControlable {
                         sprite = Shootright;
                 }
                 if (Side == sides.LEFT) {
-                    if (sprite != Shootleft)
+                    if (sprite != Shootleft) {
                         sprite = Shootleft;
+                    }
                 }
                 if (Mana > 5) {
                     if (Counters.get("shoot").is()) {
@@ -183,8 +177,9 @@ public class Spudi extends Creature implements IControlable {
                         } else if (Side == sides.LEFT) {
                             bullet = new HeroBullet(x - 30, y,input.getMouseX(),input.getMouseY(),  this, 21);
                         }
-                        CrWld.ResLoader.playSound("shoot", 1, 2, false, 2, 2, 10);
+                        World.ResLoader.playSound("shoot", 1, 2, false, 2, 2, 10);
 
+                        assert bullet != null;
                         bullet.onInit(CrWld);
                         CrWld.Bullets.add(bullet);
                         Counters.get("shoot").restoreTime();

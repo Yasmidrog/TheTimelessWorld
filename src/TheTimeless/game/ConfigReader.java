@@ -43,7 +43,7 @@ public class ConfigReader {
             configs.remove(key);
         }
         configs.put(key, conf);
-        String text=new String();
+        String text= "";
         File file = new File("configs/main.conf");
         for(Map.Entry<String, String> entry : configs.entrySet()) {
             text+=entry.getKey()+" "+entry.getValue()+"\n";
@@ -51,14 +51,9 @@ public class ConfigReader {
         try {
                 file.delete();
                 file.createNewFile();
-
-            PrintWriter out = new PrintWriter(file.getAbsoluteFile());
-
-            try {
+            try (PrintWriter out = new PrintWriter(file.getAbsoluteFile())) {
                 //Записываем текст у файл
                 out.print(text);
-            } finally {
-                out.close();
             }
         } catch(Exception e) {
             e.printStackTrace();

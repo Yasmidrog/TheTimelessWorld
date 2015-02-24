@@ -20,7 +20,7 @@ public class HealthBox extends Entity{
     public void onInit(World world) {
         try {
             CrWld = world;
-            sprite = CrWld.ResLoader.getSprite("HealthBox");
+            sprite = World.ResLoader.getSprite("HealthBox");
 
             SzW = sprite.getWidth()+5;//get collider
             SzH = sprite.getHeight()+45;
@@ -35,7 +35,6 @@ public class HealthBox extends Entity{
     @Override
 
     public void onUpdate(int delta) {
-
         if(this.Rect.intersects(CrWld.SpMn.Rect)) {
             if( CrWld.SpMn.Health <=90) {
                 CrWld.SpMn.Health = 100;

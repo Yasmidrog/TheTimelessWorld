@@ -9,13 +9,14 @@ import java.io.File;
 import java.io.Serializable;
 
 public class Entity implements Serializable {
-    transient public Animation sprite;//the animation of the objects
+  public Animation sprite;//the animation of the objects
     public float x, y;//coords
     public World CrWld;//current world which the object situated in
     protected int SzW;//width of sprite
     protected int SzH;//height of sprite
+    protected float weight;
     public String Name;
-    transient public Shape Rect;//collider
+   public Shape Rect;//collider
     public int getSizeH() {
         return SzH;
     }

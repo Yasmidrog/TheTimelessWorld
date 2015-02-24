@@ -20,10 +20,7 @@ public class Counter implements Serializable{
      */
    public boolean is()
     {
-     if(Ticks >= Period) {
-         return true;
-     }
-        else {return false;}
+        return Ticks >= Period;
     }
     /**
      * Things to do on every tick

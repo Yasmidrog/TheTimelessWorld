@@ -7,10 +7,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class DrOctopus extends Creature implements IAgressive {
-
-
-    transient Graphics HealthBack = new org.newdawn.slick.Graphics();
-    transient Graphics HealthFore = new org.newdawn.slick.Graphics();
+    Graphics HealthBack = new org.newdawn.slick.Graphics();
+   Graphics HealthFore = new org.newdawn.slick.Graphics();
     static  final long serialVersionUID=1488228l;
     private boolean Following = true;
 
@@ -22,7 +20,8 @@ public class DrOctopus extends Creature implements IAgressive {
         this.y = y;
         Health = 50;
         Name = "DrOctopus";
-        MAXENERGY=80;
+        MAXENERGY=55;
+        weight=10;
         Energy =MAXENERGY;
         Counters = new HashMap<String, Counter>();
         Counters.put("patrol", new Counter("patrol", 110));
@@ -32,12 +31,12 @@ public class DrOctopus extends Creature implements IAgressive {
     public void onInit(World world) {
         try {
             CrWld = world;
-            Shootright = CrWld.ResLoader.getSprite("DrOctShootRight");
-            Shootleft = CrWld.ResLoader.getSprite("DrOctShootLeft");
-            Upleft = CrWld.ResLoader.getSprite("DrOctUpLeft");
-            Upright = CrWld.ResLoader.getSprite("DrOctUp");
-            Left = CrWld.ResLoader.getSprite("DrOctLeft");
-            Right = CrWld.ResLoader.getSprite("DrOctRight");
+            Shootright = World.ResLoader.getSprite("DrOctShootRight");
+            Shootleft = World.ResLoader.getSprite("DrOctShootLeft");
+            Upleft = World.ResLoader.getSprite("DrOctUpLeft");
+            Upright = World.ResLoader.getSprite("DrOctUp");
+            Left = World.ResLoader.getSprite("DrOctLeft");
+            Right = World.ResLoader.getSprite("DrOctRight");
             Counters.put("shoot", new Counter("shoot", 100){
                 @Override
                 public void tick() {
@@ -55,10 +54,11 @@ public class DrOctopus extends Creature implements IAgressive {
                 }
             });
             sprite = Right;
-            SzH = Right.getHeight();
-            SzW = Right.getWidth();
+            SzW = sprite.getWidth();//получаем параметры спрайта
+            SzH = sprite.getHeight();
             Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
     }
@@ -66,28 +66,18 @@ public class DrOctopus extends Creature implements IAgressive {
     @Override
     public void onUpdate(int delta) {
         if (Health <= 0) {
-            CrWld.ResLoader.playSound("hurt", 1, 2, false, 6,6,0);
+            World.ResLoader.playSound("hurt", 1, 2, false, 6, 6, 0);
                      CrWld.Creatures.remove(this);
             System.gc();
         }
-
-        Rect.setY(y);
-        Rect.setX(x);
+        SzW = sprite.getWidth();//получаем параметры спрайта
+        SzH = sprite.getHeight();
+        Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
 
         if(sideLocked(Side,Acceleration*Speed) && Following)
             jump();
-        OnEarth = sideLocked(sides.DOWN, 1);
-        if (OnEarth) {
-          onBlockCollide();
-        } else if (!OnEarth) {
 
-            if (Side == sides.LEFT)
-                sprite = Upleft;
-            if (Side == sides.RIGHT)
-                sprite = Upright;
-
-            vy += Acceleration * Speed * 0.5;
-        }
+        Gravity();
         followPlayer();
         checkCounters();
         checkvx();
@@ -162,10 +152,11 @@ public class DrOctopus extends Creature implements IAgressive {
                 } else if (Side == sides.LEFT) {
                     bullet = new Bullet(x - 30, y, this,0.4f, 21);
                 }
+                assert bullet != null;
                 bullet.onInit(CrWld);
                 CrWld.Bullets.add(bullet);
-                CrWld.ResLoader.playSound("shoot", 1, 2, false, Math.abs((CrWld.SpMn.x / 10 - x / 10)),
-                        Math.abs(CrWld.SpMn.y/10-y/10),0);
+                World.ResLoader.playSound("shoot", 1, 2, false, Math.abs((CrWld.SpMn.x / 10 - x / 10)),
+                        Math.abs(CrWld.SpMn.y / 10 - y / 10), 0);
                 Counters.get("shoot").restoreTime();
             }
         }

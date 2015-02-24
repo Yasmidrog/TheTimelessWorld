@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Creature extends Entity{
     public float Health;
-    transient public Animation Upleft, Upright, Left, Right, Shootright, Shootleft;//спрайты
+ public Animation Upleft, Upright, Left, Right, Shootright, Shootleft;//спрайты
 
     public boolean OnEarth;//is the creature stands on earth
     public float Speed;
@@ -103,6 +103,20 @@ public class Creature extends Entity{
         for(Map.Entry<String, Counter> entry : Counters.entrySet()) {
             Counter cnt = entry.getValue();
             cnt.tick();
+        }
+    }
+    protected void Gravity(){
+        OnEarth = sideLocked(sides.DOWN, Acceleration * Speed * 0.5f);
+        if (OnEarth) {
+            onBlockCollide();
+        } else if (!OnEarth) {
+
+            if (Side == sides.LEFT)
+                sprite = Upleft;
+            if (Side == sides.RIGHT)
+                sprite = Upright;
+
+            vy += Acceleration * Speed * 0.5;
         }
     }
 }

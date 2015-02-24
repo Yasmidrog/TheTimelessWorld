@@ -1,5 +1,6 @@
 package TheTimeless.game;
 import TheTimeless.gui.*;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -14,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
+import com.thoughtworks.xstream.core.*;
+import com.thoughtworks.xstream.*;
+
 public class WizardGame extends BasicGame {
     private Menu MainMenu;
     public int Level = 1;//current level
@@ -38,6 +42,7 @@ public class WizardGame extends BasicGame {
             app.setIcon("data/icons/icon.png");
             app.start();
             setParams(app);
+
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -104,13 +109,16 @@ public class WizardGame extends BasicGame {
         MainMenu = new Menu(this, container);
         GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
         world = new World();
+
         world.init(GrassMap, container, Level);
+
         try {
 
             Display.setResizable(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

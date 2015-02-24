@@ -24,7 +24,7 @@ public class Bullet extends Creature {
         try {
 
             CrWld = world;
-            sprite = CrWld.ResLoader.getSprite("Lazer");
+            sprite = World.ResLoader.getSprite("Lazer");
 
             SzW = sprite.getWidth()+5;    //get collider
             SzH = sprite.getHeight()+45;
@@ -52,14 +52,14 @@ public class Bullet extends Creature {
                                 private int distance = 0;
                                 public void tick() {
                                     super.tick();
-                                    if (distance <= Period*(Ticks*0.3-0.12)) {
+                                    if (distance <= Period*(Ticks*0.08-ent.weight/100)) {
                                         if (ent.x < x) {
-                                            ent.vx -= (Math.sqrt(Ticks*0.3-0.12));
+                                            ent.vx -= Ticks*0.08-ent.weight/100;
                                         }
                                         if (ent.x > x) {
-                                            ent.vx += (Math.sqrt(Ticks*0.3-0.12));
+                                            ent.vx += Ticks*0.08-ent.weight/100;
                                         }
-                                        distance += Ticks*0.3-0.12;
+                                        distance += Ticks*0.08-ent.weight/100;
                                     }
                                 }
                             }
@@ -76,7 +76,7 @@ public class Bullet extends Creature {
                     -CrWld.SpMn.y + Rect.getY() + (Killer.SzH / 3) +
                             CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH / 2, Rect.getWidth(), 13);
         }else {
-            sprite= CrWld.ResLoader.getSprite("Lazer");
+            sprite= World.ResLoader.getSprite("Lazer");
         }
     }
     @Override
