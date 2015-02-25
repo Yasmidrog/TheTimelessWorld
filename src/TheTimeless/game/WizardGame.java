@@ -1,6 +1,7 @@
 package TheTimeless.game;
 import TheTimeless.gui.*;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import org.apache.commons.io.CopyUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -15,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
+import java.util.zip.GZIPOutputStream;
+
 import com.thoughtworks.xstream.core.*;
 import com.thoughtworks.xstream.*;
 
@@ -23,7 +26,7 @@ public class WizardGame extends BasicGame {
     public int Level = 1;//current level
     public World world;//current world
     private TiledMap GrassMap;//current map
-
+    private AppGameContainer app;
     public WizardGame() {
         super("Timeless");
     }
@@ -109,9 +112,8 @@ public class WizardGame extends BasicGame {
         MainMenu = new Menu(this, container);
         GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
         world = new World();
-
         world.init(GrassMap, container, Level);
-
+        this.app=(AppGameContainer)container;
         try {
 
             Display.setResizable(true);
@@ -149,69 +151,30 @@ public class WizardGame extends BasicGame {
      * Save game
      */
     public void save(String adress) {
+        app.pause();
         try {
-            ObjectOutputStream wldout = new ObjectOutputStream(new FileOutputStream(adress));
-            Serializator ser = new Serializator();
-            ser.Map = "data/levels/" + Integer.toString(Level) + "/" + "world.tmx";
-            ser.SCrts.add(0, new SerializableOne(world.SpMn));
-            for (Entity ent : world.StaticObjects) {
-                ser.SEnts.add(new SerializableOne(ent));
-            }
-            for (Creature ent : world.Creatures) {
-                ser.SCrts.add(new SerializableOne(ent));
-            }
-            ser.level = Level;
-            wldout.writeObject(ser);
-            //Create SerializableOnes for each object and write to file
+            PrintWriter writer = new PrintWriter(adress, "UTF-8");
+            XStream stream=new XStream(new DomDriver());
+            String str=stream.toXML(new Serializator(Level, world.Creatures, world.StaticObjects));
+            writer.print(str);
+            writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        app.resume();
     }
 
     /**
      * Restore map and objects from serialization file
      */
     public void load(String adress, GameContainer cntr) {
-        //I don't know anything about how it works
         cntr.pause();
         try {
-            ObjectInputStream wldin = new ObjectInputStream(new FileInputStream(adress));
-            Serializator s = (Serializator) wldin.readObject();//get serializator
-            Level = s.level;
-            GrassMap = new TiledMap(s.Map);//create map from string
-            world = new World();
-            world.init(GrassMap, cntr, Level);//init new world
-            world.Creatures = new ArrayList<Creature>();//replace world new lists
-            world.StaticObjects = new ArrayList<Entity>();
-            for (int i = 0; i < s.SCrts.size(); i++) {
-                Constructor c = Class.forName(s.SCrts.get(i).Type).getConstructor(Float.TYPE, Float.TYPE);
-                Creature ent = (Creature) c.newInstance(s.SCrts.get(i).sx, s.SCrts.get(i).sy);
-                ent.Counters = s.SCrts.get(i).Cntrs;
-                ent.Health = s.SCrts.get(i).sHealth;
-                ent.Side = s.SCrts.get(i).Side;
-                ent.onInit(world);
-                world.Creatures.add(i, ent);
-                //get all parameters from serializableOne and add new creature to the  world's list
-            }
-            for (int i = 0; i < s.SEnts.size(); i++) {
-                if (s.SEnts.get(i).Type.equals("Table")) {
-                    Entity ent = new Table(s.SEnts.get(i).sx, s.SEnts.get(i).sy, s.SEnts.get(i).tableText);
-                    ent.onInit(world);
-                    world.StaticObjects.add(i, ent);
-                } else if (!(s.SEnts.get(i).Type.equals("Table"))) {
-                    Constructor c = Class.forName(s.SEnts.get(i).Type).getConstructor(Float.TYPE, Float.TYPE);
-                    Entity ent = (Entity) c.newInstance(s.SEnts.get(i).sx, s.SEnts.get(i).sy);
-                    ent.onInit(world);
-                    world.StaticObjects.add(i, ent);
-                    //get all parameters from serializableOne and add new object to the  world's list
-                }
-            }
-            world.SpMn = (Spudi) world.Creatures.get(0);//get main hero
-            for (Creature cr : world.Creatures) {
-                if ((cr instanceof Spudi) && world.SpMn != cr)
-                    world.Creatures.remove(cr);
-            }//delete all other heroes
-            cntr.setPaused(false);
+            XStream stream=new XStream(new DomDriver());
+            Serializator s=(Serializator)stream.fromXML(new File(adress));
+            TiledMap d=s.getMap();
+            world.setBlocked(World.GetBlocked(d));
+            world.CurrentMap=d;
         } catch (ConcurrentModificationException s) {
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,7 +189,7 @@ public class WizardGame extends BasicGame {
                 GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
                 world = new World();
                 world.init(GrassMap, container, Level);
-
+                System.gc();
             } catch (Exception e) {
                 GrassMap = new TiledMap("data/levels/" + 1 + "/" + "world.tmx");
                 world = new World();

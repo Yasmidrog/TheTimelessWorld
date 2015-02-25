@@ -4,17 +4,18 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import java.util.HashMap;
+
 /**
  * our main hero
  */
 public class Spudi extends Creature implements IControlable {
 
-    Graphics indicators = new org.newdawn.slick.Graphics();
-       Image healthImage = World.ResLoader.getSprite("Health").getImage(0);
-       Image manaImage = World.ResLoader.getSprite("Mana").getImage(0);
-       Image energyImage = World.ResLoader.getSprite("Energy").getImage(0);
-    Image boowIcon= World.ResLoader.getSprite("HeroIcon").getImage(0);
-    static  final long serialVersionUID=2281488l;
+    transient Graphics indicators ;
+      transient Image healthImage ;
+       transient Image manaImage ;
+      transient Image energyImage;
+    transient Image boowIcon;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
         Speed = 18;
@@ -29,6 +30,7 @@ public class Spudi extends Creature implements IControlable {
         ENERGYREGENSTEP=0.016f;
         Mana =MAXMANA;//current mana
         Energy =MAXENERGY;//amount of remaining energy
+        Counters = new HashMap<String, Counter>();
         Counters.put("shoot",new Counter("shoot",70){
             @Override
             public void tick() {
@@ -56,7 +58,11 @@ public class Spudi extends Creature implements IControlable {
             Upright = World.ResLoader.getSprite("BoowJumpRight");
             Left = World.ResLoader.getSprite("BoowLeft");
             Right = World.ResLoader.getSprite("BoowRight");
-
+            indicators = new org.newdawn.slick.Graphics();
+            healthImage = World.ResLoader.getSprite("Health").getImage(0);
+            manaImage = World.ResLoader.getSprite("Mana").getImage(0);
+            energyImage = World.ResLoader.getSprite("Energy").getImage(0);
+            boowIcon= World.ResLoader.getSprite("HeroIcon").getImage(0);
             // Спарйт смотрит вправо
             sprite = Right;
             SzW = sprite.getWidth();//получаем параметры спрайта

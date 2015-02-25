@@ -7,9 +7,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class DrOctopus extends Creature implements IAgressive {
-    Graphics HealthBack = new org.newdawn.slick.Graphics();
-   Graphics HealthFore = new org.newdawn.slick.Graphics();
-    static  final long serialVersionUID=1488228l;
+    transient Graphics HealthBack;
+    transient Graphics HealthFore;
     private boolean Following = true;
 
     public DrOctopus(float x, float y) {
@@ -37,6 +36,8 @@ public class DrOctopus extends Creature implements IAgressive {
             Upright = World.ResLoader.getSprite("DrOctUp");
             Left = World.ResLoader.getSprite("DrOctLeft");
             Right = World.ResLoader.getSprite("DrOctRight");
+            HealthFore= new org.newdawn.slick.Graphics();
+            HealthBack= new org.newdawn.slick.Graphics();
             Counters.put("shoot", new Counter("shoot", 100){
                 @Override
                 public void tick() {

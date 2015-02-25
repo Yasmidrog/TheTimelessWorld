@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.Serializable;
 
 public class Entity implements Serializable {
-  public Animation sprite;//the animation of the objects
-    public float x, y;//coords
-    public World CrWld;//current world which the object situated in
-    protected int SzW;//width of sprite
-    protected int SzH;//height of sprite
+    transient public World CrWld;//current world which the object situated in
+    transient public Animation sprite;//the animation of the objects
+    transient protected int SzW;//width of sprite
+    transient protected int SzH;//height of sprite
+    transient public Shape Rect;//collider
     protected float weight;
     public String Name;
-   public Shape Rect;//collider
+    public float x, y;//coords
     public int getSizeH() {
         return SzH;
     }
@@ -24,7 +24,6 @@ public class Entity implements Serializable {
     public int getSizeW() {
         return SzW;
     }
-
     /**
      * @param delta
      * called on every timer tick

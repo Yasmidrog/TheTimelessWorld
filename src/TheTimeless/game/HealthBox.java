@@ -7,7 +7,6 @@ import org.newdawn.slick.geom.Rectangle;
  * A box which increases current health of hero
  */
 public class HealthBox extends Entity{
-    static  final long serialVersionUID=1488228l;
     public HealthBox(float x, float y) {
 
         this.x = x;

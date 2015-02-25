@@ -6,7 +6,6 @@ public class HeroSpawner extends Entity {
         this.x = x;
         this.y = y;
         Name = "HS";
-
     }
 
     @Override

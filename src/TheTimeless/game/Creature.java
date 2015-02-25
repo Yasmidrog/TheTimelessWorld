@@ -8,19 +8,16 @@ import java.util.Map;
 
 public class Creature extends Entity{
     public float Health;
- public Animation Upleft, Upright, Left, Right, Shootright, Shootleft;//спрайты
-
+    transient public Animation Upleft, Upright, Left, Right, Shootright, Shootleft;
     public boolean OnEarth;//is the creature stands on earth
     public float Speed;
     public float vx,vy;//the distance to move at
     protected float Acceleration;
     public sides Side = sides.RIGHT;
-    protected Map<String,Counter> Counters=new HashMap<String,Counter>();//the counters of an object
+    protected Map<String,Counter> Counters;//the counters of an object
     protected   float MAXMANA , MAXHEALTH, MAXENERGY;
-
     protected float Mana,Energy ;//current mana
     protected float MANAREGENSTEP,ENERGYREGENSTEP;//shows how fast will mana regenerate
-
     public float getAccelration() {
         return Acceleration;
     }

@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * A world with map,objects, creatures etc.
  */
 public class World implements Serializable {
-    static final long serialVersionUID = 1488228l;
     transient public static Loader ResLoader = new Loader();//loader of resources
     public Spudi SpMn;
     public boolean IsExists = true;
@@ -55,7 +54,7 @@ public class World implements Serializable {
             }
             CrLvl = level;
             checkSpudies();//check if there are more thn one hero on the screen
-            GetBlocked();//get hard blocks
+            HardBlocks=GetBlocked(CurrentMap);//get hard blocks
             startTimers();
 
         } catch (Exception e) {
@@ -138,7 +137,7 @@ public class World implements Serializable {
     private void renderEntities() {
         Creature[] ents = new Creature[Creatures.size()];
         System.arraycopy(Creatures.toArray(), 0, ents, 0, Creatures.size());
-//copy to the local list to avoid ConcurrentModificationException
+     //copy to the local list to avoid ConcurrentModificationException
         Entity[] entz = new Entity[StaticObjects.size()];
         System.arraycopy(StaticObjects.toArray(), 0, entz, 0, StaticObjects.size());
         for (Entity ent : entz) {
@@ -214,18 +213,22 @@ public class World implements Serializable {
     /*
     get solid blocks array
      */
-    private void GetBlocked() {
-        HardBlocks = new boolean[CurrentMap.getWidth() + 1][CurrentMap.getHeight() + 1];//массив с адресами блоков
+    public static boolean[][] GetBlocked(TiledMap Map) {
+        boolean blocks[][] = new boolean[Map.getWidth() + 1][Map.getHeight() + 1];
 
-        for (int xAxis = 0; xAxis < CurrentMap.getWidth(); xAxis++) {
-            for (int yAxis = 0; yAxis < CurrentMap.getHeight(); yAxis++) {
-                int tileID = CurrentMap.getTileId(xAxis, yAxis, 0);
-                String value = CurrentMap.getTileProperty(tileID, "blocked", "false");
+        for (int xAxis = 0; xAxis < Map.getWidth(); xAxis++) {
+            for (int yAxis = 0; yAxis < Map.getHeight(); yAxis++) {
+                int tileID = Map.getTileId(xAxis, yAxis, 0);
+                String value = Map.getTileProperty(tileID, "blocked", "false");
                 if ("true".equals(value)) {
-                    HardBlocks[xAxis][yAxis] = true;
+                    blocks[xAxis][yAxis] = true;
                 }
             }
         }
+        return blocks;
+    }
+    public void setBlocked(boolean[][] blocks){
+        HardBlocks=blocks;
     }
 
     public void startSpeaking(int dialogIndex) {
@@ -275,5 +278,4 @@ public class World implements Serializable {
     }
 
     private static enum states {FIGHTING, SPEAKING}//states of the game
-
 }
