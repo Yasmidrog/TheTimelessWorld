@@ -16,6 +16,7 @@ import java.util.ArrayList;
         Map="data/levels/"+level+"/world.tmx";
         Creatures =creatures;
         StaticObjects =entities;
+        Level=level;
     }
     public ArrayList<Creature> getCreatures(){
         return Creatures;

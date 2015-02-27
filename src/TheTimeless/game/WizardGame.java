@@ -11,9 +11,8 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.io.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Date;
+import java.util.*;
+
 import com.thoughtworks.xstream.*;
 
 
@@ -225,8 +224,19 @@ public class WizardGame extends BasicGame {
 
         if (input.isKeyPressed(Input.KEY_O)) {
             try {
-                String[] saves = new File("data/saves").list();
-                load("data/saves/" + saves[0]);
+                File[] saves = new File("data/saves").listFiles();
+                Arrays.sort(saves, new Comparator() {
+                    public int compare(Object o1, Object o2) {
+                        if (((File) o1).lastModified() > ((File) o2).lastModified()) {
+                            return -1;
+                        } else if (((File) o1).lastModified() < ((File) o2).lastModified()) {
+                            return +1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                });
+                load(saves[0].getAbsolutePath());
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -236,7 +246,7 @@ public class WizardGame extends BasicGame {
             if (!container.isPaused()) {
                 container.pause(); //pause or continue game
                 MainMenu.setShown(true);
-            } else if (container.isPaused()) {
+            } else {
                 container.setPaused(false);
                 MainMenu.setShown(false);
             }

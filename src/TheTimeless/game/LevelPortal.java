@@ -29,7 +29,6 @@ public class LevelPortal extends Entity{
         try {
             if (this.Rect.intersects(CrWld.SpMn.Rect)) {
                 CrWld.exsists=false;
-
                 CrWld.StaticObjects.remove(this);
             }
         }catch(Exception d){

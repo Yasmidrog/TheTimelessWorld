@@ -15,6 +15,7 @@ import java.util.Date;
 public class Menu {
     public  guiContainer gui,params,saves;
     private GameContainer app;
+    private guiButton Help;
     private VTextRender mainFont;
     private WizardGame Game;
     private Menu thism=this;
@@ -30,11 +31,16 @@ public class Menu {
     }
     public void render()
     {
-        if(Shown) {
-            gui.render();
-            params.render();
-            if(list!=null)
-            list.render();
+        try {
+            if (Shown) {
+                gui.render();
+                params.render();
+                if (list != null)
+                    list.render();
+                Help.render();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     private void setGui(){
@@ -44,10 +50,19 @@ public class Menu {
         params.setShown(false);
         saves =new guiContainer(app);
         saves.setShown(false);
+        Help=new guiButton(app,"Shoot: left mouse\n\n" +
+                "Move: A,D\n\n" +
+                "Jump: Space\n\n" +
+                "Fast save/open: P,O\n\n"+
+        "Menu: Esc \n\n"+
+        "Continue speaking: Tab\n\n",mainFont,
+                Display.getDesktopDisplayMode().getWidth()/2-200,
+                Display.getDesktopDisplayMode().getHeight()/2-350);
+        Help.setShown(false);
         params.setSound(World.ResLoader.getSound("click"));
         gui.setSound(World.ResLoader.getSound("click"));
         gui.add(new guiButton(app,"Resume", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2-300+30){
+                s_height/2-  mainFont.getHeight()/2-300){
             @Override
             public void onClicked(){
                Shown=false;
@@ -57,7 +72,7 @@ public class Menu {
         });
 
         gui.add(new guiButton(app,"Load", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2-150+30){
+                s_height/2-  mainFont.getHeight()/2-150){
             @Override
             public void onClicked(){
                 try {
@@ -71,7 +86,7 @@ e.printStackTrace();
             }
         });
         gui.add(new guiButton(app,"Save", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2+30){
+                s_height/2-  mainFont.getHeight()/2){
             @Override
             public void onClicked(){
                 try {
@@ -90,8 +105,18 @@ e.printStackTrace();
             }
         });
 
+        gui.add(new guiButton(app,"Help",  mainFont,4,
+                s_height/2-  mainFont.getHeight()/2+290){
+            @Override
+            public void onClicked(){
+               if(Help.getShown())
+                   Help.setShown(false);
+                else Help.setShown(true);
+                Loader.playSound("click", 1, 1, false);
+            }
+        });
         gui.add(new guiButton(app,"Parameters",  mainFont,4,
-                s_height/2-  mainFont.getHeight()/2+150+30){
+                s_height/2-  mainFont.getHeight()/2+150){
             @Override
             public void onClicked(){
                 gui.setShown(false);
@@ -102,7 +127,7 @@ e.printStackTrace();
 
 
         gui.add(new guiButton(app,"Exit", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2+300+30){
+                s_height/2-  mainFont.getHeight()/2+400+30){
             @Override
             public void onClicked(){
                 ConfigReader.setConfig("width", String.valueOf(Display.getWidth()));
