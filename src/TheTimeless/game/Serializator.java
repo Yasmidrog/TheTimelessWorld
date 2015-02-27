@@ -26,7 +26,7 @@ import java.util.ArrayList;
     }
     public int getLevel(){return Level;}
     public TiledMap getMap(){
-        System.out.print("Load"+Map);
+        System.out.println("Load"+Map);
         TiledMap map=null;
         try {
            map= new TiledMap(Map);
