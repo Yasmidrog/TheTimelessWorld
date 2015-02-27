@@ -1,9 +1,6 @@
 package TheTimeless.gui;
 
-import TheTimeless.game.ConfigReader;
-import TheTimeless.game.Fonts;
-import TheTimeless.game.WizardGame;
-import TheTimeless.game.World;
+import TheTimeless.game.*;
 import org.ietf.jgss.GSSManager;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
@@ -55,7 +52,7 @@ public class Menu {
             public void onClicked(){
                Shown=false;
                 app.setPaused(false);
-                World.ResLoader.playSound("click",1,1,false);
+                Loader.playSound("click", 1, 1, false);
             }
         });
 
@@ -65,9 +62,9 @@ public class Menu {
             public void onClicked(){
                 try {
                    gui.setShown(false);
-                    list=new SavesList(app,Game,thism);
+                    list=new SavesList(Game,thism);
                     list.setShown(true);
-                    World.ResLoader.playSound("click",1,1,false);
+                    Loader.playSound("click", 1, 1, false);
                 }catch(Exception e){
 e.printStackTrace();
                 }
@@ -84,8 +81,8 @@ e.printStackTrace();
                     Date d = new Date();
                     SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
                     Game.save("data/saves/world_lev." + Game.Level + "_" + format1.format(d) + ".ttws");
-                    World.ResLoader.playSound("click",1,1,false);
-                    list=new SavesList(app,Game,thism);
+                    Loader.playSound("click", 1, 1, false);
+                    list=new SavesList(Game,thism);
                     list.setShown(false);
                 }catch(Exception e){
 e.printStackTrace();
@@ -99,7 +96,7 @@ e.printStackTrace();
             public void onClicked(){
                 gui.setShown(false);
                 params.setShown(true);
-                World.ResLoader.playSound("click",1,1,false);
+                Loader.playSound("click", 1, 1, false);
             }
         });
 
@@ -111,7 +108,7 @@ e.printStackTrace();
                 ConfigReader.setConfig("width", String.valueOf(Display.getWidth()));
                 ConfigReader.setConfig("height", String.valueOf(Display.getHeight()));
                 app.exit();
-                World.ResLoader.playSound("click",1,1,false);
+                Loader.playSound("click", 1, 1, false);
             }
         });
         params.add(new guiCheckBox(app,"FPS", mainFont,4,
@@ -121,13 +118,13 @@ e.printStackTrace();
                 if (active) {
                     active=false;
                     ConfigReader.setConfig("fps", "false");
-                    Game.setParams(app);
+                    WizardGame.setParams(app);
                 }else {
                     active = true;
                     ConfigReader.setConfig("fps", "true");
-                    Game.setParams(app);
+                    WizardGame.setParams(app);
                 }
-                World.ResLoader.playSound("click",1,1,false);
+                Loader.playSound("click", 1, 1, false);
             }
         });
         params.add(new guiButton(app,"Return", mainFont,4,
@@ -136,7 +133,7 @@ e.printStackTrace();
             public void onClicked(){
                 params.setShown(false);
                 gui.setShown(true);
-                World.ResLoader.playSound("click",1,1,false);
+                Loader.playSound("click", 1, 1, false);
             }
         });
     }

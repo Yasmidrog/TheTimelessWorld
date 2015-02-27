@@ -205,7 +205,6 @@ public class Spudi extends Creature implements IControlable {
             Hand.rotate(alpha*57.295f);
             Hand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2+21,  CrWld.CrCntr.getHeight() / 2-SzH/4+10);
             BodyLeft.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
-            Hand=null;
         }
         if(Side==sides.RIGHT){
             Hand=rightHand.copy();
@@ -213,7 +212,6 @@ public class Spudi extends Creature implements IControlable {
             Hand.rotate(alpha*57.295f);
             BodyRight.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
             Hand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2+48,  CrWld.CrCntr.getHeight() / 2-SzH/4+3);
-            Hand=null;
         }
     }
     @Override

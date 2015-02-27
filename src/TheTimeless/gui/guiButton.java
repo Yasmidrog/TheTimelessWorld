@@ -12,7 +12,7 @@ public class guiButton extends guiElement {
         string=str;
         shown=true;
         this.render=vr;
-        input = container.getInput();
+        input = cntr.getInput();
         rect=new Rectangle(x,y,vr.getWidth(str),vr.getHeight());
         setLocation(x, y);
     }

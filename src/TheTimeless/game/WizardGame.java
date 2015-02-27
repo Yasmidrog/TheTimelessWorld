@@ -162,8 +162,7 @@ public class WizardGame extends BasicGame {
     /**
      * Restore map and objects from serialization file
      */
-    public void load(String adress, GameContainer cntr) {
-        cntr.pause();
+    public void load(String adress) {
         try {
             XStream stream=new XStream(new DomDriver());
             Serializator s=(Serializator)stream.fromXML(new File(adress));
@@ -190,6 +189,7 @@ public class WizardGame extends BasicGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void LoadWorld() {
@@ -226,7 +226,7 @@ public class WizardGame extends BasicGame {
         if (input.isKeyPressed(Input.KEY_O)) {
             try {
                 String[] saves = new File("data/saves").list();
-                load("data/saves/" + saves[0], container);
+                load("data/saves/" + saves[0]);
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -247,5 +247,7 @@ public class WizardGame extends BasicGame {
             }
         }
     }
-
+public GameContainer getContainer(){
+    return  app;
+}
 }

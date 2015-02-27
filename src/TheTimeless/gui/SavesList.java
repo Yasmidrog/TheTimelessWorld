@@ -19,38 +19,36 @@ public class SavesList extends guiContainer {
     private  int elem;
     private VTextRender Font=Fonts.regulartext;
     private WizardGame WGame;
-    public SavesList(GameContainer container,WizardGame game,final Menu menu){
+    public SavesList(WizardGame game,final Menu menu){
         int y=150;
-        input=container.getInput();
+        final GameContainer cntr=game.getContainer();
+        input=cntr.getInput();
         WGame=game;
         elem=0;
-        this.container=container;
         for(final String str:new File("data/saves").list()){
-            buttons.add(new guiButton(container, str, Font, 10, y) {
+            buttons.add(new guiButton(cntr, str, Font, 10, y) {
                 @Override
                 public void onClicked() {
-                    WGame.load("data/saves/" + str, container);
-                  exit(menu);
+                    WGame.load("data/saves/" + str);
+                  exit(menu,cntr);
                 }
             });
             y+=30;
         }
         if(buttons.isEmpty()) {
-            if(buttons.isEmpty()){
-                String str="There is no saves";
-                buttons.add(new guiButton(container, str, Font,10, y){
-                    @Override
-                    public void onClicked() {
-                        exit(menu);
-                    }
-                });
-                 }
+            String str="There is no saves";
+            buttons.add(new guiButton(cntr, str, Font,10, y){
+                @Override
+                public void onClicked() {
+                    exit(menu,cntr);
+                }
+            });
             return;
             }
-        buttons.add(new guiButton(container, "Exit", Font,10, y){
+        buttons.add(new guiButton(cntr, "Exit", Font,10, y){
             @Override
             public void onClicked() {
-                exit(menu);
+                exit(menu,cntr);
             }
         });
     }
@@ -119,7 +117,7 @@ public class SavesList extends guiContainer {
                }
            }
    }
-    private void exit(Menu menu){
+    private void exit(Menu menu,GameContainer container){
         menu.setShown(false);
         menu.gui.setShown(true);
         container.setPaused(false);
