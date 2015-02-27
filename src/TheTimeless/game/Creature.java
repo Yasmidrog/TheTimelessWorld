@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Creature extends Entity{
     public float Health;
-    transient public Animation Upleft, Upright, Left, Right, Shootright, Shootleft;
+    transient public Animation Upleft, Upright, Left, Right,BodyRight,BodyLeft,ShootRight,ShootLeft;
     public boolean OnEarth;//is the creature stands on earth
     public float Speed;
     public float vx,vy;//the distance to move at

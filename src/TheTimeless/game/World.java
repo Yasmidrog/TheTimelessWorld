@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class World implements Serializable {
     transient public static Loader ResLoader = new Loader();//loader of resources
     public Spudi SpMn;
-    public boolean IsExists = true;
+    public boolean exsists=true;
     public int delta = 1;
     transient public GameContainer CrCntr;//current window with game
     public int CrLvl;//level of the game
@@ -266,7 +266,7 @@ public class World implements Serializable {
     /*
     check if there are more than hero on the map
     */
-    private void checkSpudies() {
+    public void checkSpudies() {
         try {
             for (Creature cr : Creatures) {
                 if ((cr instanceof Spudi) && SpMn != cr)

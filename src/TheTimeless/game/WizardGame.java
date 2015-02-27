@@ -1,7 +1,6 @@
 package TheTimeless.game;
 import TheTimeless.gui.*;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.apache.commons.io.CopyUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -11,21 +10,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 import java.io.*;
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
-import java.util.zip.GZIPOutputStream;
-
-import com.thoughtworks.xstream.core.*;
 import com.thoughtworks.xstream.*;
+
 
 public class WizardGame extends BasicGame {
     private Menu MainMenu;
     public int Level = 1;//current level
     public World world;//current world
-    private TiledMap GrassMap;//current map
     private AppGameContainer app;
     public WizardGame() {
         super("Timeless");
@@ -110,9 +105,9 @@ public class WizardGame extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         MainMenu = new Menu(this, container);
-        GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
+        TiledMap grassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
         world = new World();
-        world.init(GrassMap, container, Level);
+        world.init(grassMap, container, Level);
         this.app=(AppGameContainer)container;
         try {
 
@@ -120,18 +115,18 @@ public class WizardGame extends BasicGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        if (!container.isPaused()) {
-            world.update(delta);
-        }
-        Buttons(container);
-        if (!world.IsExists) {
-            LoadWorld(container);
-        }
+            if (!container.isPaused()) {
+                world.update(delta);
+                Buttons(container);
+                if(!world.exsists){
+                    LoadWorld();
+                    world.exsists=true;
+                }
+            }
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
@@ -175,45 +170,66 @@ public class WizardGame extends BasicGame {
             TiledMap d=s.getMap();
             world.setBlocked(World.GetBlocked(d));
             world.CurrentMap=d;
+            Level=s.getLevel();
+            ArrayList<Creature> crts=s.getCreatures();
+            ArrayList<Entity> ents=s.getEntities();
+            world.Creatures=crts;
+            for(Creature cr:world.Creatures){
+                cr.onInit(world);
+                if(cr instanceof Spudi)
+                    world.SpMn=(Spudi)cr;
+            }
+            world.checkSpudies();
+
+            world.StaticObjects=ents;
+            for(Entity ent:world.StaticObjects){
+                ent.onInit(world);
+            }
+
         } catch (ConcurrentModificationException s) {
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void LoadWorld(GameContainer container) {
-        try {
-            container.pause();
-            try {
-                Level++;
-                GrassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
-                world = new World();
-                world.init(GrassMap, container, Level);
-                System.gc();
-            } catch (Exception e) {
-                GrassMap = new TiledMap("data/levels/" + 1 + "/" + "world.tmx");
-                world = new World();
-                world.init(GrassMap, container, 1);
-            }
-            container.setPaused(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void LoadWorld() {
+        app.pause();
+        try{
+        Level++;
+        TiledMap d= new TiledMap("data/levels/" + (Level) + "/" + "world.tmx");
+        System.out.println("Loaded level: "+Level+": data/levels/" + (Level) + "/world.tmx");
+        world = new World();
+        world.init(d, app, Level);
+        System.gc();
+            app.resume();
+    } catch (Exception e) {
+       e.printStackTrace();
+    }
+
         //try to load map for the next level
+
     }
     private void Buttons(GameContainer container)
     {
         Input input = container.getInput();
 
         if (input.isKeyPressed(Input.KEY_P)) {
-            Date d = new Date();
-            SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
-            save("data/saves/world_lev." + Level + "_" + format1.format(d) + "-fast" + ".ttws");
+            try {
+                Date d = new Date();
+                SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
+                save("data/saves/world_lev." + Level + "_" + format1.format(d) + "-fast" + ".ttws");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         if (input.isKeyPressed(Input.KEY_O)) {
-            String[] saves = new File("data/saves").list();
-            load("data/saves/" + saves[0], container);
+            try {
+                String[] saves = new File("data/saves").list();
+                load("data/saves/" + saves[0], container);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -231,4 +247,5 @@ public class WizardGame extends BasicGame {
             }
         }
     }
+
 }

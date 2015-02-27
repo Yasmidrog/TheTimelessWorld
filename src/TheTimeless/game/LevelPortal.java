@@ -25,21 +25,16 @@ public class LevelPortal extends Entity{
             ex.printStackTrace();
         }
     }
+    public void onRender() {
+        try {
+            if (this.Rect.intersects(CrWld.SpMn.Rect)) {
+                CrWld.exsists=false;
 
-    @Override
-
-    public void onUpdate(int delta) {
-   try {
-    if (this.Rect.intersects(CrWld.SpMn.Rect)) {
-        CrWld.IsExists =false;
-        CrWld.StaticObjects.remove(this);
+                CrWld.StaticObjects.remove(this);
+            }
+        }catch(Exception d){
+            d.printStackTrace();
+        }
     }
-
-    }catch(Exception d){
-        d.printStackTrace();
-    }
-
-    }
-    public void onRender() {}
 
 }

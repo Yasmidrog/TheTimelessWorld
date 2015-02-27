@@ -23,10 +23,10 @@ import java.util.Scanner;
 public class Loader {
     Graphics g = new Graphics();
     Map<String, Animation> Animations = new HashMap<String, Animation>();
-    Map<String, Audio> Sounds = new HashMap<String, Audio>();
+    static Map<String, Audio> Sounds = new HashMap<String, Audio>();
     ArrayList<String> strings = new ArrayList<String>();
     Map<String, Image> Smallpictures = new HashMap<String, Image>();
-    private VTextRender TextRender = new VTextRender(20, "Sans");
+
 
     public Loader() {
         setSprites();
@@ -135,12 +135,14 @@ public class Loader {
     public Animation getSprite(String index) {
         return Animations.get(index);
     }
-
-    public void playSound(String index, int gain, int pitch, boolean repeat) {
+    public static void playMusic(String index, int gain, int pitch, boolean repeat) {
+        Sounds.get(index).playAsMusic(gain,pitch,repeat);
+    }
+    public static void playSound(String index, int gain, int pitch, boolean repeat) {
         Sounds.get(index).playAsSoundEffect(gain, pitch, repeat);
     }
 
-    public void playSound(String index, int gain, int pitch, boolean repeat, float x, float y, float z) {
+    public static  void playSound(String index, int gain, int pitch, boolean repeat, float x, float y, float z) {
         Sounds.get(index).playAsSoundEffect(gain, pitch, repeat, x, y, z);
     }
 
@@ -167,13 +169,13 @@ public class Loader {
                     strings.get(index).length());//get what he said
             if (speaker.equals("Me")) {
                 Smallpictures.get("Me").draw(10, sheight - 130);
-                TextRender.drawString(value, 80, sheight - 115, Color.white);
+                Fonts.TextRender.drawString(value, 80, sheight - 115, Color.white);
 
             } else if (!speaker.equals("Me"))//draw on the left or right
             {
                 Smallpictures.get(speaker).draw(swidth - 5 - 125, sheight- 130);
-                TextRender.drawString(value,
-                        swidth -5-130 - TextRender.getWidth(value),
+                Fonts.TextRender.drawString(value,
+                        swidth -5-130 - Fonts.TextRender.getWidth(value),
                         sheight - 115, Color.white);
             }
         } catch (Exception e) {

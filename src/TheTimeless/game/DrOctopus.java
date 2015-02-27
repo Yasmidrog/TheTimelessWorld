@@ -30,8 +30,8 @@ public class DrOctopus extends Creature implements IAgressive {
     public void onInit(World world) {
         try {
             CrWld = world;
-            Shootright = World.ResLoader.getSprite("DrOctShootRight");
-            Shootleft = World.ResLoader.getSprite("DrOctShootLeft");
+            ShootRight = World.ResLoader.getSprite("DrOctShootRight");
+            ShootLeft = World.ResLoader.getSprite("DrOctShootLeft");
             Upleft = World.ResLoader.getSprite("DrOctUpLeft");
             Upright = World.ResLoader.getSprite("DrOctUp");
             Left = World.ResLoader.getSprite("DrOctLeft");
@@ -44,11 +44,11 @@ public class DrOctopus extends Creature implements IAgressive {
                     super.tick();
                     if(Ticks<50) {
                         if(Side==sides.RIGHT) {
-                            sprite=Shootright;
+                            sprite=ShootRight;
                             vx -= (Ticks * 0.06 - 0.1);
                         }
                         if(Side==sides.LEFT) {
-                            sprite=Shootleft;
+                            sprite=ShootLeft;
                             vx += (Ticks * 0.06 - 0.1);
                         }
                     }
@@ -67,7 +67,7 @@ public class DrOctopus extends Creature implements IAgressive {
     @Override
     public void onUpdate(int delta) {
         if (Health <= 0) {
-            World.ResLoader.playSound("hurt", 1, 2, false, 6, 6, 0);
+            Loader.playSound("hurt", 1, 2, false, 6, 6, 0);
                      CrWld.Creatures.remove(this);
             System.gc();
         }
@@ -156,8 +156,8 @@ public class DrOctopus extends Creature implements IAgressive {
                 assert bullet != null;
                 bullet.onInit(CrWld);
                 CrWld.Bullets.add(bullet);
-                World.ResLoader.playSound("shoot", 1, 2, false, Math.abs((CrWld.SpMn.x / 10 - x / 10)),
-                        Math.abs(CrWld.SpMn.y / 10 - y / 10), 0);
+                Loader.playSound("shoot", 1, 2, false, ((CrWld.SpMn.x / 10 - x / 10)),
+                        (CrWld.SpMn.y / 10 - y / 10), 0);
                 Counters.get("shoot").restoreTime();
             }
         }

@@ -8,4 +8,5 @@ import TheTimeless.gui.VTextRender;
 public  class Fonts {
     static public VTextRender mainFont=new VTextRender(46,"Sans");
     static public VTextRender regulartext=new VTextRender(20,"Sans");
+    static public VTextRender TextRender = new VTextRender(20, "Sans");
 }

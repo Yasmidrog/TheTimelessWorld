@@ -12,10 +12,8 @@ import java.util.HashMap;
 public class Spudi extends Creature implements IControlable {
 
     transient Graphics indicators ;
-      transient Image healthImage ;
-       transient Image manaImage ;
-      transient Image energyImage;
-    transient Image boowIcon;
+      transient Image healthImage,manaImage,energyImage,boowIcon;
+    transient  Image rightHand,leftHand;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
         Speed = 18;
@@ -52,8 +50,6 @@ public class Spudi extends Creature implements IControlable {
         CrWld = world;
         try {
 
-            Shootleft = World.ResLoader.getSprite("BoowShootLeft");
-            Shootright = World.ResLoader.getSprite("BoowShootRight");
             Upleft = World.ResLoader.getSprite("BoowJumpLeft");
             Upright = World.ResLoader.getSprite("BoowJumpRight");
             Left = World.ResLoader.getSprite("BoowLeft");
@@ -63,6 +59,7 @@ public class Spudi extends Creature implements IControlable {
             manaImage = World.ResLoader.getSprite("Mana").getImage(0);
             energyImage = World.ResLoader.getSprite("Energy").getImage(0);
             boowIcon= World.ResLoader.getSprite("HeroIcon").getImage(0);
+
             // Спарйт смотрит вправо
             sprite = Right;
             SzW = sprite.getWidth();//получаем параметры спрайта
@@ -83,8 +80,8 @@ public class Spudi extends Creature implements IControlable {
             System.out.print("********Health=0********");
             CrWld.CrCntr.exit();
         }
-    if(Energy ==75|| Energy ==25) {
-        World.ResLoader.playSound("fly", 1, 1, false, 1, 1, 80);
+    if((int)Energy ==25) {
+        Loader.playSound("fly", 1, 1, false, 1, 1, 1);
     }
 
         checkCounters();
@@ -102,11 +99,15 @@ public class Spudi extends Creature implements IControlable {
 
     public void onRender() {
         try {
-
-            if (sprite != null) {
-                sprite.update(CrWld.delta);
-                sprite.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+            if (CrWld.CrCntr.getInput().isMouseButtonDown(0)) {
+                drawShoot();
+            }else {
+                if (sprite != null) {
+                    sprite.update(CrWld.delta);
+                    sprite.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+                }
             }
+
             indicators.setColor(new Color(Color.green.getRed(), Color.green.getGreen(), Color.green.getBlue(), 120));
             indicators.fillRect(64 + 10, 82, 150 - 44, 13);
             indicators.fillRect(64 + 10, 82, (150 - 44) * Energy / MAXENERGY, 12, energyImage,1,1);
@@ -165,15 +166,6 @@ public class Spudi extends Creature implements IControlable {
                 if(Side==sides.LEFT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2<input.getMouseX()) {
                     Side = sides.RIGHT;
                 }
-                if (Side == sides.RIGHT) {
-                    if (sprite != Shootright)
-                        sprite = Shootright;
-                }
-                if (Side == sides.LEFT) {
-                    if (sprite != Shootleft) {
-                        sprite = Shootleft;
-                    }
-                }
                 if (Mana > 5) {
                     if (Counters.get("shoot").is()) {
                         Bullet bullet = null;
@@ -183,8 +175,7 @@ public class Spudi extends Creature implements IControlable {
                         } else if (Side == sides.LEFT) {
                             bullet = new HeroBullet(x - 30, y,input.getMouseX(),input.getMouseY(),  this, 21);
                         }
-                        World.ResLoader.playSound("shoot", 1, 2, false, 2, 2, 10);
-
+                        Loader.playSound("shoot", 1, 2, false, 2, 2, 10);
                         assert bullet != null;
                         bullet.onInit(CrWld);
                         CrWld.Bullets.add(bullet);
@@ -197,9 +188,30 @@ public class Spudi extends Creature implements IControlable {
         } catch (Exception e) {
         }
     }
+    private void drawShoot(){
+        /*
+        Input in = CrWld.CrCntr.getInput();
+        int targetx=in.getMouseX();
+        int targety=in.getMouseY();
+        int deltax = targetx-(int)(-CrWld.SpMn.x + Rect.getX() + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW / 2);
+        int deltay = targety-(int) (-CrWld.SpMn.y + Rect.getY() + (SzH / 3) +CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH / 2);
+        float alpha=(float)Math.atan2(deltay,deltax);
+        if(Side==sides.LEFT) {
+            leftHand.rotate(alpha*52.7f);
+            leftHand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 3);
+            BodyLeft.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+        }
+        if(Side==sides.RIGHT){
+            rightHand.rotate(alpha*52.7f);
+            BodyRight.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+            rightHand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 3);
+        }
+        */
+    }
     @Override
     public void interact(int delta) {
     }
+
     @Override
     protected void onBlockCollide() {
         if (Side ==sides.LEFT)
