@@ -60,7 +60,10 @@ public class Spudi extends Creature implements IControlable {
             energyImage = World.ResLoader.getSprite("Energy").getImage(0);
             boowIcon= World.ResLoader.getSprite("HeroIcon").getImage(0);
 
-            // Спарйт смотрит вправо
+            BodyRight=World.ResLoader.getSprite("BoowBodyRight");
+            BodyLeft=World.ResLoader.getSprite("BoowBodyLeft");
+            rightHand=World.ResLoader.getSprite("BoowHandRight").getImage(0);
+            leftHand=World.ResLoader.getSprite("BoowHandLeft").getImage(0);
             sprite = Right;
             SzW = sprite.getWidth();//получаем параметры спрайта
             SzH = sprite.getHeight();
@@ -189,24 +192,29 @@ public class Spudi extends Creature implements IControlable {
         }
     }
     private void drawShoot(){
-        /*
         Input in = CrWld.CrCntr.getInput();
+        Image Hand;
         int targetx=in.getMouseX();
         int targety=in.getMouseY();
         int deltax = targetx-(int)(-CrWld.SpMn.x + Rect.getX() + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW / 2);
         int deltay = targety-(int) (-CrWld.SpMn.y + Rect.getY() + (SzH / 3) +CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH / 2);
         float alpha=(float)Math.atan2(deltay,deltax);
         if(Side==sides.LEFT) {
-            leftHand.rotate(alpha*52.7f);
-            leftHand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 3);
+            Hand=leftHand.copy();
+            Hand.setCenterOfRotation(20,10);
+            Hand.rotate(alpha*57.295f);
+            Hand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2+21,  CrWld.CrCntr.getHeight() / 2-SzH/4+10);
             BodyLeft.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+            Hand=null;
         }
         if(Side==sides.RIGHT){
-            rightHand.rotate(alpha*52.7f);
+            Hand=rightHand.copy();
+            Hand.setCenterOfRotation(5,5);
+            Hand.rotate(alpha*57.295f);
             BodyRight.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
-            rightHand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 3);
+            Hand.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2+48,  CrWld.CrCntr.getHeight() / 2-SzH/4+3);
+            Hand=null;
         }
-        */
     }
     @Override
     public void interact(int delta) {
