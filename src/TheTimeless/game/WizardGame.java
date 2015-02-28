@@ -22,6 +22,7 @@ public class WizardGame extends BasicGame {
     public World world;//current world
     private AppGameContainer app;
     public boolean loaded;
+    private Image back;
     public WizardGame() {
         super("Timeless");
     }
@@ -103,6 +104,10 @@ public class WizardGame extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
+        int swidth=Display.getDesktopDisplayMode().getWidth();
+        int sheight=Display.getDesktopDisplayMode().getHeight();
+        back=new Image("data/icons/twlogo.png").getScaledCopy(swidth-(int)(swidth/2.5),
+                                                                sheight-(int)(sheight/3.5));
         MainMenu = new Menu(this, container);
         MainMenu.setShown(true);
         newGame(container);
@@ -153,6 +158,9 @@ public void newGame(GameContainer container)throws SlickException{
                 GL11.glColor3f(255, 255, 255);
                 e.printStackTrace();
             }
+        }else {
+            back.draw(Display.getDesktopDisplayMode().getWidth()-back.getWidth()-100
+                    ,Display.getDesktopDisplayMode().getHeight()/13.5f);
         }
         MainMenu.render();
     }//render world&objects or menu
