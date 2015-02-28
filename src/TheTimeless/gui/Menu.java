@@ -3,9 +3,10 @@ package TheTimeless.gui;
 import TheTimeless.game.*;
 import org.ietf.jgss.GSSManager;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.*;
 
 import java.awt.*;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -62,17 +63,43 @@ public class Menu {
         params.setSound(World.ResLoader.getSound("click"));
         gui.setSound(World.ResLoader.getSound("click"));
         gui.add(new guiButton(app,"Resume", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2-300){
+                s_height/2-  mainFont.getHeight()/2-350){
             @Override
             public void onClicked(){
-               Shown=false;
-                app.setPaused(false);
-                Loader.playSound("click", 1, 1, false);
+                if(Game.loaded) {
+                    Shown = false;
+                    app.setPaused(false);
+                    Loader.playSound("click", 1, 1, false);
+                }
+            }
+            @Override
+            public void render(){
+                if (Game.loaded) {
+                    render.drawString( string, (int) rect.getX(), (int) rect.getY(), org.newdawn.slick.Color.white);
+                }else{
+                    render.drawString( string, (int) rect.getX(), (int) rect.getY(), org.newdawn.slick.Color.gray);
+                }
+            }
+        });
+        gui.add(new guiButton(app,"New Game", mainFont,4,
+                s_height/2-  mainFont.getHeight()/2-270){
+            @Override
+            public void onClicked(){
+                try {
+                    Shown = false;
+                    Game.loaded=true;
+                    app.setPaused(false);
+                    Loader.playSound("click", 1, 1, false);
+                    Game.newGame(app);
+                    System.gc();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
         gui.add(new guiButton(app,"Load", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2-150){
+                s_height/2-  mainFont.getHeight()/2-190){
             @Override
             public void onClicked(){
                 try {
@@ -86,13 +113,10 @@ e.printStackTrace();
             }
         });
         gui.add(new guiButton(app,"Save", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2){
+                s_height/2-  mainFont.getHeight()/2-110){
             @Override
             public void onClicked(){
                 try {
-
-                    Shown=false;
-                    app.setPaused(false);
                     Date d = new Date();
                     SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
                     Game.save("data/saves/world_lev." + Game.Level + "_" + format1.format(d) + ".ttws");
@@ -106,7 +130,7 @@ e.printStackTrace();
         });
 
         gui.add(new guiButton(app,"Help",  mainFont,4,
-                s_height/2-  mainFont.getHeight()/2+290){
+                s_height/2-  mainFont.getHeight()/2-30){
             @Override
             public void onClicked(){
                if(Help.getShown())
@@ -116,7 +140,7 @@ e.printStackTrace();
             }
         });
         gui.add(new guiButton(app,"Parameters",  mainFont,4,
-                s_height/2-  mainFont.getHeight()/2+150){
+                s_height/2-  mainFont.getHeight()/2+50){
             @Override
             public void onClicked(){
                 gui.setShown(false);
@@ -127,7 +151,7 @@ e.printStackTrace();
 
 
         gui.add(new guiButton(app,"Exit", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2+400+30){
+                s_height/2-  mainFont.getHeight()/2+130){
             @Override
             public void onClicked(){
                 ConfigReader.setConfig("width", String.valueOf(Display.getWidth()));
@@ -161,7 +185,9 @@ e.printStackTrace();
                 Loader.playSound("click", 1, 1, false);
             }
         });
+
     }
+
     public void setShown(boolean show){
         Shown=show;
     }

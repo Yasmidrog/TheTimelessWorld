@@ -37,7 +37,7 @@ public final class VTextRender {
             Graphics g = im.getGraphics();
             FontMetrics fm = g.getFontMetrics(f);
             int w = fm.charWidth(i);
-            int h = f.getSize() + 5;
+            int h = f.getSize() + (int)(f.getSize()/4.6);
             /*
              Making the java.awt.BufferedImage with character.
              */

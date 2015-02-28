@@ -21,6 +21,7 @@ public class WizardGame extends BasicGame {
     public int Level = 1;//current level
     public World world;//current world
     private AppGameContainer app;
+    public boolean loaded;
     public WizardGame() {
         super("Timeless");
     }
@@ -103,22 +104,26 @@ public class WizardGame extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
         MainMenu = new Menu(this, container);
-        TiledMap grassMap = new TiledMap("data/levels/" + Level + "/" + "world.tmx");
-        world = new World();
-        world.init(grassMap, container, Level);
-        this.app=(AppGameContainer)container;
-        try {
-
-            Display.setResizable(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        container.pause();
         MainMenu.setShown(true);
+        newGame(container);
+        container.pause();
     }
+public void newGame(GameContainer container)throws SlickException{
+    TiledMap grassMap = new TiledMap("data/levels/" + 1 + "/" + "world.tmx");
+    world = new World();
+    world.init(grassMap, container, 1);
+    this.app=(AppGameContainer)container;
+    try {
 
+        Display.setResizable(true);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
+        if (!loaded)
+            app.pause();
             if (!container.isPaused()) {
                 world.update(delta);
                 Buttons(container);
@@ -138,14 +143,16 @@ public class WizardGame extends BasicGame {
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-        g.scale(1, 1);
-        GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-        try {
-            GL11.glColor3f(255, 255, 255);
-            world.render();
-        } catch (Exception e) {
-            GL11.glColor3f(255, 255, 255);
-            e.printStackTrace();
+        if(loaded) {
+            g.scale(1, 1);
+            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+            try {
+                GL11.glColor3f(255, 255, 255);
+                world.render();
+            } catch (Exception e) {
+                GL11.glColor3f(255, 255, 255);
+                e.printStackTrace();
+            }
         }
         MainMenu.render();
     }//render world&objects or menu
@@ -164,7 +171,9 @@ public class WizardGame extends BasicGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        app.resume();
+        if(loaded) {
+            app.resume();
+        }
     }
 
     /**

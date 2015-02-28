@@ -9,7 +9,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.openal.Audio;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Created by yasmidrog on 1/15/15.
@@ -25,15 +28,39 @@ public class SavesList extends guiContainer {
         input=cntr.getInput();
         WGame=game;
         elem=0;
-        for(final String str:new File("data/saves").list()){
-            buttons.add(new guiButton(cntr, str, Font, 10, y) {
-                @Override
-                public void onClicked() {
-                    WGame.load("data/saves/" + str);
-                  exit(menu,cntr);
+        final File[] file=new File("data/saves").listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                if(pathname.getName().contains(".ttws"))
+                    return true;
+                else return false;
+            }
+        });
+        if(! (file==null)&&!(file.length==0)) {
+            Arrays.sort(file, new Comparator() {
+                public int compare(Object o1, Object o2) {
+                    if (((File) o1).lastModified() > ((File) o2).lastModified()) {
+                        return -1;
+                    } else if (((File) o1).lastModified() < ((File) o2).lastModified()) {
+                        return +1;
+                    } else {
+                        return 0;
+                    }
                 }
             });
-            y+=30;
+            for (final File f:file) {
+                if (f.getName().contains("ttws")) {
+                    buttons.add(new guiButton(cntr, f.getName(), Font, 10, y) {
+                        @Override
+                        public void onClicked() {
+                            WGame.load("data/saves/" + f.getName());
+                            WGame.loaded = true;
+                            exit(menu, cntr);
+                        }
+                    });
+                    y += 30;
+                }
+            }
         }
         if(buttons.isEmpty()) {
             String str="There is no saves";
@@ -117,10 +144,9 @@ public class SavesList extends guiContainer {
                }
            }
    }
-    private void exit(Menu menu,GameContainer container){
-        menu.setShown(false);
+    protected void exit(Menu menu,GameContainer container){
+        menu.setShown(true);
         menu.gui.setShown(true);
-        container.setPaused(false);
         this.shown=false;
     }
 }

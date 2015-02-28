@@ -81,7 +81,6 @@ public class Spudi extends Creature implements IControlable {
 
     @Override
     public void onUpdate(int delta) {
-
         SzW = sprite.getWidth();//получаем параметры спрайта
         SzH = sprite.getHeight();
         Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);

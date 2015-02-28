@@ -10,7 +10,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/slick/lib/ibxm.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/slick/lib/slick.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/jorbis-0.0.17-11.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/luaj/jnlua-1.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/xstream/xstream-1.4.8.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
