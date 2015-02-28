@@ -53,8 +53,13 @@ public class World implements Serializable {
                 ent.onInit(this);
             }
             CrLvl = level;
-            checkSpudies();//check if there are more thn one hero on the screen
             HardBlocks=GetBlocked(CurrentMap);//get hard blocks
+            for (Creature e:Creatures){
+                if (e instanceof Spudi)
+                    SpMn=(Spudi)e;
+            }
+            checkSpudies();//check if there are more thn one hero on the screen
+
             startTimers();
 
         } catch (Exception e) {

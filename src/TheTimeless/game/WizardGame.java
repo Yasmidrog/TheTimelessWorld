@@ -39,7 +39,6 @@ public class WizardGame extends BasicGame {
             app.setIcon("data/icons/icon.png");
             app.start();
             setParams(app);
-
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -114,6 +113,8 @@ public class WizardGame extends BasicGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        container.pause();
+        MainMenu.setShown(true);
     }
 
     @Override
@@ -124,6 +125,14 @@ public class WizardGame extends BasicGame {
                 if(!world.exsists){
                     LoadWorld();
                     world.exsists=true;
+                }
+                if(world.SpMn.Health<=0){
+                    boolean b=fastLoad();
+                    if (!b) {
+                        Level--;
+                        world.SpMn.Health=world.SpMn.MAXHEALTH;
+                        LoadWorld();
+                    }
                 }
             }
     }
@@ -194,12 +203,25 @@ public class WizardGame extends BasicGame {
     public void LoadWorld() {
         app.pause();
         try{
+
         Level++;
+            XStream x=new XStream(new DomDriver());
+            String sp=x.toXML(world.SpMn);
+
         TiledMap d= new TiledMap("data/levels/" + (Level) + "/" + "world.tmx");
         System.out.println("Loaded level: "+Level+": data/levels/" + (Level) + "/world.tmx");
         world = new World();
         world.init(d, app, Level);
         System.gc();
+            float X=world.SpMn.x;
+            float Y=world.SpMn.y;
+            Spudi spmn=(Spudi)x.fromXML(sp);
+            spmn.x=X;
+            spmn.y=Y;
+            world.Creatures.remove(world.SpMn);
+            world.SpMn=spmn;
+            world.Creatures.add(world.SpMn);
+            world.SpMn.onInit(world);
             app.resume();
     } catch (Exception e) {
        e.printStackTrace();
@@ -213,18 +235,39 @@ public class WizardGame extends BasicGame {
         Input input = container.getInput();
 
         if (input.isKeyPressed(Input.KEY_P)) {
-            try {
-                Date d = new Date();
-                SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
-                save("data/saves/world_lev." + Level + "_" + format1.format(d) + "-fast" + ".ttws");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+           fastSave();
         }
 
         if (input.isKeyPressed(Input.KEY_O)) {
-            try {
-                File[] saves = new File("data/saves").listFiles();
+          fastLoad();
+        }
+
+        if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+            if (!container.isPaused()) {
+                container.pause();
+                MainMenu.setShown(true);
+            } else {
+                container.setPaused(false);
+                MainMenu.setShown(false);
+            }
+        }
+        if (MainMenu.isShown()) {
+            if (container.isFullscreen()) {
+                Mouse.setCursorPosition(0, 0);
+            }
+        }
+    }
+    private boolean fastLoad(){
+        try {
+            File[] saves = new File("data/saves").listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    if(pathname.getName().contains(".ttws"))
+                        return true;
+                    else return false;
+                }
+            });
+            if(! (saves==null)&&!(saves.length==0)) {
                 Arrays.sort(saves, new Comparator() {
                     public int compare(Object o1, Object o2) {
                         if (((File) o1).lastModified() > ((File) o2).lastModified()) {
@@ -237,24 +280,20 @@ public class WizardGame extends BasicGame {
                     }
                 });
                 load(saves[0].getAbsolutePath());
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+                return true;
+            }else return false;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
-
-        if (input.isKeyPressed(Input.KEY_ESCAPE)) {
-            if (!container.isPaused()) {
-                container.pause(); //pause or continue game
-                MainMenu.setShown(true);
-            } else {
-                container.setPaused(false);
-                MainMenu.setShown(false);
-            }
-        }
-        if (MainMenu.isShown()) {
-            if (container.isFullscreen()) {
-                Mouse.setCursorPosition(0, 0);
-            }
+    }
+    private  void fastSave(){
+        try {
+            Date d = new Date();
+            SimpleDateFormat format1 = new SimpleDateFormat("dd_MM_yyyy_hhmmss");
+            save("data/saves/world_lev." + Level + "_" + format1.format(d) + "-fast" + ".ttws");
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 public GameContainer getContainer(){

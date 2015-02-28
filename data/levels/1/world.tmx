@@ -19,10 +19,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="7" name="man" tilewidth="64" tileheight="64">
-  <image source="../../terrain/man.png" width="64" height="128"/>
- </tileset>
- <tileset firstgid="9" name="Tree2" tilewidth="64" tileheight="64">
+ <tileset firstgid="7" name="Tree2" tilewidth="64" tileheight="64">
   <image source="../../terrain/Tree2.png" width="256" height="256"/>
   <tile id="14">
    <properties>
@@ -30,7 +27,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="25" name="evilguy" tilewidth="64" tileheight="64">
+ <tileset firstgid="23" name="evilguy" tilewidth="64" tileheight="64">
   <image source="../../terrain/evilguy.png" width="128" height="128"/>
   <tile id="0">
    <properties>
@@ -38,15 +35,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="29" name="man" tilewidth="64" tileheight="64">
-  <image source="../../terrain/man.png" width="64" height="128"/>
-  <tile id="0">
-   <properties>
-    <property name="type" value="LevelPortal"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="31" name="Sprite" tilewidth="64" tileheight="64">
+ <tileset firstgid="27" name="Sprite" tilewidth="64" tileheight="64">
   <image source="../../terrain/Sprite.png" width="64" height="64"/>
   <tile id="0">
    <properties>
@@ -54,16 +43,16 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="32" name="Platform1" tilewidth="64" tileheight="64">
+ <tileset firstgid="28" name="Platform1" tilewidth="64" tileheight="64">
   <image source="../../terrain/Platform1.png" width="128" height="128"/>
  </tileset>
- <tileset firstgid="36" name="Platform2" tilewidth="64" tileheight="64">
+ <tileset firstgid="32" name="Platform2" tilewidth="64" tileheight="64">
   <image source="../../terrain/Platform2.png" width="128" height="128"/>
  </tileset>
- <tileset firstgid="40" name="Platform3" tilewidth="64" tileheight="64">
+ <tileset firstgid="36" name="Platform3" tilewidth="64" tileheight="64">
   <image source="../../terrain/Platform3.png" width="128" height="128"/>
  </tileset>
- <tileset firstgid="44" name="table" tilewidth="64" tileheight="64">
+ <tileset firstgid="40" name="table" tilewidth="64" tileheight="64">
   <image source="../../terrain/table.png" width="64" height="64"/>
   <tile id="0">
    <properties>
@@ -72,19 +61,35 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="41" name="Teleport" tilewidth="64" tileheight="64">
+  <image source="../../sprites/Teleport/Teleport.png" width="64" height="253"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="LevelPortal"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="44" name="Death" tilewidth="64" tileheight="64">
+  <image source="../../terrain/Collision.png" width="64" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="DeathBlock"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="collision" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3aWwrCQBAEwMTH/a9s8iGIqJlZH0G6ChZ/BDPQzbCSaQIeOSznGPgJW07LOQd+wpZ57wf4MXuDqqRurLPaG1TNU1Y/7A2q0rphb1CV1I11TnuDqrRuXPdGysyMS+rGdWckzcy4pJy4a9CR1A13DTqSunF710iZmXFJObE36EjqhvsGHUndmO8OvJKUE72gIykr9gYdSTnRCzqSsqIbdCRlRTfo+Jes3N8VXp2t70PFnnmp5vzTvwMV38rLLzI/+jxQkZIX3aArJS+6QVdKXtYZvUtFR+f/n38+3sGla+/Mjp5nczyb0Tu4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO+5APGRDWjwNgEA
+   H4sIAAAAAAAAA+3XQQrCQAAEQf3/p32BmpGgkq6CnDcDvYe93QBgc//1D8CfKt6N4mZ2xU6Km9kVOyluZlfspLiZXbGT4mZ2xU6Km9kVOyluZlfspLiZXbGT4mZ23+jk/uT7FXeDI/6t22+4+j7OUeykuJldsZPiZnbFToqb2R3p5Nmb5OzGXp1z5rnuBkcUOyluZlfspLiZXbGT4mZ2V+zk3Rvlips5X7GT4mZ2xU6Km9kVOyluZlfspLiZXbGT4mZ2xU6Km9kVOyluZlfspLiZXbGT4mZ2xU6Km9kVOyluZlfspLiZXbGT4mZ2xU6Km9kVOyluZlfspLiZXbGT4mZ2xU6Km9kVOyluBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD7zAGVAx3HwNgEA
   </data>
  </layer>
  <layer name="terrain" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3XQYrCQBCG0UbHe0RwYLz/BU0WLpRfmCJqG/s9KLLQRQtdfqQ1INn1PgB8qJ/eB4APpRuQ6QZkugGZbkCmG5DpBmS6AdlI3Tj0PgCbMlI37AYVugGZbkCmG5At3dj3PsSb2A0qlm6McmdG+Z08h25AphuQ6QZkugHZVroxzXOc5+/BnOc5zfMbvr98dmh2g5qe3Zhavu/39/wZ7AZVr+rG1G7/t1915//LblA1yvuG3aBqK+8ba9kNqkbqBlRcu/HtT6i6duPbnwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACscwENKEcF8DYBAA==
+   H4sIAAAAAAAAA+3ZMQqAMAxA0RxEIYLe/4rNUiji4CAtyHvw6dgOWUIjAAAAAAAAAAAAmGmr9uqsriqrY+WD4KVxdjPMLQAAMM+4j/Qyvt9Lnu4Zs8cDAACr3f8a+wkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/0wB+vvoM8DYBAA==
   </data>
  </layer>
  <layer name="creatures" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3UuQ0AMAgEQdrw03+dpgBCJBzMSJtfdBEAAAAAAAAAAAAAAAAAAECHle3pEfChk93pEdDE10PN1wMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ0eRLEVIPA2AQA=
+   H4sIAAAAAAAAA+3XsQ3AMAgEQLZwnP0HNX1SWUEW0Z30LaL4AiIAAAAAAAAAgK+MzHV6CdhU2d+ZuYtmQzX9BaAr/wkdnOip+44O9BSAv/KnwDv3HwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADA0wLbwQqu8DYBAA==
   </data>
  </layer>
  <layer name="objects" width="199" height="100">
@@ -92,19 +97,8 @@
    <property name="type" value="LevelPortal"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3UoQ0AIBAEQQShC6D/LimBvCAPZEafWHWlAAAAAAAAAAAAAAAAAAAAJ7Tgvh+pgPeN7ADYiP49AADwh5kdABeq2QEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMA3FvMpMG3wNgEA
+   H4sIAAAAAAAAA+3XMQoCMRBA0a28hCdQ9/7ns7L7hSIyu+Y9SJ2B8AmzbQAAfGufHgAOShvQtAFNG9C0AU0b0LQBTRvQXm1cB+6+DNwJ7/JvQNMGNG1A0wa0b9uY2qft8fzaKv/GbXoATmeVNu7TA3A6q7TxmB6A01mlDfiUNqBpA5o2oGkDmjagaQOaNqBpA5o2oGkDmjagaQOaNqBpA5o2oGkDmjagaQOaNqDtmz6g7M7Y4di8FzRNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMB/ewIjxiHQ8DYBAA==
   </data>
  </layer>
- <objectgroup name="tables" width="199" height="100">
-  <object name="tab" type="table" gid="44" x="781" y="1731" width="4096" height="4096">
-   <properties>
-    <property name="text" value="hello.txt"/>
-   </properties>
-  </object>
-  <object name="qw" type="table" gid="44" x="1158" y="1700" width="4096" height="4096">
-   <properties>
-    <property name="type" value="hello.txt"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup name="tables" width="199" height="100"/>
 </map>

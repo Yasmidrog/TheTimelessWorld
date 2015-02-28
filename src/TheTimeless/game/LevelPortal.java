@@ -15,17 +15,16 @@ public class LevelPortal extends Entity{
     public void onInit(World world) {
         try {
             CrWld = world;
-            // Спарйт смотрит вправо
-
-            SzW = 100;//получаем параметры спрайта
-            SzH = 500;
+            sprite=World.ResLoader.getSprite("Teleport");
+            SzW = sprite.getWidth();
+            SzH = sprite.getHeight();
             Rect = new Rectangle(x, y, SzW, SzH);
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    public void onRender() {
+    @Override
+    public void onUpdate(int delta){
         try {
             if (this.Rect.intersects(CrWld.SpMn.Rect)) {
                 CrWld.exsists=false;
@@ -34,6 +33,11 @@ public class LevelPortal extends Entity{
         }catch(Exception d){
             d.printStackTrace();
         }
+    }
+    public void onRender() {
+        if (sprite != null)
+            sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW /2,
+                    -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH /2);
     }
 
 }

@@ -19,7 +19,7 @@ public class DrOctopus extends Creature implements IAgressive {
         this.y = y;
         Health = 50;
         Name = "DrOctopus";
-        MAXENERGY=55;
+        MAXENERGY=82;
         weight=10;
         Energy =MAXENERGY;
         Counters = new HashMap<String, Counter>();

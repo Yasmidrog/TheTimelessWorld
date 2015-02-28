@@ -88,7 +88,7 @@ public class Creature extends Entity{
     protected void jump(){
         if (Energy >0) {
             vy -= (Acceleration * Speed * +Math.sqrt(Energy *0.1));
-            Energy--;
+            Energy-=0.7;
         }
     }
 
@@ -103,7 +103,7 @@ public class Creature extends Entity{
         }
     }
     protected void Gravity(){
-        OnEarth = sideLocked(sides.DOWN, Acceleration * Speed * 0.5f);
+        OnEarth = sideLocked(sides.DOWN, 5.1f);
         if (OnEarth) {
             onBlockCollide();
         } else if (!OnEarth) {
@@ -112,8 +112,7 @@ public class Creature extends Entity{
                 sprite = Upleft;
             if (Side == sides.RIGHT)
                 sprite = Upright;
-
-            vy += Acceleration * Speed * 0.5;
+            vy += 5.1;
         }
     }
 }

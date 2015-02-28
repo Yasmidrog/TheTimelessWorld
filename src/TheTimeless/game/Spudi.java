@@ -11,9 +11,9 @@ import java.util.HashMap;
  */
 public class Spudi extends Creature implements IControlable {
 
-    transient Graphics indicators ;
-      transient Image healthImage,manaImage,energyImage,boowIcon;
-    transient  Image rightHand,leftHand;
+    private transient Graphics indicators ;
+      private transient Image healthImage,manaImage,energyImage,boowIcon;
+   private transient  Image rightHand,leftHand;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
         Speed = 18;
@@ -23,9 +23,11 @@ public class Spudi extends Creature implements IControlable {
         Health = 100;
         Name = "Spudi";
         weight=60;
-        MAXMANA =150; MAXHEALTH =100;MAXENERGY=55;
+        MAXMANA =150;
+        MAXHEALTH =100;
+        MAXENERGY=82;
         MANAREGENSTEP =0.027f;
-        ENERGYREGENSTEP=0.016f;
+        ENERGYREGENSTEP=0.6f;
         Mana =MAXMANA;//current mana
         Energy =MAXENERGY;//amount of remaining energy
         Counters = new HashMap<String, Counter>();
@@ -68,7 +70,10 @@ public class Spudi extends Creature implements IControlable {
             SzW = sprite.getWidth();//получаем параметры спрайта
             SzH = sprite.getHeight();
             Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
-            CrWld.startSpeaking(0);
+            if (CrWld.CrLvl==2) {
+                CrWld.startSpeaking(0);
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -76,25 +81,16 @@ public class Spudi extends Creature implements IControlable {
 
     @Override
     public void onUpdate(int delta) {
+
         SzW = sprite.getWidth();//получаем параметры спрайта
         SzH = sprite.getHeight();
         Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
-        if (Health <=  0) {
-            System.out.print("********Health=0********");
-            CrWld.CrCntr.exit();
-        }
-    if((int)Energy ==25) {
-        Loader.playSound("fly", 1, 1, false, 1, 1, 1);
-    }
-
         checkCounters();
         control(delta);
      if(Mana <MAXMANA) {
          Mana += MANAREGENSTEP;
      }
-        if(Energy <MAXENERGY) {
-            Energy+=ENERGYREGENSTEP;
-        }
+
        Gravity();
         shoot();
         checkvx();
@@ -153,8 +149,16 @@ public class Spudi extends Creature implements IControlable {
                     vx+=Speed*Acceleration;
 
             } else if (Side == sides.LEFT) sprite = Upleft;
-            if (input.isKeyDown(Input.KEY_SPACE)) {
+            if (input.isKeyDown(Input.KEY_SPACE)&&!(OnEarth&&Energy<26)) {
                 jump();
+            }else if (input.isKeyDown(Input.KEY_LSHIFT)) {
+                if (Energy>= 1) {
+                    if (Side == sides.RIGHT)
+                        vx += 3.2;
+                    if (Side == sides.LEFT)
+                        vx -= 3.2;
+                    Energy -= 1;
+                }
             }
 
         }catch(Exception e){}
@@ -224,7 +228,9 @@ public class Spudi extends Creature implements IControlable {
             sprite = Left;
         if (Side ==sides.RIGHT)
             sprite = Right;
-        Energy =MAXENERGY;
+        if(Energy <MAXENERGY) {
+            Energy+=ENERGYREGENSTEP;
+        }
     }
 @Override
     public void onEntityCollide(final Creature ent) {}
