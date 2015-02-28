@@ -2,9 +2,6 @@ package TheTimeless.game;
 
 import org.newdawn.slick.geom.Rectangle;
 
-/**
- * Created by yasmidrog on 28.02.15.
- */
 public class DeathBlock extends Entity {
     public DeathBlock(float x, float y) {
 
