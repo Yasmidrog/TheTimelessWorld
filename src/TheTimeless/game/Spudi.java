@@ -152,10 +152,12 @@ public class Spudi extends Creature implements IControlable {
                 jump();
             }else if (input.isKeyDown(Input.KEY_LSHIFT)) {
                 if (Energy>= 1) {
-                    if (Side == sides.RIGHT)
+                    if (Side == sides.RIGHT&&input.isKeyDown(Input.KEY_D)) {
                         vx += 3.2;
-                    if (Side == sides.LEFT)
+                    }
+                    if (Side == sides.LEFT&&input.isKeyDown(Input.KEY_A)) {
                         vx -= 3.2;
+                    }
                     Energy -= 1;
                 }
             }

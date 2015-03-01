@@ -19,11 +19,10 @@ public class guiElement {
         protected Graphics graphics=new Graphics();
         protected VTextRender render;
        protected  void update(){
-               if(mouseClicked()&&active)
-                   onClicked();
+           if(mouseClicked()&&active)
+               onClicked();
            }
         public void render()throws SlickException {
-            update();
         }
         public void onClicked() {
 

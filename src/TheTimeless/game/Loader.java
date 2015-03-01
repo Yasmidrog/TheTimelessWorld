@@ -213,8 +213,8 @@ DO NOT READ THE THE CODE BELOW
                     Entity objs = null;
                     if (!("".equals(value))) {
                         Constructor c = Class.forName("TheTimeless.game." + value).getConstructors()[0];
-                        objs = (Entity) c.newInstance((xAxis -  Display.getDesktopDisplayMode().getWidth() / 2 / 64) * 64,
-                                (yAxis -  Display.getDesktopDisplayMode().getHeight() / 2 / 64) * 64);//get the coords of th object
+                        objs = (Entity) c.newInstance(((xAxis - (Display.getDesktopDisplayMode().getWidth() / 2 / 64)) * 64) + 27,
+                                ((yAxis - (Display.getDesktopDisplayMode().getHeight() / 2 / 64)) * 64) +27);//get the coords of th object
                         if (!(objs instanceof Creature))
                             crts.add(objs);
                         else
@@ -242,8 +242,8 @@ DO NOT READ THE THE CODE BELOW
                     String value = map.getTileProperty(tileID, "type", "");//check the type of block with ID
                     if (!("".equals(value))) {
                         Constructor c = Class.forName("TheTimeless.game." + value).getConstructors()[0];
-                        Creature objs = (Creature) c.newInstance((xAxis -  Display.getDesktopDisplayMode().getWidth() / 2 / 64) * 64,
-                                (yAxis - Display.getDesktopDisplayMode().getHeight() / 2 / 64) * 64);//get the coords of th object
+                        Creature objs = (Creature) c.newInstance((xAxis -  Display.getDesktopDisplayMode().getWidth() / 2 / 64) * 64+64,
+                                (yAxis - Display.getDesktopDisplayMode().getHeight() / 2 / 64) * 64+64);//get the coords of th object
                         crts.add(objs);
                     }//if block has a type, create an creature with the value of "type"
                 }

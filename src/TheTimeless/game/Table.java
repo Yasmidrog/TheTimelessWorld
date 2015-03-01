@@ -25,6 +25,7 @@ public class Table extends Entity {
             this.x = x;
             this.y = y;
             Name = "HB";
+            renderBehind=false;
         }catch(Exception e){e.printStackTrace();}
     }
 

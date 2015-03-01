@@ -42,7 +42,7 @@ public class HeroBullet extends Bullet {
         }
     }
     public void onRender() {
-        if (sprite != null) {
+        if (sprite != null&&!Rect.intersects(Killer.Rect)) {
             Image im=sprite.getCurrentFrame().copy();
             im.rotate(57.2f*(float)alpha);
             im.draw(-CrWld.SpMn.x + Rect.getX() + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,

@@ -150,7 +150,7 @@ public class World implements Serializable {
                     || ent.x - SpMn.x > ent.SzW + Display.getWidth()
                     || SpMn.y - ent.y > ent.SzH + Display.getHeight()
                     || ent.y - SpMn.y > ent.SzH + Display.getHeight()
-            ))
+            )&&ent.renderBehind)
                 ent.onRender();
         }//render if the object is on the string
         for (Creature ent : ents) {
@@ -162,8 +162,12 @@ public class World implements Serializable {
                 ent.onRender();
         }
         for (Entity ent : entz) {
-            if (ent instanceof Table)
-                ((Table) ent).drawTable();
+            if (!(SpMn.x - ent.x > ent.SzW + Display.getWidth()
+                    || ent.x - SpMn.x > ent.SzW + Display.getWidth()
+                    || SpMn.y - ent.y > ent.SzH + Display.getHeight()
+                    || ent.y - SpMn.y > ent.SzH + Display.getHeight()
+            ) && !ent.renderBehind)
+                ent.onRender();
         }
     }
 

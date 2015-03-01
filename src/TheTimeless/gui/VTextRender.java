@@ -164,7 +164,12 @@ public final class VTextRender {
         }
     }
 
-    public int getHeight() {
-        return f.getSize() + 5;
+    public int getHeight(){
+        return (int)(f.getSize()+f.getSize()/4.6f);
+    }
+    public int getHeight(String text) {
+        if(!text.contains("\n"))
+        return (int)(f.getSize()+f.getSize()/4.6f);
+        else return (int)((f.getSize()+f.getSize()/4.6f)*text.split("\n").length);
     }
 }

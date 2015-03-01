@@ -31,8 +31,7 @@ public class Menu {
 
     }
     public void render()
-    {
-        try {
+    {try {
             if (Shown) {
                 gui.render();
                 params.render();
@@ -56,9 +55,21 @@ public class Menu {
                 "Jump: Space\n\n" +
                 "Fast save/open: P,O\n\n"+
         "Menu: Esc \n\n"+
-        "Continue speaking: Tab\n\n",mainFont,
+        "Continue speaking: Tab\n\n" +
+                "Read tables: E\n\n ",mainFont,
                 Display.getDesktopDisplayMode().getWidth()/2-200,
-                Display.getDesktopDisplayMode().getHeight()/2-350);
+                Display.getDesktopDisplayMode().getHeight()/12){
+            @Override
+            public void render(){
+                try {
+                    if (shown) {
+                        graphics.setColor(new org.newdawn.slick.Color(0, 0, 0, 230));
+                        graphics.fillRect(getX() - 10, getY() - 10, getWidth() + 20, getHeight() + 20);
+                        super.render();
+                    }
+                }catch (Exception e){e.printStackTrace();}
+            }
+        };
         Help.setShown(false);
         params.setSound(World.ResLoader.getSound("click"));
         gui.setSound(World.ResLoader.getSound("click"));
@@ -125,6 +136,14 @@ e.printStackTrace();
                     list.setShown(false);
                 }catch(Exception e){
 e.printStackTrace();
+                }
+            }
+            @Override
+            public void render(){
+                if (Game.loaded) {
+                    render.drawString( string, (int) rect.getX(), (int) rect.getY(), org.newdawn.slick.Color.white);
+                }else{
+                    render.drawString( string, (int) rect.getX(), (int) rect.getY(), org.newdawn.slick.Color.gray);
                 }
             }
         });

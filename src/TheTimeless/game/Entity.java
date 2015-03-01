@@ -16,6 +16,7 @@ public class Entity implements Serializable {
     transient public Shape Rect;//collider
     protected float weight;
     public String Name;
+    public boolean renderBehind=true;
     public float x, y;//coords
     public int getSizeH() {
         return SzH;
