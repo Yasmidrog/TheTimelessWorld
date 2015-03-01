@@ -17,6 +17,7 @@ public class World implements Serializable {
     public Spudi SpMn;
     public boolean exsists=true;
     public int delta = 1;
+    public float Gravity=5.1f;
     transient public GameContainer CrCntr;//current window with game
     public int CrLvl;//level of the game
     transient public TiledMap CurrentMap;//map that you playing on

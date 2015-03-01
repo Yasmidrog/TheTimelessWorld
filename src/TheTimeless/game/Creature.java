@@ -103,7 +103,7 @@ public class Creature extends Entity{
         }
     }
     protected void Gravity(){
-        OnEarth = sideLocked(sides.DOWN, 5.1f);
+        OnEarth = sideLocked(sides.DOWN, CrWld.Gravity);
         if (OnEarth) {
             onBlockCollide();
         } else if (!OnEarth) {
@@ -112,7 +112,7 @@ public class Creature extends Entity{
                 sprite = Upleft;
             if (Side == sides.RIGHT)
                 sprite = Upright;
-            vy += 5.1;
+            vy += CrWld.Gravity;
         }
     }
 }

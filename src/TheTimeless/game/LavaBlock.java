@@ -20,10 +20,10 @@ public class LavaBlock extends Entity {
     public void onInit(World world) {
         try {
             CrWld = world;
-            sprite = World.ResLoader.getSprite("Lava");
 
-            SzW = sprite.getWidth()+5;//get collider
-            SzH = sprite.getHeight()+45;
+            sprite=World.ResLoader.getSprite("Lava");
+            SzW = 64;//get collider
+            SzH = 64;
 
             Rect = new Rectangle(x, y, SzW, SzH);
 
@@ -33,11 +33,9 @@ public class LavaBlock extends Entity {
     }
     @Override
     public void onRender() {
-        if (sprite != null) {
-            Image im = sprite.getCurrentFrame().copy();
-            im.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
-                    -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2);
-        }
+      CrWld.CrCntr.getGraphics().drawAnimation(sprite,-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
+       -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, new Color(191, 48, 0, 120));
+
     }
     @Override
 
@@ -45,8 +43,6 @@ public class LavaBlock extends Entity {
         for (Creature cr:CrWld.Creatures)
             if(this.Rect.intersects(cr.Rect)) {
                 cr.Health-=0.05;
-                cr.vx=cr.vx/2;
-                cr.vy=cr.vy/2;
             }
     }
 }
