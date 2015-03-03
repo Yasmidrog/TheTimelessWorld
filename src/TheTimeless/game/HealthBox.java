@@ -42,10 +42,6 @@ public class HealthBox extends Entity{
             }
         }
     }
-    public void onRender() {
-        if (sprite != null)
-            sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW /2,
-                    -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH /2);
-    }
+
 }
 

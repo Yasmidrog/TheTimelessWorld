@@ -1,7 +1,9 @@
 package TheTimeless.game;
 
+import org.lwjgl.openal.AL11;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.awt.event.ActionEvent;
@@ -17,15 +19,15 @@ public class World implements Serializable {
     public Spudi SpMn;
     public boolean exsists=true;
     public int delta = 1;
-    public float Gravity=5.1f;
+
     transient public GameContainer CrCntr;//current window with game
     public int CrLvl;//level of the game
     transient public TiledMap CurrentMap;//map that you playing on
     public ArrayList<Bullet> Bullets;
     public ArrayList<Creature> Creatures;
     public ArrayList<Entity> StaticObjects;
-    private javax.swing.Timer EntityTimer;
-    private javax.swing.Timer BulletTimer;
+    javax.swing.Timer EntityTimer;
+    javax.swing.Timer BulletTimer;
     private boolean[][] HardBlocks;//solid blocks
     transient private Image BackgroundImage;
     private states state;
@@ -60,7 +62,6 @@ public class World implements Serializable {
                     SpMn=(Spudi)e;
             }
             checkSpudies();//check if there are more thn one hero on the screen
-
             startTimers();
 
         } catch (Exception e) {

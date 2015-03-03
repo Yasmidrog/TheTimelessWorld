@@ -86,12 +86,12 @@ public class Spudi extends Creature implements IControlable {
         Rect = new org.newdawn.slick.geom.Rectangle(x, y, SzW, SzH);
         checkCounters();
         control(delta);
+        shoot();
      if(Mana <MAXMANA) {
          Mana += MANAREGENSTEP;
      }
 
        Gravity();
-        shoot();
         checkvx();
     }
 
@@ -179,9 +179,9 @@ public class Spudi extends Creature implements IControlable {
                         Bullet bullet = null;
 
                         if (Side == sides.RIGHT) {
-                            bullet = new HeroBullet(x + SzW - 15, y,input.getMouseX(),input.getMouseY(),  this, -21);
+                            bullet = new HeroBullet(x + SzW/2+17, y,input.getMouseX(),input.getMouseY(),  this, -21);
                         } else if (Side == sides.LEFT) {
-                            bullet = new HeroBullet(x - 30, y,input.getMouseX(),input.getMouseY(),  this, 21);
+                            bullet = new HeroBullet(x +SzH/2-17, y,input.getMouseX(),input.getMouseY(),  this, 21);
                         }
                         Loader.playSound("shoot", 1, 2, false, 2, 2, 10);
                         assert bullet != null;
@@ -197,14 +197,14 @@ public class Spudi extends Creature implements IControlable {
         }
     }
     private void drawShoot(){
-        Input in = CrWld.CrCntr.getInput();
+        Input input = CrWld.CrCntr.getInput();
         Image Hand;
-        int targetx=in.getMouseX();
-        int targety=in.getMouseY();
-        int deltax = targetx-(int)(-CrWld.SpMn.x + Rect.getX() + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW / 2);
-        int deltay = targety-(int) (-CrWld.SpMn.y + Rect.getY() + (SzH / 3) +CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH / 2);
-        float alpha=(float)Math.atan2(deltay,deltax);
+        int targetx=input.getMouseX();
+        int targety=input.getMouseY();
         if(Side==sides.LEFT) {
+            int deltax = targetx-(CrWld.CrCntr.getWidth() / 2 - SzW / 2+21);
+            int deltay = targety-(CrWld.CrCntr.getHeight() / 2-SzH/4+10);
+            float alpha=(float)Math.atan2(deltay,deltax);
             Hand=leftHand.copy();
             Hand.setCenterOfRotation(20,10);
             Hand.rotate(alpha*57.295f);
@@ -212,6 +212,9 @@ public class Spudi extends Creature implements IControlable {
             BodyLeft.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
         }
         if(Side==sides.RIGHT){
+            int deltax = targetx-(CrWld.CrCntr.getWidth() / 2 - SzW / 2+48);
+            int deltay = targety-( CrWld.CrCntr.getHeight() / 2-SzH/4+3);
+            float alpha=(float)Math.atan2(deltay,deltax);
             Hand=rightHand.copy();
             Hand.setCenterOfRotation(5,5);
             Hand.rotate(alpha*57.295f);

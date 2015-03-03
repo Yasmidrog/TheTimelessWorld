@@ -2,6 +2,7 @@ package TheTimeless.game;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Transform;
 
 import java.util.Objects;
 
@@ -34,9 +35,9 @@ public class HeroBullet extends Bullet {
             int deltax = targetx-(int)(-CrWld.SpMn.x + Rect.getX() + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW / 2);
             int deltay = targety-(int) (-CrWld.SpMn.y + Rect.getY() + (Killer.SzH / 3) +CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH / 2);
 
-            alpha=Math.atan2(deltay,deltax);
-                cosx=(float)Math.cos(alpha);
-            siny=(float) Math.sin(alpha);
+                 alpha=Math.atan2(deltay,deltax);
+                 cosx=(float)Math.cos(alpha);
+                 siny=(float) Math.sin(alpha);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -62,7 +63,7 @@ public class HeroBullet extends Bullet {
         for (final Creature ent : CrWld.Creatures) {
             if (this.Rect.intersects(ent.Rect) ) {
                 if(!Objects.equals(ent.getClass().getName(), Killer.getClass().getName())) {
-                    ent.Health -= 5;
+                    ent.changeHealth(-5);
                     ent.Counters.put("collide",new Counter("collide",40) {
                                 private int distance = 0;
                                 public void tick() {

@@ -23,6 +23,7 @@ public class WizardGame extends BasicGame {
     private AppGameContainer app;
     public boolean loaded;
     private Image back;
+
     public WizardGame() {
         super("Timeless");
     }
@@ -114,12 +115,16 @@ public class WizardGame extends BasicGame {
         container.pause();
     }
 public void newGame(GameContainer container)throws SlickException{
+    if(world!=null) {
+        world.EntityTimer.stop();
+        world.BulletTimer.stop();
+    }
     TiledMap grassMap = new TiledMap("data/levels/" + 1 + "/" + "world.tmx");
     world = new World();
     world.init(grassMap, container, 1);
+    Level=1;
     this.app=(AppGameContainer)container;
     try {
-
         Display.setResizable(true);
     } catch (Exception e) {
         e.printStackTrace();
@@ -189,6 +194,9 @@ public void newGame(GameContainer container)throws SlickException{
      */
     public void load(String adress) {
         try {
+            world.EntityTimer.stop();
+            world.BulletTimer.stop();
+            app.pause();
             XStream stream=new XStream(new DomDriver());
             Serializator s=(Serializator)stream.fromXML(new File(adress));
             TiledMap d=s.getMap();
@@ -203,13 +211,16 @@ public void newGame(GameContainer container)throws SlickException{
                 if(cr instanceof Spudi)
                     world.SpMn=(Spudi)cr;
             }
+            System.gc();
             world.checkSpudies();
-
             world.StaticObjects=ents;
             for(Entity ent:world.StaticObjects){
                 ent.onInit(world);
             }
-
+            System.gc();
+            world.EntityTimer.restart();
+            world.BulletTimer.restart();
+            app.resume();
         } catch (ConcurrentModificationException s) {
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,7 +229,10 @@ public void newGame(GameContainer container)throws SlickException{
     }
 
     public void LoadWorld() {
+        world.EntityTimer.stop();
+        world.BulletTimer.stop();
         app.pause();
+
         try{
 
         Level++;
@@ -236,9 +250,10 @@ public void newGame(GameContainer container)throws SlickException{
             spmn.x=X;
             spmn.y=Y;
             world.Creatures.remove(world.SpMn);
-            world.SpMn=spmn;
+            world.SpMn= spmn;
             world.Creatures.add(world.SpMn);
             world.SpMn.onInit(world);
+
             app.resume();
     } catch (Exception e) {
        e.printStackTrace();

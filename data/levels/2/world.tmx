@@ -71,11 +71,9 @@
  </tileset>
  <tileset firstgid="44" name="lava" tilewidth="64" tileheight="64">
   <image source="../../terrain/lava.png" width="64" height="64"/>
-  <tile id="0">
-   <properties>
-    <property name="type" value="LavaBlock"/>
-   </properties>
-  </tile>
+ </tileset>
+ <tileset firstgid="45" name="lavatop" tilewidth="64" tileheight="64">
+  <image source="../../terrain/lavatop.png" width="64" height="64"/>
  </tileset>
  <layer name="collision" width="199" height="100">
   <data encoding="base64" compression="gzip">
@@ -84,12 +82,12 @@
  </layer>
  <layer name="terrain" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3U0UrDUBAE0KD2LxQqtP//i14QQaShNzAmLXMOLPsSSAZmsywAAAAAwJ5OR38APCi3wVYtnWnJSU5LZ1pyktPSmZac5LR0piUnOS2daclJTktnWnKS09KZlpzktHSmJSc5LZ1pyUlOS2dacpLT0pmWnOS0dKYlJzktnWnJSc4zdOZ9zMeYy8pcx5zHfN54/vprwxZH3cZa3//2POUZ/gE8lv/ozNp/+7zkOz/LbbBVS2dacpLT0pmWnOS0dKYlJxkvY17De+/3zW63wRZvy3dnUvte/36eSb93dsNRZm4DGrkNuO00MQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAe/sCNAQBRfA2AQA=
+   H4sIAAAAAAAAA+3UwUrDUBQE0KDNXyi0YHf6/79nxI1IU/Jg2rTMOXC5m0AyMDfTBAAAAADc07z3B8CDchuMaulMS05yWjrTkpOcls605CSnpTMtOclp6UxLTnJaOtOSk5yWzrTkJKelMy05yWnpTEtOclo605KTnJbOtOQkp6UzLTnJaelMS05ynqEzb8u8L/OxMudljsucLjx//rNhxF63sdb3/z1PeYZ/AI/lFp1Z+28fp3znt3IbjGrpTEtOclo605KTnJbOtOQk42WZ1/D+ujK3eN/W7TYYcZh+O5PaP/N5Zebw+0Y37GXLbUAjtwGXzRsGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODevgG1CXq28DYBAA==
   </data>
  </layer>
  <layer name="creatures" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3UuQ0AMAgEQbrw03+hpgBCJBzMSJtfdBEAAAAAAAAAAAAAAAAAAECHle3pEfChk93pEdDE10PN1wMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ0ea7JfivA2AQA=
+   H4sIAAAAAAAAA+3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgztOyt88DYBAA==
   </data>
  </layer>
  <layer name="objects" width="199" height="100">
@@ -97,14 +95,15 @@
    <property name="type" value="LevelPortal"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3UsQ0AIAhFQSqXcAX3n88FiJ0Sw11C/5tHBAAAAAAAAAAAAAAAAAAAcMOoHgDAE/49AAD0NKsHANDSOhx0pg3IaQNy2gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD9seAH90/A2AQA=
+   H4sIAAAAAAAAA+3UMQ0AMAwEsZ9Kovx5BkUaKbUR3HQJAAAAAAAAAAAAAAAAAADQ4UwHAPCE3wMAwJ/udAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsVjG+KtHwNgEA
   </data>
  </layer>
  <objectgroup name="tables" width="199" height="100">
-  <object name="tab" type="table" gid="40" x="781" y="1731" width="4096" height="4096">
+  <object name="tab" type="Table" gid="40" x="781" y="1731" width="4096" height="4096">
    <properties>
     <property name="text" value="hello.txt"/>
    </properties>
   </object>
+  <object name="lav" type="Lava" x="1344" y="1728" width="446" height="254"/>
  </objectgroup>
 </map>

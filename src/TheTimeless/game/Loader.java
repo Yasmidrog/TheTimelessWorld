@@ -262,12 +262,19 @@ private ArrayList<Entity> getScriptsAndTables(TiledMap map){
 
     try {
         for (int i = 0; i < count; i++) {
-
-            Constructor c = Class.forName("TheTimeless.game.Table").getConstructors()[0];
-            crts.add((Entity) c.newInstance((map.getObjectX(0, i) - Display.getDesktopDisplayMode().getWidth() / 2-32) ,
-                        ((map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2 )-32 ),
-                          map.getObjectProperty(0, i, "text", "hello.txt")));
-
+            if(map.getObjectType(0, i).equals("Table")) {
+                Constructor c = Class.forName("TheTimeless.game.Table").getConstructors()[0];
+                crts.add((Entity) c.newInstance((map.getObjectX(0, i) - Display.getDesktopDisplayMode().getWidth() / 2 - 32),
+                        ((map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2) - 32),
+                        map.getObjectProperty(0, i, "text", "hello.txt")));
+            }
+            if(map.getObjectType(0, i).equals("Lava")){
+                Constructor c = Class.forName("TheTimeless.game.Table").getConstructors()[0];
+                crts.add( new Lava(map.getObjectX(0, i) - Display.getDesktopDisplayMode().getWidth() / 2 +27,
+                        ((map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2) +27),
+                        map.getObjectWidth(0, i), map.getObjectHeight(0, i)));
+            }
+            System.out.println("Loaded new "+map.getObjectType(0, i));
         }
     }catch(Exception e){
         e.printStackTrace();

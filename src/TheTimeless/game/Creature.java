@@ -7,13 +7,14 @@ import java.util.Map;
 
 
 public class Creature extends Entity{
-    public float Health;
+    protected float Health;
     transient public Animation Upleft, Upright, Left, Right,BodyRight,BodyLeft,ShootRight,ShootLeft;
     public boolean OnEarth;//is the creature stands on earth
     public float Speed;
     public float vx,vy;//the distance to move at
     protected float Acceleration;
     public sides Side = sides.RIGHT;
+    public float Gravity=5.1f;
     protected Map<String,Counter> Counters;//the counters of an object
     protected   float MAXMANA , MAXHEALTH, MAXENERGY;
     protected float Mana,Energy ;//current mana
@@ -103,7 +104,7 @@ public class Creature extends Entity{
         }
     }
     protected void Gravity(){
-        OnEarth = sideLocked(sides.DOWN, CrWld.Gravity);
+        OnEarth = sideLocked(sides.DOWN, Gravity);
         if (OnEarth) {
             onBlockCollide();
         } else if (!OnEarth) {
@@ -112,8 +113,11 @@ public class Creature extends Entity{
                 sprite = Upleft;
             if (Side == sides.RIGHT)
                 sprite = Upright;
-            vy += CrWld.Gravity;
+            vy += Gravity;
         }
+    }
+    public void changeHealth(float healthDifference){
+        Health+=healthDifference;
     }
 }
 

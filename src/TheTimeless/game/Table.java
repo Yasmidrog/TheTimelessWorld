@@ -25,7 +25,7 @@ public class Table extends Entity {
             this.x = x;
             this.y = y;
             Name = "HB";
-            renderBehind=false;
+            renderBehind=true;
         }catch(Exception e){e.printStackTrace();}
     }
 
@@ -49,6 +49,7 @@ public class Table extends Entity {
         if (showText&&(CrWld.SpMn.x - x > SzW + 40|| x - CrWld.SpMn.x > SzW + 40)){
             showText=false;
             return;
+
         }
         if(this.Rect.intersects(CrWld.SpMn.Rect)&& CrWld.CrCntr.getInput().isKeyPressed(Input.KEY_E)) {
            if(!showText)
@@ -60,15 +61,13 @@ public class Table extends Entity {
         }
     }
     public void onRender() {
-        if (sprite != null)
-            sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW /2,
-                    -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH /2);
-
+        super.onRender();
+        drawTable();
     }
     public void drawTable() {
-        int swidth=Display.getDesktopDisplayMode().getWidth();
-        int sheight=Display.getDesktopDisplayMode().getHeight();
         if (showText) {
+            int swidth=Display.getDesktopDisplayMode().getWidth();
+            int sheight=Display.getDesktopDisplayMode().getHeight();
             gr.setColor(new Color(Color.white.getRed(), Color.white.getGreen(), Color.white.getBlue(), 40));
             String result = vr.splitString(Text, swidth/3, false);
             int height = result.split("\n").length * vr.getHeight() + 20;

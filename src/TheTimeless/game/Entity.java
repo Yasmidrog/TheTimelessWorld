@@ -18,6 +18,7 @@ public class Entity implements Serializable {
     public String Name;
     public boolean renderBehind=true;
     public float x, y;//coords
+
     public int getSizeH() {
         return SzH;
     }
@@ -37,5 +38,9 @@ public class Entity implements Serializable {
     /**
      * render method
      */
-    public void onRender() {}
+    public void onRender() {
+        if (sprite != null)
+            sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
+                    -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2);
+    }
 }

@@ -24,20 +24,15 @@ public class LevelPortal extends Entity{
         }
     }
     @Override
-    public void onUpdate(int delta){
+    public void onUpdate(int delta) {
         try {
             if (this.Rect.intersects(CrWld.SpMn.Rect)) {
-                CrWld.exsists=false;
+                CrWld.exsists = false;
                 CrWld.StaticObjects.remove(this);
             }
-        }catch(Exception d){
+        } catch (Exception d) {
             d.printStackTrace();
         }
-    }
-    public void onRender() {
-        if (sprite != null)
-            sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2-CrWld.SpMn.SzW /2,
-                    -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2-CrWld.SpMn.SzH /2);
     }
 
 }

@@ -31,8 +31,14 @@ public class Menu {
 
     }
     public void render()
-    {try {
+    {
+        try {
             if (Shown) {
+                if(Game.loaded&&app.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+                    Shown = false;
+                    app.setPaused(false);
+                    Loader.playSound("click", 1, 1, false);
+                }
                 gui.render();
                 params.render();
                 if (list != null)
