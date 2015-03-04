@@ -39,10 +39,8 @@ public class XPIncreaser extends Entity {
            exists=false;
         }
         if(!exists){
-            System.out.println(upMove);
                 y-=0.5;upMove+=1;
             if(upMove>100){
-                System.out.println("not");
                 CrWld.StaticObjects.remove(this);
             }
         }
