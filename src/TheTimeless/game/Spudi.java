@@ -12,8 +12,9 @@ import java.util.HashMap;
 public class Spudi extends Creature implements IControlable {
 
     private transient Graphics indicators ;
-      private transient Image healthImage,manaImage,energyImage,boowIcon;
-   private transient  Image rightHand,leftHand;
+    private transient Image healthImage,manaImage,energyImage,boowIcon;
+    private transient  Image rightHand,leftHand;
+    int XP=50;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
         Speed = 18;
@@ -118,6 +119,8 @@ public class Spudi extends Creature implements IControlable {
             indicators.fillRect(64 + 10, 57, 150 - 44, 13);
             indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12, healthImage,1,1);
             boowIcon.draw(5,30);
+            indicators.drawImage(World.ResLoader.getSprite("Coin").getImage(0).getScaledCopy(16,16),5,98);
+            Fonts.SmallText.drawString("XP: "+XP,23,98,Color.white);
 
         } catch(Exception e){
                 e.printStackTrace();

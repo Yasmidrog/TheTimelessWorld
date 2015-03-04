@@ -68,6 +68,8 @@ public class DrOctopus extends Creature implements IAgressive {
     public void onUpdate(int delta) {
         if (Health <= 0) {
             Loader.playSound("hurt", 1, 2, false, 6, 6, 0);
+            if(new Random().nextInt()%1==0)
+            spawnXP();
                      CrWld.Creatures.remove(this);
             System.gc();
         }
@@ -185,6 +187,9 @@ public class DrOctopus extends Creature implements IAgressive {
         if (Side == sides.LEFT) {
             vx -= Speed * Acceleration;
         }
+    }
+    protected void spawnXP(){
+        CrWld.spawn(new XPIncreaser(x+SzW/2,y+SzH/2,new Random().nextInt(21-5)+5));
     }
 }
 

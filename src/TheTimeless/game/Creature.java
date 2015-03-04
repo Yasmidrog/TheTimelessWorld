@@ -15,7 +15,6 @@ public class Creature extends Entity{
     protected float Acceleration;
     public sides Side = sides.RIGHT;
     public float Gravity=5.1f;
-    protected Map<String,Counter> Counters;//the counters of an object
     protected   float MAXMANA , MAXHEALTH, MAXENERGY;
     protected float Mana,Energy ;//current mana
     protected float MANAREGENSTEP,ENERGYREGENSTEP;//shows how fast will mana regenerate
@@ -93,16 +92,7 @@ public class Creature extends Entity{
         }
     }
 
-    /**
-     * call tick() of every counter
-     */
-    protected void checkCounters()
-    {
-        for(Map.Entry<String, Counter> entry : Counters.entrySet()) {
-            Counter cnt = entry.getValue();
-            cnt.tick();
-        }
-    }
+
     protected void Gravity(){
         OnEarth = sideLocked(sides.DOWN, Gravity);
         if (OnEarth) {

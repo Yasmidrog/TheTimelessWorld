@@ -21,7 +21,11 @@ public final class VTextRender {
     private final Texture letter[] = new Texture[Short.MAX_VALUE];
     private Font f;
 
-    public VTextRender(int size, String name) {
+    public VTextRender(int size, int style,String name) {
+        f = new Font(name, style, size);
+        getWidth("ABCCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`'[](){}<>:,-.?\";/|\\!@#$%^&*_+-*=§АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя");
+    }
+    public VTextRender(int size,String name) {
         f = new Font(name, 0, size);
         getWidth("ABCCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`'[](){}<>:,-.?\";/|\\!@#$%^&*_+-*=§АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя");
     }

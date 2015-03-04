@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class World implements Serializable {
     transient public static Loader ResLoader = new Loader();//loader of resources
     public Spudi SpMn;
-    public boolean exsists=true;
+    public boolean exsists = true;
     public int delta = 1;
 
     transient public GameContainer CrCntr;//current window with game
@@ -32,6 +32,8 @@ public class World implements Serializable {
     transient private Image BackgroundImage;
     private states state;
     private int dialognumber = 0;
+
+    private static enum states {FIGHTING, SPEAKING}//states of the game
 
     public void init(TiledMap Map, GameContainer Cont, int level) throws SlickException {
         try {
@@ -56,10 +58,10 @@ public class World implements Serializable {
                 ent.onInit(this);
             }
             CrLvl = level;
-            HardBlocks=GetBlocked(CurrentMap);//get hard blocks
-            for (Creature e:Creatures){
+            HardBlocks = GetBlocked(CurrentMap);//get hard blocks
+            for (Creature e : Creatures) {
                 if (e instanceof Spudi)
-                    SpMn=(Spudi)e;
+                    SpMn = (Spudi) e;
             }
             checkSpudies();//check if there are more thn one hero on the screen
             startTimers();
@@ -144,7 +146,7 @@ public class World implements Serializable {
     private void renderEntities() {
         Creature[] ents = new Creature[Creatures.size()];
         System.arraycopy(Creatures.toArray(), 0, ents, 0, Creatures.size());
-     //copy to the local list to avoid ConcurrentModificationException
+        //copy to the local list to avoid ConcurrentModificationException
         Entity[] entz = new Entity[StaticObjects.size()];
         System.arraycopy(StaticObjects.toArray(), 0, entz, 0, StaticObjects.size());
         for (Entity ent : entz) {
@@ -152,7 +154,7 @@ public class World implements Serializable {
                     || ent.x - SpMn.x > ent.SzW + Display.getWidth()
                     || SpMn.y - ent.y > ent.SzH + Display.getHeight()
                     || ent.y - SpMn.y > ent.SzH + Display.getHeight()
-            )&&ent.renderBehind)
+            ) && ent.renderBehind)
                 ent.onRender();
         }//render if the object is on the string
         for (Creature ent : ents) {
@@ -238,8 +240,9 @@ public class World implements Serializable {
         }
         return blocks;
     }
-    public void setBlocked(boolean[][] blocks){
-        HardBlocks=blocks;
+
+    public void setBlocked(boolean[][] blocks) {
+        HardBlocks = blocks;
     }
 
     public void startSpeaking(int dialogIndex) {
@@ -288,5 +291,33 @@ public class World implements Serializable {
         }
     }
 
-    private static enum states {FIGHTING, SPEAKING}//states of the game
+    public void spawn(Entity ent) {
+        try {
+            if (!(ent instanceof Creature)) {
+                ent.onInit(this);
+                StaticObjects.add(ent);
+            } else {
+                throw new Exception("Wrong type of the object to spawn\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void spawn(Creature ent) {
+        try {
+            if (ent instanceof Creature) {
+                ent.onInit(this);
+                Creatures.add(ent);
+            }
+            else {
+                throw new Exception("Wrong type of the object to spawn\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
+
+
