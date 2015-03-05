@@ -23,7 +23,6 @@ public class WizardGame extends BasicGame {
     private AppGameContainer app;
     public boolean loaded;
     private Image back;
-
     public WizardGame() {
         super("Timeless");
     }
@@ -31,7 +30,9 @@ public class WizardGame extends BasicGame {
     public static void main(String[] arguments) throws Exception {
         try {
             AppGameContainer app;
+
             setNatives();
+
             //set application parameters
             app = new AppGameContainer(new WizardGame());
             app.setTitle("The Timeless World");
@@ -40,8 +41,12 @@ public class WizardGame extends BasicGame {
             app.setMouseGrabbed(false);
             app.setDefaultMouseCursor();
             app.setIcon("data/icons/icon.png");
-            app.start();
+
             setParams(app);
+
+            app.start();
+
+
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -49,6 +54,7 @@ public class WizardGame extends BasicGame {
 
     public static void setParams(GameContainer cntr) {
         try {
+            ConfigReader.getConfigs();
             if (!ConfigReader.getConf("fps").equals("null"))
                 cntr.setShowFPS(Boolean.valueOf(ConfigReader.getConf("fps")));
             if (!ConfigReader.getConf("updateonlyifvisible").equals("null"))
@@ -59,7 +65,13 @@ public class WizardGame extends BasicGame {
                 int width = Integer.valueOf(ConfigReader.getConf("width"));
                 int height = Integer.valueOf(ConfigReader.getConf("height"));
                 Display.setDisplayMode(new DisplayMode(width, height));
+
             }
+            if (!ConfigReader.getConf("locale").equals("null")) {
+                Loader.Locale = String.valueOf(ConfigReader.getConf("locale"));
+            }
+            Loader.setStrings();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,6 +117,7 @@ public class WizardGame extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
+
         int swidth=Display.getDesktopDisplayMode().getWidth();
         int sheight=Display.getDesktopDisplayMode().getHeight();
         back=new Image("data/icons/twlogo.png").getScaledCopy(swidth-(int)(swidth/2.5),
@@ -112,6 +125,7 @@ public class WizardGame extends BasicGame {
         MainMenu = new Menu(this, container);
         MainMenu.setShown(true);
         newGame(container);
+
         container.pause();
     }
 public void newGame(GameContainer container)throws SlickException{
@@ -241,7 +255,9 @@ public void newGame(GameContainer container)throws SlickException{
 
         TiledMap d= new TiledMap("data/levels/" + (Level) + "/" + "world.tmx");
         System.out.println("Loaded level: "+Level+": data/levels/" + (Level) + "/world.tmx");
+            int dial=world.dialognumber;
         world = new World();
+        world.dialognumber=dial;
         world.init(d, app, Level);
         System.gc();
             float X=world.SpMn.x;

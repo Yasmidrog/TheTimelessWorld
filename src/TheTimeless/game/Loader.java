@@ -1,6 +1,5 @@
 package TheTimeless.game;
 
-import TheTimeless.gui.VTextRender;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.openal.Audio;
@@ -21,14 +20,14 @@ import java.util.Scanner;
  * Loads different resources
  */
 public class Loader {
+    static String Locale="en_EN";
     Graphics g = new Graphics();
     Map<String, Animation> Animations = new HashMap<String, Animation>();
     static Map<String, Audio> Sounds = new HashMap<String, Audio>();
-    ArrayList<String> strings = new ArrayList<String>();
-    Map<String, Image> Smallpictures = new HashMap<String, Image>();
-
-
-    public Loader() {
+    static ArrayList<String> DialogStrings = new ArrayList<String>();
+    static Map<String, String> Strings = new HashMap<String, String>();
+     Map<String, Image> Smallpictures = new HashMap<String, Image>();
+    public  Loader() {
         setSprites();
         new Thread() {
             @Override
@@ -36,19 +35,7 @@ public class Loader {
                 setSounds();
             }
         }.start();
-        new Thread() {
-            @Override
-            public void start() {
-                getStrings();
-            }
-        }.start();
-        new Thread() {
-            @Override
-            public void start() {
-                getPicts();
-            }
-        }.start();
-
+        getPicts();
     }
 
     /**
@@ -102,28 +89,39 @@ public class Loader {
     /**
      * Gets all strings for the level
      */
-    protected void getStrings() {
+    static public  void setStrings() {
         try {
-            Scanner s = new Scanner(new File("data/strings/strings"));
+            Scanner s = new Scanner(new File("data/dialogs/"+Locale+"/strings"));
             ArrayList<String> strList = new ArrayList<String>();
             while (s.hasNextLine()) {
                 String c = s.nextLine();
                 strList.add(c);
             }
-            strings = strList;
-        } catch (FileNotFoundException ex) {
+            DialogStrings = strList;
+            s = new Scanner(new File("data/strings/"+Locale+"/strings"));
+             Map<String, String> strings = new HashMap<String, String>();
+            while (s.hasNextLine()) {
+                String c = s.nextLine();
+                String Short = c.substring(0, c.indexOf(":"));//get speaker
+                String Full = c.substring(c.indexOf(":") + 1, c.length());
+                strings.put(Short,Full);
+            }
+            Strings=strings;
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
+     public static String getString(String desc){
+         return Strings.get(desc);
+     }
     private void getPicts() {
         try {
             Map<String, Image> picts = new HashMap<String, Image>();
-            String pictures[] = new File("data/strings/smallpictures").list();
+            String pictures[] = new File("data/dialogs/smallpictures").list();
             for (String str : pictures) {
                 if (str.contains(".png")) {
                     picts.put(str.substring(0, str.indexOf(".png")),
-                            new Image("data/strings/smallpictures/" + str));
+                            new Image("data/dialogs/smallpictures/" + str));
                 }
             }
             Smallpictures = picts;
@@ -150,8 +148,8 @@ public class Loader {
         return Sounds.get(index);
     }
 
-    public String getString(int index) {
-        return strings.get(index);
+    public String getDialogString(int index) {
+        return DialogStrings.get(index);
     }
 
 
@@ -164,9 +162,9 @@ public class Loader {
             int sheight=Display.getDesktopDisplayMode().getHeight();
             g.setColor(new Color(0, 0, 0, 60));
             g.fillRect(2, sheight - 140, swidth, 140);//draw a background for message yb`
-            String speaker = strings.get(index).substring(0, strings.get(index).indexOf(":"));//get speaker
-            String value = strings.get(index).substring(strings.get(index).indexOf(":") + 1,
-                    strings.get(index).length());//get what he said
+            String speaker = DialogStrings.get(index).substring(0, DialogStrings.get(index).indexOf(":"));//get speaker
+            String value = DialogStrings.get(index).substring(DialogStrings.get(index).indexOf(":") + 1,
+                    DialogStrings.get(index).length());//get what he said
             if (speaker.equals("Me")) {
                 Smallpictures.get("Me").draw(10, sheight - 130);
                 Fonts.TextRender.drawString(value, 80, sheight - 115, Color.white);
@@ -215,8 +213,9 @@ DO NOT READ THE THE CODE BELOW
                         Constructor c = Class.forName("TheTimeless.game." + value).getConstructors()[0];
                         objs = (Entity) c.newInstance(((xAxis - (Display.getDesktopDisplayMode().getWidth() / 2 / 64)) * 64) + 27,
                                 ((yAxis - (Display.getDesktopDisplayMode().getHeight() / 2 / 64)) * 64) +27);//get the coords of th object
-                        if (!(objs instanceof Creature))
+                        if (!(objs instanceof Creature)) {
                             crts.add(objs);
+                        }
                         else
                             throw new Exception("Wrong type:an object must be an TheTimeless.game.Entity, check your map");
                     }//if block has a type, create an object with the value of "type"
@@ -248,6 +247,7 @@ DO NOT READ THE THE CODE BELOW
                     }//if block has a type, create an creature with the value of "type"
                 }
             }
+
             return crts;
         } catch (Exception ex) {
             System.out.print("Wrong type:an enemy must be an TheTimeless.game.Creature, check your map");
@@ -274,7 +274,6 @@ private ArrayList<Entity> getScriptsAndTables(TiledMap map){
                         ((map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2) +27),
                         map.getObjectWidth(0, i), map.getObjectHeight(0, i)));
             }
-            System.out.println("Loaded new "+map.getObjectType(0, i));
         }
     }catch(Exception e){
         e.printStackTrace();

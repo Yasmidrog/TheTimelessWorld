@@ -164,7 +164,7 @@ e.printStackTrace();
                 Loader.playSound("click", 1, 1, false);
             }
         });
-        gui.add(new guiButton(app,"Parameters",  mainFont,4,
+        gui.add(new guiButton(app,Loader.getString("Params"),  mainFont,4,
                 s_height/2-  mainFont.getHeight()/2+50){
             @Override
             public void onClicked(){

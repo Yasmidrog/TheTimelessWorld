@@ -7,21 +7,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class Table extends Entity {
     public String Text="",fileName="";
-    private  transient  VTextRender vr=new VTextRender(25,"Sans");
-    ArrayList<String> list =new ArrayList();
     private boolean showText=false;
-    private transient Graphics gr=new Graphics(Display.getWidth()/2,Display.getHeight()/2);
+    private transient Graphics gr;
     public Table(float x, float y,String text) {
         try {
-            FileReader fin = new FileReader("data/hints/"+text);
-            int c;
-            fileName=text;
-            while ((c = fin.read()) != -1)
-                Text+=(char)c;
+          fileName=text;
             this.x = x;
             this.y = y;
             Name = "HB";
@@ -36,8 +29,13 @@ public class Table extends Entity {
             sprite = World.ResLoader.getSprite("Table");
             SzW = sprite.getWidth()+45;//get collider
             SzH = sprite.getHeight()+45;
+            gr=new Graphics(Display.getWidth()/2,Display.getHeight()/2);
             Rect = new Rectangle(x-20, y-20, SzW, SzH);
-
+            FileReader fin = new FileReader("data/hints/"+Loader.Locale+"/"+fileName);
+            Text="";
+            int c;
+            while ((c = fin.read()) != -1)
+                Text+=(char)c;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -69,11 +67,11 @@ public class Table extends Entity {
             int swidth=Display.getDesktopDisplayMode().getWidth();
             int sheight=Display.getDesktopDisplayMode().getHeight();
             gr.setColor(new Color(Color.white.getRed(), Color.white.getGreen(), Color.white.getBlue(), 40));
-            String result = vr.splitString(Text, swidth/3, false);
-            int height = result.split("\n").length * vr.getHeight() + 20;
-            gr.fillRect(swidth/2-40-vr.getWidth(result)/2-20,
-                    sheight/7, vr.getWidth(result) + 40, height);
-            vr.drawString(result, swidth/2-40-vr.getWidth(result)/2,
+            String result = Fonts.TableText.splitString(Text, swidth/3, false);
+            int height = result.split("\n").length * Fonts.TableText.getHeight() + 20;
+            gr.fillRect(swidth/2-40-Fonts.TableText.getWidth(result)/2-20,
+                    sheight/7, Fonts.TableText.getWidth(result) + 40, height);
+            Fonts.TableText.drawString(result, swidth/2-40-Fonts.TableText.getWidth(result)/2,
                     sheight/7, Color.white);
         }
     }

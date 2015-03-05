@@ -17,10 +17,12 @@ public class DrOctopus extends Creature implements IAgressive {
         OnEarth = false;
         this.x = x;
         this.y = y;
-        Health = 50;
+
         Name = "DrOctopus";
         MAXENERGY=82;
         weight=10;
+        MAXHEALTH=50;
+        Health = MAXHEALTH;
         Energy =MAXENERGY;
         Counters = new HashMap<String, Counter>();
         Counters.put("patrol", new Counter("patrol", 110));
@@ -95,7 +97,7 @@ public class DrOctopus extends Creature implements IAgressive {
                     (int) -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, SzW, 5);
             HealthFore.setColor(org.newdawn.slick.Color.red);
             HealthFore.fillRect((int) -CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
-                    (int) -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, SzW * Health / 50, 5);
+                    (int) -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, SzW * Health / MAXHEALTH, 5);
 
     }
 
@@ -189,7 +191,18 @@ public class DrOctopus extends Creature implements IAgressive {
         }
     }
     protected void spawnXP(){
-        CrWld.spawn(new XPIncreaser(x+SzW/2,y+SzH/2,new Random().nextInt(21-5)+5));
+        CrWld.spawn(new Increaser(x+SzW/2,y+SzH/2,new Random().nextInt(21-5)+5){
+            @Override
+            public void setColorAndSprite(){
+                IntColor= 14706969;
+                sprite=World.ResLoader.getSprite("Coin");
+            }
+            @Override
+             public  void  onPick(){
+                CrWld.SpMn.XP+=Amount;
+                exists=false;
+            }
+        });
     }
 }
 

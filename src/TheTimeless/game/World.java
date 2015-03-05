@@ -1,9 +1,7 @@
 package TheTimeless.game;
 
-import org.lwjgl.openal.AL11;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
-import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.awt.event.ActionEvent;
@@ -31,7 +29,7 @@ public class World implements Serializable {
     private boolean[][] HardBlocks;//solid blocks
     transient private Image BackgroundImage;
     private states state;
-    private int dialognumber = 0;
+    public int dialognumber = 0;
 
     private static enum states {FIGHTING, SPEAKING}//states of the game
 
@@ -250,6 +248,10 @@ public class World implements Serializable {
         state = states.SPEAKING;
         //set state to speaking and start to render string
     }
+    public void startSpeaking() {
+        state = states.SPEAKING;
+        //set state to speaking and start to render string
+    }
 
     public boolean isBlocked(float x, float y) {
         boolean blocked;
@@ -264,14 +266,30 @@ public class World implements Serializable {
     }
 
     private void HandleSpeaking() {
-        Input in = CrCntr.getInput();
-        EntityTimer.stop();
-        if (in.isKeyPressed(Input.KEY_TAB)) {
-            dialognumber++;
-        }//stop all timers and start to render the string under dialognumber
-        if (ResLoader.getString(dialognumber) == null ||
-                in.isKeyDown(Input.KEY_ESCAPE) ||
-                ResLoader.getString(dialognumber).isEmpty()) {
+        try {
+            Input in = CrCntr.getInput();
+            EntityTimer.stop();
+            if (in.isKeyPressed(Input.KEY_TAB)) {
+                if (ResLoader.getDialogString(dialognumber + 1) != null &&
+                        !(ResLoader.getDialogString(dialognumber + 1).isEmpty()))
+                    dialognumber++;
+                else {
+                    if (ResLoader.getDialogString(dialognumber + 1) != null)
+                        dialognumber += 2;
+                    state = states.FIGHTING;
+                    startTimers();
+                    return;
+                }
+            }//stop all timers and start to render the string under dialognumber
+            if (in.isKeyDown(Input.KEY_ESCAPE)) {
+                state = states.FIGHTING;
+                startTimers();
+            }
+        }catch (IndexOutOfBoundsException e) {
+            state = states.FIGHTING;
+            startTimers();
+        }catch (Exception e){
+            e.printStackTrace();
             state = states.FIGHTING;
             startTimers();
         }

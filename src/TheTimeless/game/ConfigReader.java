@@ -52,7 +52,7 @@ public class ConfigReader {
                 file.delete();
                 file.createNewFile();
             try (PrintWriter out = new PrintWriter(file.getAbsoluteFile())) {
-                //Записываем текст у файл
+
                 out.print(text);
             }
         } catch(Exception e) {

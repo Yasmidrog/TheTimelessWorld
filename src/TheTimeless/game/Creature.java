@@ -15,7 +15,8 @@ public class Creature extends Entity{
     protected float Acceleration;
     public sides Side = sides.RIGHT;
     public float Gravity=5.1f;
-    protected   float MAXMANA , MAXHEALTH, MAXENERGY;
+    protected float armorCoef=0.0f;
+    protected float MAXMANA , MAXHEALTH, MAXENERGY;
     protected float Mana,Energy ;//current mana
     protected float MANAREGENSTEP,ENERGYREGENSTEP;//shows how fast will mana regenerate
     public float getAccelration() {
@@ -106,8 +107,16 @@ public class Creature extends Entity{
             vy += Gravity;
         }
     }
-    public void changeHealth(float healthDifference){
-        Health+=healthDifference;
+    public int changeHealth(float healthDifference){
+        float diff=healthDifference;
+        if(diff+Health>MAXHEALTH) {
+
+            diff=MAXHEALTH-Health;
+            Health=MAXHEALTH;
+            return (int) diff;
+        }
+        Health+=diff;
+        return (int) diff;
     }
 }
 
