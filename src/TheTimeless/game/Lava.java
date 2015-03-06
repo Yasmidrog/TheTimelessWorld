@@ -13,7 +13,6 @@ public class Lava extends Entity {
     private  transient ArrayList<Creature> swimmedIn;
     private transient Animation topSprite,middleSprite;
     public Lava(float x, float y, int width, int height) {
-
         this.x = x;
         this.y = y;
         Name = "LB";
