@@ -132,7 +132,7 @@ public void newGame(GameContainer container)throws SlickException{
     if(world!=null) {
         world.EntityTimer.stop();
         world.BulletTimer.stop();
-    }
+    }//stop timers if there was an existing world
     TiledMap grassMap = new TiledMap("data/levels/" + 1 + "/" + "world.tmx");
     world = new World();
     world.init(grassMap, container, 1);
@@ -154,13 +154,17 @@ public void newGame(GameContainer container)throws SlickException{
                 if(!world.exsists){
                     LoadWorld();
                     world.exsists=true;
-                }
+                }//if the world requires deleting, delete it
                 if(world.SpMn.Health<=0){
-                    boolean b=fastLoad();
+                    boolean b=fastLoad();//try to load last save
                     if (!b) {
                         Level--;
                         world.SpMn.Health=world.SpMn.MAXHEALTH;
+                        world.SpMn.XP-=world.SpMn.XP*0.30;
                         LoadWorld();
+                    }//if there are no saves in the folder, load the beginning of the level
+                    else{
+                        world.SpMn.XP-=world.SpMn.XP*0.13;
                     }
                 }
             }
@@ -168,8 +172,6 @@ public void newGame(GameContainer container)throws SlickException{
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         if(loaded) {
-            g.scale(1, 1);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
             try {
                 GL11.glColor3f(255, 255, 255);
                 world.render();
@@ -208,32 +210,34 @@ public void newGame(GameContainer container)throws SlickException{
      */
     public void load(String adress) {
         try {
-            world.EntityTimer.stop();
+            world.EntityTimer.stop();//stop working timers with old world components
             world.BulletTimer.stop();
             app.pause();
             XStream stream=new XStream(new DomDriver());
-            Serializator s=(Serializator)stream.fromXML(new File(adress));
+            Serializator s=(Serializator)stream.fromXML(new File(adress));//save old spudi to string
             TiledMap d=s.getMap();
             world.setBlocked(World.GetBlocked(d));
-            world.CurrentMap=d;
+            world.CurrentMap=d;//set new map
             Level=s.getLevel();
             ArrayList<Creature> crts=s.getCreatures();
-            ArrayList<Entity> ents=s.getEntities();
+            ArrayList<Entity> ents=s.getEntities();//get entity lists
             world.Creatures=crts;
             for(Creature cr:world.Creatures){
-                cr.onInit(world);
                 if(cr instanceof Spudi)
                     world.SpMn=(Spudi)cr;
+                cr.onInit(world);
             }
-            System.gc();
             world.checkSpudies();
             world.StaticObjects=ents;
             for(Entity ent:world.StaticObjects){
                 ent.onInit(world);
             }
-            System.gc();
+            world.SpMn.onInit(world);
+            //init all
+
             world.EntityTimer.restart();
             world.BulletTimer.restart();
+            //restart new world's timers
             app.resume();
         } catch (ConcurrentModificationException s) {
         } catch (Exception e) {
@@ -241,35 +245,35 @@ public void newGame(GameContainer container)throws SlickException{
         }
 
     }
-
+    /**
+     loads new level
+     */
     public void LoadWorld() {
-        world.EntityTimer.stop();
+
+        world.EntityTimer.stop();//stop working timers with old world components
         world.BulletTimer.stop();
         app.pause();
-
         try{
 
         Level++;
             XStream x=new XStream(new DomDriver());
             String sp=x.toXML(world.SpMn);
 
-        TiledMap d= new TiledMap("data/levels/" + (Level) + "/" + "world.tmx");
+        TiledMap d= new TiledMap("data/levels/" + (Level) + "/" + "world.tmx");//get tiled map adress
         System.out.println("Loaded level: "+Level+": data/levels/" + (Level) + "/world.tmx");
-            int dial=world.dialognumber;
+        int dial=world.dialognumber;//save dialog string number
         world = new World();
         world.dialognumber=dial;
         world.init(d, app, Level);
-        System.gc();
             float X=world.SpMn.x;
             float Y=world.SpMn.y;
-            Spudi spmn=(Spudi)x.fromXML(sp);
-            spmn.x=X;
+            Spudi spmn=(Spudi)x.fromXML(sp);//load saved spudi
+            spmn.x=X;//get default spudi's coords
             spmn.y=Y;
             world.Creatures.remove(world.SpMn);
             world.SpMn= spmn;
-            world.Creatures.add(world.SpMn);
+            world.Creatures.add(world.SpMn);//remove default spudi and add saved one
             world.SpMn.onInit(world);
-
             app.resume();
     } catch (Exception e) {
        e.printStackTrace();
@@ -305,6 +309,9 @@ public void newGame(GameContainer container)throws SlickException{
             }
         }
     }
+    /**
+    loads last save
+     */
     private boolean fastLoad(){
         try {
             File[] saves = new File("data/saves").listFiles(new FileFilter() {
@@ -314,7 +321,7 @@ public void newGame(GameContainer container)throws SlickException{
                         return true;
                     else return false;
                 }
-            });
+            });//get all .ttws saves
             if(! (saves==null)&&!(saves.length==0)) {
                 Arrays.sort(saves, new Comparator() {
                     public int compare(Object o1, Object o2) {
@@ -326,7 +333,7 @@ public void newGame(GameContainer container)throws SlickException{
                             return 0;
                         }
                     }
-                });
+                });//sort saves by date
                 load(saves[0].getAbsolutePath());
                 return true;
             }else return false;

@@ -110,7 +110,6 @@ public class Creature extends Entity{
     public int changeHealth(float healthDifference){
         float diff=healthDifference;
         if(diff+Health>MAXHEALTH) {
-
             diff=MAXHEALTH-Health;
             Health=MAXHEALTH;
             return (int) diff;

@@ -132,11 +132,18 @@ public class World implements Serializable {
                             Color.red.getBlue(),
                             110));
         }
-        CurrentMap.render(-(int) SpMn.x - SpMn.SzW / 2, -(int) SpMn.y - SpMn.SzH / 2, 1);
-        renderEntities();
-        renderBullets();
-        if (state == states.SPEAKING) {
-            ResLoader.renderString(dialognumber);//if the state is SPEAKING, render current string from dialog
+        try {
+            if(CrCntr.getFPS()>0) {
+                CurrentMap.render(-(int) SpMn.x - SpMn.SzW / 2, -(int) SpMn.y - SpMn.SzH / 2, 1);
+                renderEntities();
+                renderBullets();
+                if (state == states.SPEAKING) {
+                    ResLoader.renderString(dialognumber);//if the state is SPEAKING,
+                                                        // render current string from dialog
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -154,7 +161,7 @@ public class World implements Serializable {
                     || ent.y - SpMn.y > ent.SzH + Display.getHeight()
             ) && ent.renderBehind)
                 ent.onRender();
-        }//render if the object is on the string
+        }
         for (Creature ent : ents) {
             if (!(SpMn.x - ent.x > ent.SzW + Display.getWidth()
                     || ent.x - SpMn.x > ent.SzW + Display.getWidth()
@@ -275,7 +282,7 @@ public class World implements Serializable {
                     dialognumber++;
                 else {
                     if (ResLoader.getDialogString(dialognumber + 1) != null)
-                        dialognumber += 2;
+                        dialognumber += 2;//move to the next block
                     state = states.FIGHTING;
                     startTimers();
                     return;
@@ -286,6 +293,7 @@ public class World implements Serializable {
                 startTimers();
             }
         }catch (IndexOutOfBoundsException e) {
+            //if there are no lines below
             state = states.FIGHTING;
             startTimers();
         }catch (Exception e){
@@ -295,7 +303,7 @@ public class World implements Serializable {
         }
     }
 
-    /*
+    /**
     check if there are more than hero on the map
     */
     public void checkSpudies() {
@@ -308,7 +316,9 @@ public class World implements Serializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     spawn new Entity
+     */
     public void spawn(Entity ent) {
         try {
             if (!(ent instanceof Creature)) {
@@ -321,7 +331,9 @@ public class World implements Serializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     spawn new Crearure
+     */
     public void spawn(Creature ent) {
         try {
             if (ent instanceof Creature) {

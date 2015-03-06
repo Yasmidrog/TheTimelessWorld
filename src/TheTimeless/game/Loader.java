@@ -25,7 +25,9 @@ public class Loader {
     Map<String, Animation> Animations = new HashMap<String, Animation>();
     static Map<String, Audio> Sounds = new HashMap<String, Audio>();
     static ArrayList<String> DialogStrings = new ArrayList<String>();
+    static ArrayList<String> enDialogStrings = new ArrayList<String>();
     static Map<String, String> Strings = new HashMap<String, String>();
+    static Map<String, String> enStrings = new HashMap<String, String>();
      Map<String, Image> Smallpictures = new HashMap<String, Image>();
     public  Loader() {
         setSprites();
@@ -87,7 +89,7 @@ public class Loader {
     }
 
     /**
-     * Gets all strings for the level
+     * Gets all strings fir the current locale and for english locale
      */
     static public  void setStrings() {
         try {
@@ -98,6 +100,7 @@ public class Loader {
                 strList.add(c);
             }
             DialogStrings = strList;
+            //get dialogs in the given locale
             s = new Scanner(new File("data/strings/"+Locale+"/strings"));
              Map<String, String> strings = new HashMap<String, String>();
             while (s.hasNextLine()) {
@@ -107,14 +110,36 @@ public class Loader {
                 strings.put(Short,Full);
             }
             Strings=strings;
+            if(enDialogStrings.isEmpty()||enStrings.isEmpty())
+            setEnglish();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+    private static void setEnglish() {
+        try{
+        Scanner s = new Scanner(new File("data/strings/en_EN/strings"));
+        HashMap<String, String> strings = new HashMap<String, String>();
+        while (s.hasNextLine()) {
+            String c = s.nextLine();
+            String Short = c.substring(0, c.indexOf(":"));//get speaker
+            String Full = c.substring(c.indexOf(":") + 1, c.length());
+            strings.put(Short, Full);
+        }
+        enStrings = strings;
+        s = new Scanner(new File("data/dialogs/en_EN/strings"));
+        ArrayList<String> strList = new ArrayList<String>();
+        while (s.hasNextLine()) {
+            String c = s.nextLine();
+            strList.add(c);
+        }
+        enDialogStrings = strList;
+    }catch(Exception e){e.printStackTrace();}
+    }
      public static String getString(String desc){
          return Strings.get(desc);
      }
-    private void getPicts() {
+     private void getPicts() {
         try {
             Map<String, Image> picts = new HashMap<String, Image>();
             String pictures[] = new File("data/dialogs/smallpictures").list();
@@ -180,23 +205,7 @@ public class Loader {
             e.printStackTrace();
         }
     }
-/*
-DO NOT READ THE THE CODE BELOW
-***
-*
-*
-*
-*
-*
-* I SAID YOU NOT TO READ
-*
-*
-*
-*
-*
-*
-* OK
- */
+
     /**
      * Gets all static objects from a TiledMap.
      */

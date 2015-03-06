@@ -40,7 +40,7 @@ public class Increaser extends Entity {
             if(upMove>100){
                 CrWld.StaticObjects.remove(this);
             }
-        }
+        }///if spudi has picked
     }
     public void onRender() {
         if(exists) {
@@ -52,6 +52,7 @@ public class Increaser extends Entity {
                 (int)(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2),
                 (int)(-CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2),
                 new org.newdawn.slick.Color(IntColor));
+            //render flying digits if Spudi has picked the bonus
        }
     }
 public void onPick(){

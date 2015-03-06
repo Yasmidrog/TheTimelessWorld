@@ -1,11 +1,11 @@
 package TheTimeless.game;
-
-import TheTimeless.gui.VTextRender;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
+
+import java.io.File;
 import java.io.FileReader;
 
 public class Table extends Entity {
@@ -31,7 +31,10 @@ public class Table extends Entity {
             SzH = sprite.getHeight()+45;
             gr=new Graphics(Display.getWidth()/2,Display.getHeight()/2);
             Rect = new Rectangle(x-20, y-20, SzW, SzH);
-            FileReader fin = new FileReader("data/hints/"+Loader.Locale+"/"+fileName);
+            File f=new File("data/hints/"+Loader.Locale+"/"+fileName);
+            if(!f.exists())
+                f=new File("data/hints/en_EN/"+fileName);
+            FileReader fin = new FileReader(f);
             Text="";
             int c;
             while ((c = fin.read()) != -1)

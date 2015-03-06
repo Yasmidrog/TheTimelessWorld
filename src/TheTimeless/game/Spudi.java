@@ -96,15 +96,6 @@ public class Spudi extends Creature implements IControlable {
 
     public void onRender() {
         try {
-            if (CrWld.CrCntr.getInput().isMouseButtonDown(0)) {
-                drawShoot();
-            }else {
-                if (sprite != null) {
-                    sprite.update(CrWld.delta);
-                    sprite.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
-                }
-            }
-
             indicators.setColor(new Color(Color.green.getRed(), Color.green.getGreen(), Color.green.getBlue(), 120));
             indicators.fillRect(64 + 10, 82, 150 - 44, 13);
             indicators.fillRect(64 + 10, 82, (150 - 44) * Energy / MAXENERGY, 12, energyImage,1,1);
@@ -119,7 +110,14 @@ public class Spudi extends Creature implements IControlable {
             boowIcon.draw(5,30);
             indicators.drawImage(World.ResLoader.getSprite("Coin").getImage(0).getScaledCopy(16,16),5,98);
             Fonts.SmallText.drawString("XP: "+XP,23,98,Color.white);
-
+            if (CrWld!=null&&CrWld.CrCntr.getInput().isMouseButtonDown(0)) {
+                drawShoot();
+            }else {
+                if (sprite != null) {
+                    sprite.update(CrWld.delta);
+                    sprite.draw(CrWld.CrCntr.getWidth() / 2 - SzW / 2, CrWld.CrCntr.getHeight() / 2 - SzH / 2);
+                }
+            }
         } catch(Exception e){
                 e.printStackTrace();
         }
