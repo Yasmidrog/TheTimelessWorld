@@ -84,7 +84,10 @@ public final class VTextRender {
 
     public int getWidth(String text) {
         int width = 0;
-        String[] fText = text.split("\n");
+        String[] fText;
+        if(text.contains("\n")) {
+            fText = text.split("\n");
+        }else fText=new String[]{text};
         for (String str : fText) {
             int w = 0;
             for (char c : str.toCharArray()) {

@@ -1,2 +1,19 @@
-Params:Parameters
-Exit:Exit
+Params:Settings;
+Exit:Exit;
+Save:Save;
+Load:Load;
+Help:Help;
+New:New Game;
+FPS:FPS;
+Sound:Sound;
+No saves:No saves there;
+Return:Return;
+New:New Game;
+Sound:Sound;
+Helptab:Shoot- left mouse
+Move- A,D
+Jump- Space
+Fast save/load- P,O
+Munu- Esc 
+Speak- Tab
+Read- E;

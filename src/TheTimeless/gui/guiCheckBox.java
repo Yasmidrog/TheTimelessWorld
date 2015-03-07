@@ -21,7 +21,6 @@ public class guiCheckBox extends guiElement {
         if(shown) {
             super.update();
             if (active) {
-
                 render.drawString( string, (int) rect.getX(), (int) rect.getY(),Color.yellow);
             }else{
                 render.drawString( string, (int) rect.getX(), (int) rect.getY(),Color.white);

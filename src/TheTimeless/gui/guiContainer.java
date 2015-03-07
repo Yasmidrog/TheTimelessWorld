@@ -1,23 +1,16 @@
 package TheTimeless.gui;
-import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 import org.newdawn.slick.openal.Audio;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class guiContainer extends guiElement{
-    private ArrayList<guiElement> ve = new ArrayList<guiElement>();
+    public ArrayList<guiElement> ve = new ArrayList<guiElement>();
     public void add(guiElement e) {
         ve.add(e);
     }
     protected int elementNumber=0;
-    protected Audio mus;
+    protected Sound clickSound;
     protected guiContainer(){}
 public guiContainer(GameContainer container){
     input=container.getInput();
@@ -51,8 +44,8 @@ public guiContainer(GameContainer container){
             }
         }
     }
-    public void setSound(Audio a){
-        mus=a;
+    public void setSound(Sound a){
+        clickSound =a;
     }
     public void remove(guiElement e) {
         ve.remove(e);
@@ -63,15 +56,15 @@ public guiContainer(GameContainer container){
         if(elementNumber!=0)
             elementNumber--;
         else elementNumber=ve.size()-1;
-        if(mus!=null)
-            mus.playAsMusic(1,1,false);
+        if(clickSound !=null)
+            clickSound.play(1,1);
     }
     if (input.isKeyPressed(Input.KEY_DOWN)) {
         if(elementNumber<ve.size()-1)
             elementNumber++;
         else elementNumber=0;
-        if(mus!=null)
-            mus.playAsMusic(1,1,false);
+        if(clickSound !=null)
+            clickSound.play(1,1);
     }
     if(input.isKeyPressed(Input.KEY_ENTER))
     {

@@ -69,11 +69,11 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="44" name="lava" tilewidth="64" tileheight="64">
-  <image source="../../terrain/lava.png" width="64" height="64"/>
+ <tileset firstgid="44" name="lavaTop" tilewidth="64" tileheight="64">
+  <image source="../../terrain/lavaTop.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="45" name="lavatop" tilewidth="64" tileheight="64">
-  <image source="../../terrain/lavatop.png" width="64" height="64"/>
+ <tileset firstgid="45" name="lava" tilewidth="64" tileheight="64">
+  <image source="../../terrain/lava.png" width="64" height="64"/>
  </tileset>
  <layer name="collision" width="199" height="100">
   <data encoding="base64" compression="gzip">
@@ -82,7 +82,7 @@
  </layer>
  <layer name="terrain" width="199" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3UwUrDUBQE0KDNXyi0YHf6/79nxI1IU/Jg2rTMOXC5m0AyMDfTBAAAAADc07z3B8CDchuMaulMS05yWjrTkpOcls605CSnpTMtOclp6UxLTnJaOtOSk5yWzrTkJKelMy05yWnpTEtOclo605KTnJbOtOQkp6UzLTnJaelMS05ynqEzb8u8L/OxMudljsucLjx//rNhxF63sdb3/z1PeYZ/AI/lFp1Z+28fp3znt3IbjGrpTEtOclo605KTnJbOtOQk42WZ1/D+ujK3eN/W7TYYcZh+O5PaP/N5Zebw+0Y37GXLbUAjtwGXzRsGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODevgG1CXq28DYBAA==
+   H4sIAAAAAAAAA+3UwUrDUBQE0KDNXyi0YHf6/79nxI1IU/Jg2rTMOXC5m0AyMDfTBAAAAADc07z3B8CDchuMaulMS05yWjrTkpOcls605CSnpTMtOclp6UxLTnJaOtOSk5yWzrTkJKelMy05yWnpTEtOclo605KTnJbOtOQkp6UzLTnJaelMS05ynqEzb8u8L/OxMudljsucLjx//rNhxF63sdb3/z1PeYZ/AI/lFp1Z+28fp3znt3IbjGrpTEtOclo605KTnJbOtOQk42WZ1/D+vDK3eN/W7TYYcZh+O5PaP/N1Zebw+0Y37GXLbUAjtwGXzRsGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODevgH+RA4t8DYBAA==
   </data>
  </layer>
  <layer name="creatures" width="199" height="100">

@@ -1,13 +1,14 @@
 package TheTimeless.gui;
 
 import TheTimeless.game.Fonts;
+import TheTimeless.game.Loader;
 import TheTimeless.game.WizardGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.Audio;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class SavesList extends guiContainer {
             renderSaves();
         }
     }
-    public void setSound(Audio a){
-        mus=a;
+    public void setSound(Sound a){
+        clickSound =a;
     }
     public void remove(guiElement e) {
         savesButtons.remove(e);
@@ -48,8 +49,8 @@ public class SavesList extends guiContainer {
            }
            if (elementNumber < elem)
                elem--;
-           if (mus != null)
-               mus.playAsMusic(1, 1, false);
+           if (clickSound != null)
+               clickSound.play(100, 1);
        }
        if (input.isKeyPressed(Input.KEY_DOWN)) {
            if (elementNumber < savesButtons.size() - 1) {
@@ -58,8 +59,8 @@ public class SavesList extends guiContainer {
                elementNumber = 0;
            }
            elem = 0;
-           if (mus != null)
-               mus.playAsMusic(1, 1, false);
+           if (clickSound != null)
+               clickSound.play(100, 1);
        }
        if (input.isKeyPressed(Input.KEY_ENTER)) {
            savesButtons.get(elementNumber).onClicked();
@@ -155,7 +156,7 @@ public class SavesList extends guiContainer {
             }
         }
         if(Buttons.isEmpty()) {
-            String str="There is no saves";
+            String str=Loader.getString("No saves");
             Buttons.add(new guiButton(cntr, str, Font,10, y){
                 @Override
                 public void onClicked() {
@@ -164,7 +165,7 @@ public class SavesList extends guiContainer {
             });
             return Buttons;
         }
-        Buttons.add(new guiButton(cntr, "Exit", Font, 10, y) {
+        Buttons.add(new guiButton(cntr, Loader.getString("Return"), Font, 10, y) {
             @Override
             public void onClicked() {
                 exit(menu, cntr);

@@ -69,7 +69,7 @@ public class DrOctopus extends Creature implements IAgressive {
     @Override
     public void onUpdate(int delta) {
         if (Health <= 0) {
-            Loader.playSound("hurt", 1, 2, false, 6, 6, 0);
+            Loader.playSound("hurt", 1, 2,  6, 6, 0);
             if(new Random().nextInt()%1==0)
             spawnXP();
                      CrWld.Creatures.remove(this);
@@ -160,7 +160,7 @@ public class DrOctopus extends Creature implements IAgressive {
                 assert bullet != null;
                 bullet.onInit(CrWld);
                 CrWld.Bullets.add(bullet);
-                Loader.playSound("shoot", 1, 2, false, ((CrWld.SpMn.x / 10 - x / 10)),
+                Loader.playSound("shoot", 1, 2, ((CrWld.SpMn.x / 10 - x / 10)),
                         (CrWld.SpMn.y / 10 - y / 10), 0);
                 Counters.get("shoot").restoreTime();
             }

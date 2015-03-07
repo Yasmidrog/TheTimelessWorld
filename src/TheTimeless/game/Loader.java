@@ -23,7 +23,7 @@ public class Loader {
     static String Locale="en_EN";
     Graphics g = new Graphics();
     Map<String, Animation> Animations = new HashMap<String, Animation>();
-    static Map<String, Audio> Sounds = new HashMap<String, Audio>();
+    static Map<String, Sound> Sounds = new HashMap<String, Sound>();
     static ArrayList<String> DialogStrings = new ArrayList<String>();
     static ArrayList<String> enDialogStrings = new ArrayList<String>();
     static Map<String, String> Strings = new HashMap<String, String>();
@@ -66,7 +66,7 @@ public class Loader {
             for (String adr : files) {
                 if (adr.contains(".ogg")) {
                     Sounds.put(adr.substring(0, adr.indexOf(".ogg")),// get every ogg sound and write into list under name of file
-                            AudioLoader.getAudio("OGG", new FileInputStream(new File("data/sounds/" + adr))));
+                                new Sound("data/sounds/" + adr));
                 }
             }
         } catch (Exception ex) {
@@ -93,21 +93,27 @@ public class Loader {
      */
     static public  void setStrings() {
         try {
-            Scanner s = new Scanner(new File("data/dialogs/"+Locale+"/strings"));
+            Scanner s = new Scanner(new File("data/dialogs/"+Locale+"/strings"),"UTF-8");
             ArrayList<String> strList = new ArrayList<String>();
+
             while (s.hasNextLine()) {
-                String c = s.nextLine();
-                strList.add(c);
+               String  c = s.nextLine();
+               strList.add(c);
             }
             DialogStrings = strList;
             //get dialogs in the given locale
-            s = new Scanner(new File("data/strings/"+Locale+"/strings"));
+            s = new Scanner(new File("data/strings/"+Locale+"/strings"),"UTF-8");
              Map<String, String> strings = new HashMap<String, String>();
+           String c ="";
             while (s.hasNextLine()) {
-                String c = s.nextLine();
-                String Short = c.substring(0, c.indexOf(":"));//get speaker
-                String Full = c.substring(c.indexOf(":") + 1, c.length());
-                strings.put(Short,Full);
+              c+= s.nextLine()+"\n";
+            }
+            for(String str:c.split(";\n"))
+            {
+                String sr[]=str.split(":");
+                String Short =sr[0];
+                String Full = sr[1];
+                strings.put(Short, Full);
             }
             Strings=strings;
             if(enDialogStrings.isEmpty()||enStrings.isEmpty())
@@ -118,26 +124,33 @@ public class Loader {
     }
     private static void setEnglish() {
         try{
-        Scanner s = new Scanner(new File("data/strings/en_EN/strings"));
-        HashMap<String, String> strings = new HashMap<String, String>();
-        while (s.hasNextLine()) {
-            String c = s.nextLine();
-            String Short = c.substring(0, c.indexOf(":"));//get speaker
-            String Full = c.substring(c.indexOf(":") + 1, c.length());
-            strings.put(Short, Full);
-        }
+        Scanner s = new Scanner(new File("data/strings/en_EN/strings"),"UTF-8");
+            Map<String, String> strings = new HashMap<String, String>();
+            String c ="";
+            while (s.hasNextLine()) {
+                c+= s.nextLine()+"\n";
+            }
+            for(String str:c.split(";\n"))
+            {
+                String sr[]=str.split(":");
+                String Short =sr[0];
+                String Full = sr[1];
+                strings.put(Short, Full);
+            }
         enStrings = strings;
-        s = new Scanner(new File("data/dialogs/en_EN/strings"));
+        s = new Scanner(new File("data/dialogs/en_EN/strings"),"UTF-8");
         ArrayList<String> strList = new ArrayList<String>();
         while (s.hasNextLine()) {
-            String c = s.nextLine();
-            strList.add(c);
+            String st = s.nextLine();
+            strList.add(st);
         }
         enDialogStrings = strList;
     }catch(Exception e){e.printStackTrace();}
     }
      public static String getString(String desc){
+         if(Strings.containsKey(desc))
          return Strings.get(desc);
+         else return enStrings.get(desc);
      }
      private void getPicts() {
         try {
@@ -158,18 +171,22 @@ public class Loader {
     public Animation getSprite(String index) {
         return Animations.get(index);
     }
+    /*
     public static void playMusic(String index, int gain, int pitch, boolean repeat) {
         Sounds.get(index).playAsMusic(gain,pitch,repeat);
     }
-    public static void playSound(String index, int gain, int pitch, boolean repeat) {
-        Sounds.get(index).playAsSoundEffect(gain, pitch, repeat);
+    */
+    public static void playSound(String index, int volume, int pitch, boolean repeat) {
+        if(!repeat)
+        Sounds.get(index).play(pitch,volume);
+        else  Sounds.get(index).loop(pitch, volume);
     }
 
-    public static  void playSound(String index, int gain, int pitch, boolean repeat, float x, float y, float z) {
-        Sounds.get(index).playAsSoundEffect(gain, pitch, repeat, x, y, z);
+    public static  void playSound(String index, int volume, int pitch, float x, float y, float z) {
+        Sounds.get(index).playAt(volume,pitch,x,y,z);
     }
 
-    public Audio getSound(String index) {
+    public Sound getSound(String index) {
         return Sounds.get(index);
     }
 

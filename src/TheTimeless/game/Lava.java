@@ -44,7 +44,7 @@ public class Lava extends Entity {
             if(ya==starty) sprite = topSprite;
                       else sprite = middleSprite;
                 //if there  is the top block on the x, draw top block
-           CrWld.CrCntr.getGraphics().drawAnimation(sprite, xa, ya, new Color(191, 48, 0, 155));
+           CrWld.CrCntr.getGraphics().drawAnimation(sprite, xa, ya, new Color(254,100,25,90));
             }
         }
     }

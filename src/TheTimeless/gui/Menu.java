@@ -56,13 +56,8 @@ public class Menu {
         params.setShown(false);
         saves =new guiContainer(app);
         saves.setShown(false);
-        Help=new guiButton(app,"Shoot: left mouse\n\n" +
-                "Move: A,D\n\n" +
-                "Jump: Space\n\n" +
-                "Fast save/open: P,O\n\n"+
-        "Menu: Esc \n\n"+
-        "Continue speaking: Tab\n\n" +
-                "Read tables: E\n\n ",mainFont,
+        Help=new guiButton(app,Loader.getString("Helptab"),
+                mainFont,
                 Display.getDesktopDisplayMode().getWidth()/2-200,
                 Display.getDesktopDisplayMode().getHeight()/12){
             @Override
@@ -79,7 +74,7 @@ public class Menu {
         Help.setShown(false);
         params.setSound(World.ResLoader.getSound("click"));
         gui.setSound(World.ResLoader.getSound("click"));
-        gui.add(new guiButton(app,"Resume", mainFont,4,
+        gui.add(new guiButton(app,Loader.getString("Return"), mainFont,4,
                 s_height/2-  mainFont.getHeight()/2-350){
             @Override
             public void onClicked(){
@@ -98,7 +93,7 @@ public class Menu {
                 }
             }
         });
-        gui.add(new guiButton(app,"New Game", mainFont,4,
+        gui.add(new guiButton(app,Loader.getString("New"), mainFont,4,
                 s_height/2-  mainFont.getHeight()/2-270){
             @Override
             public void onClicked(){
@@ -114,8 +109,8 @@ public class Menu {
                 }
             }
         });
-
-        gui.add(new guiButton(app,"Load", mainFont,4,
+        Help.setLocation((int)Help.getX(),(int)(gui.ve.get(gui.ve.size()-1).getY()+40));
+        gui.add(new guiButton(app,Loader.getString("Load"), mainFont,4,
                 s_height/2-  mainFont.getHeight()/2-190){
             @Override
             public void onClicked(){
@@ -129,7 +124,7 @@ e.printStackTrace();
                 }
             }
         });
-        gui.add(new guiButton(app,"Save", mainFont,4,
+        gui.add(new guiButton(app,Loader.getString("Save"), mainFont,4,
                 s_height/2-  mainFont.getHeight()/2-110){
             @Override
             public void onClicked(){
@@ -153,8 +148,7 @@ e.printStackTrace();
                 }
             }
         });
-
-        gui.add(new guiButton(app,"Help",  mainFont,4,
+        gui.add(new guiButton(app,Loader.getString("Help"),  mainFont,4,
                 s_height/2-  mainFont.getHeight()/2-30){
             @Override
             public void onClicked(){
@@ -174,8 +168,7 @@ e.printStackTrace();
             }
         });
 
-
-        gui.add(new guiButton(app,"Exit", mainFont,4,
+        gui.add(new guiButton(app,Loader.getString("Exit"), mainFont,4,
                 s_height/2-  mainFont.getHeight()/2+130){
             @Override
             public void onClicked(){
@@ -185,8 +178,25 @@ e.printStackTrace();
                 Loader.playSound("click", 1, 1, false);
             }
         });
-        params.add(new guiCheckBox(app,"FPS", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2-150+30,app.isShowingFPS()){
+        params.add(new guiCheckBox(app,Loader.getString("Sound"), mainFont,4,
+                s_height/2-  mainFont.getHeight()/2-220,app.isSoundOn()){
+            @Override
+            public void onClicked (){
+                if (active) {
+                    active=false;
+                    ConfigReader.setConfig("sound", "false");
+                    WizardGame.setParams(app);
+                }else {
+                    active = true;
+                    ConfigReader.setConfig("sound", "true");
+                    WizardGame.setParams(app);
+                }
+                Loader.playSound("click", 1, 1, false);
+            }
+        });
+        guiElement e=params.ve.get(params.ve.size() - 1);
+        params.add(new guiCheckBox(app,Loader.getString("FPS"), mainFont,4,
+                (int)(e.getY() +e.getHeight()+30),app.isShowingFPS()){
             @Override
             public void onClicked (){
                 if (active) {
@@ -201,10 +211,11 @@ e.printStackTrace();
                 Loader.playSound("click", 1, 1, false);
             }
         });
-        params.add(new guiButton(app,"Return", mainFont,4,
-                s_height/2-  mainFont.getHeight()/2- mainFont.getHeight()/2-10+30){
+        e=params.ve.get(params.ve.size() -  1);
+        params.add(new guiButton(app, Loader.getString("Return"), mainFont, 4,
+                (int)(e.getY() +e.getHeight()+30)) {
             @Override
-            public void onClicked(){
+            public void onClicked() {
                 params.setShown(false);
                 gui.setShown(true);
                 Loader.playSound("click", 1, 1, false);

@@ -24,7 +24,7 @@ public class WizardGame extends BasicGame {
     public boolean loaded;
     private Image back;
     public WizardGame() {
-        super("Timeless");
+        super("The Timeless");
     }
 
     public static void main(String[] arguments) throws Exception {
@@ -35,18 +35,12 @@ public class WizardGame extends BasicGame {
 
             //set application parameters
             app = new AppGameContainer(new WizardGame());
-            app.setTitle("The Timeless World");
+            setParams(app);
             app.setDisplayMode(app.getScreenWidth() - 50, app.getScreenHeight() - 50, false);
-            app.setUpdateOnlyWhenVisible(true);
             app.setMouseGrabbed(false);
             app.setDefaultMouseCursor();
             app.setIcon("data/icons/icon.png");
-
-            setParams(app);
-
             app.start();
-
-
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -61,11 +55,12 @@ public class WizardGame extends BasicGame {
                 cntr.setUpdateOnlyWhenVisible(Boolean.valueOf(ConfigReader.getConf("updateonlyifvisible")));
             if (!ConfigReader.getConf("smoothdeltas").equals("null"))
                 cntr.setSmoothDeltas(Boolean.valueOf(ConfigReader.getConf("smoothdeltas")));
+            if (!ConfigReader.getConf("sound").equals("null"))
+                cntr.setSoundOn(Boolean.valueOf(ConfigReader.getConf("sound")));
             if (!ConfigReader.getConf("width").equals("null") && !ConfigReader.getConf("height").equals("null")) {
                 int width = Integer.valueOf(ConfigReader.getConf("width"));
                 int height = Integer.valueOf(ConfigReader.getConf("height"));
                 Display.setDisplayMode(new DisplayMode(width, height));
-
             }
             if (!ConfigReader.getConf("locale").equals("null")) {
                 Loader.Locale = String.valueOf(ConfigReader.getConf("locale"));
@@ -125,7 +120,6 @@ public class WizardGame extends BasicGame {
         MainMenu = new Menu(this, container);
         MainMenu.setShown(true);
         newGame(container);
-
         container.pause();
     }
 public void newGame(GameContainer container)throws SlickException{
@@ -171,6 +165,8 @@ public void newGame(GameContainer container)throws SlickException{
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
+        g.scale(1,1);
+        GL11.glViewport(0,0,Display.getWidth(),Display.getHeight());
         if(loaded) {
             try {
                 GL11.glColor3f(255, 255, 255);

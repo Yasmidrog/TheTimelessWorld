@@ -1,2 +1,11 @@
-Params:Параметры
-Exit:Выход
+Params:Settings;
+Exit:Exit;
+Save:Save;
+Load:Load;
+Help:Help;
+New:New Game;
+FPS:FPS;
+Sound:Sound;
+No saves:No saves there;
+Return:Return;
+New:New Game;
