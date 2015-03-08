@@ -178,9 +178,9 @@ public class Spudi extends Creature implements IControlable {
                         Bullet bullet = null;
 
                         if (Side == sides.RIGHT) {
-                            bullet = new HeroBullet(x + SzW/2+17, y,input.getMouseX(),input.getMouseY(),  this, -21);
+                            bullet = new HeroBullet(x + SzW/2+17, y,input.getMouseX(),input.getMouseY(),  this, -15);
                         } else if (Side == sides.LEFT) {
-                            bullet = new HeroBullet(x +SzH/2-17, y,input.getMouseX(),input.getMouseY(),  this, 21);
+                            bullet = new HeroBullet(x +SzH/2-17, y,input.getMouseX(),input.getMouseY(),  this, 15);
                         }
                         Loader.playSound("shoot", 20, 2,  2, 2, 10);
                         assert bullet != null;

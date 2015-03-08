@@ -28,10 +28,10 @@ public class World implements Serializable {
     javax.swing.Timer BulletTimer;
     private boolean[][] HardBlocks;//solid blocks
     transient private Image BackgroundImage;
-    private states state;
+    public states state;
     public int dialognumber = 0;
 
-    private static enum states {FIGHTING, SPEAKING}//states of the game
+    public static enum states {FIGHTING, SPEAKING}//states of the game
 
     public void init(TiledMap Map, GameContainer Cont, int level) throws SlickException {
         try {
@@ -85,7 +85,7 @@ public class World implements Serializable {
                 }
             }
         });
-        BulletTimer = new javax.swing.Timer(9, new ActionListener() {
+        BulletTimer = new javax.swing.Timer(6, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -135,8 +135,8 @@ public class World implements Serializable {
         try {
             if(CrCntr.getFPS()>0) {
                 CurrentMap.render(-(int) SpMn.x - SpMn.SzW / 2, -(int) SpMn.y - SpMn.SzH / 2, 1);
-                renderEntities();
                 renderBullets();
+                renderEntities();
                 if (state == states.SPEAKING) {
                     ResLoader.renderString(dialognumber);//if the state is SPEAKING,
                                                         // render current string from dialog
@@ -288,7 +288,7 @@ public class World implements Serializable {
                     return;
                 }
             }//stop all timers and start to render the string under dialognumber
-            if (in.isKeyDown(Input.KEY_ESCAPE)) {
+            if (in.isKeyDown(Input.KEY_GRAVE)) {
                 state = states.FIGHTING;
                 startTimers();
             }

@@ -1,11 +1,18 @@
-Params:Settings;
-Exit:Exit;
-Save:Save;
-Load:Load;
-Help:Help;
-New:New Game;
+Params:Настройки;
+Exit:Выход;
+Save:Сохранить;
+Load:Загрузить;
+Help:Помощь;
+New:Новая игра;
 FPS:FPS;
-Sound:Sound;
-No saves:No saves there;
-Return:Return;
-New:New Game;
+Sound:Звук;
+No saves:Нет сохранений;
+Return:Вернуться;
+Helptab:Стрелять- left mouse
+Двигаться- A,D
+Прыгать- Space
+Быстрая загрузка/сохранение- P,O
+Меню- Esc 
+Говорить- Tab
+Читать- E
+Выход из диалога- ~;

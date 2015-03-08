@@ -153,9 +153,9 @@ public class DrOctopus extends Creature implements IAgressive {
                 Bullet bullet = null;
 
                 if (Side == sides.RIGHT) {
-                    bullet = new Bullet(x + SzW - 15, y, this,0.4f,-21);
+                    bullet = new Bullet(x + SzW - 15, y, this,0.4f,-15);
                 } else if (Side == sides.LEFT) {
-                    bullet = new Bullet(x - 30, y, this,0.4f, 21);
+                    bullet = new Bullet(x - 30, y, this,0.4f, 15);
                 }
                 assert bullet != null;
                 bullet.onInit(CrWld);
