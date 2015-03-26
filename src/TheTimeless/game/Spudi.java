@@ -128,7 +128,6 @@ public class Spudi extends Creature implements IControlable {
             if (Side == sides.RIGHT)
                 sprite = Upright;
             else if (Side == sides.LEFT) sprite = Upleft;
-
             if (input.isKeyDown(Input.KEY_A)) {
                 if (OnEarth) sprite = Left;
                 else sprite = Upleft;
