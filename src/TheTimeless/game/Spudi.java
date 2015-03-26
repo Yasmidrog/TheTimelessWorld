@@ -121,7 +121,6 @@ public class Spudi extends Creature implements IControlable {
                 e.printStackTrace();
         }
     }
-
     @Override
     public void control(int delta) {
         try {
