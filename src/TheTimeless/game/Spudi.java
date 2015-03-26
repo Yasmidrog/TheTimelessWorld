@@ -89,9 +89,8 @@ public class Spudi extends Creature implements IControlable {
      if(Mana <MAXMANA) {
          Mana += MANAREGENSTEP;
      }
-
        Gravity();
-        checkvx();
+       checkvx();
     }
 
     public void onRender() {
@@ -149,7 +148,7 @@ public class Spudi extends Creature implements IControlable {
             } else if (Side == sides.LEFT) sprite = Upleft;
             if (input.isKeyDown(Input.KEY_SPACE)&&!(OnEarth&&Energy<26)) {
                 jump();
-            }else if (input.isKeyDown(Input.KEY_LSHIFT)) {
+            }else if (input.isKeyDown(Input.KEY_LSHIFT)&&vx!=0) {
                 if (Energy>= 1) {
                     if (Side == sides.RIGHT&&input.isKeyDown(Input.KEY_D)) {
                         vx += 3.2;
@@ -227,13 +226,15 @@ public class Spudi extends Creature implements IControlable {
 
     @Override
     protected void onBlockCollide() {
-        if (Side ==sides.LEFT)
-            sprite = Left;
-        if (Side ==sides.RIGHT)
-            sprite = Right;
-        if(Energy <MAXENERGY) {
-            Energy+=ENERGYREGENSTEP;
-        }
+        try {
+            if (Side == sides.LEFT)
+                sprite = Left;
+            if (Side == sides.RIGHT)
+                sprite = Right;
+            if (Energy < MAXENERGY && !(CrWld.CrCntr.getInput().isKeyDown(Input.KEY_LSHIFT) && vx != 0)) {
+                Energy += ENERGYREGENSTEP;
+            }
+        }catch (IllegalStateException ignored){}
     }
 @Override
     public void onEntityCollide(final Creature ent) {}

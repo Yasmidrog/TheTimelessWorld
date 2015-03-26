@@ -1,9 +1,7 @@
 package TheTimeless.game;
-
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
@@ -142,9 +140,11 @@ public class World implements Serializable {
                                                         // render current string from dialog
                 }
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     //rendering
