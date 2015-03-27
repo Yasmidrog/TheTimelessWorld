@@ -61,7 +61,6 @@ public class World implements Serializable {
             }
             checkSpudies();//check if there are more thn one hero on the screen
             startTimers();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -99,11 +99,16 @@
   </data>
  </layer>
  <objectgroup name="tables" width="199" height="100">
-  <object name="tab" type="Table" gid="40" x="781" y="1731" width="4096" height="4096">
+  <object name="tab" type="Table" gid="40" x="781" y="1731" width="64" height="64">
    <properties>
     <property name="text" value="hello.txt"/>
    </properties>
   </object>
   <object name="lav" type="Lava" x="1344" y="1728" width="446" height="254"/>
+  <object name="scr" type="ScriptActivator" x="739" y="1491" width="315" height="137">
+   <properties>
+    <property name="script" value="test"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

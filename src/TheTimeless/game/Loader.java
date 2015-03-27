@@ -295,10 +295,16 @@ private ArrayList<Entity> getScriptsAndTables(TiledMap map){
                         map.getObjectProperty(0, i, "text", "hello.txt")));
             }
             if(map.getObjectType(0, i).equals("Lava")){
-                Constructor c = Class.forName("TheTimeless.game.Table").getConstructors()[0];
                 crts.add( new Lava(map.getObjectX(0, i) - Display.getDesktopDisplayMode().getWidth() / 2 +27,
                         ((map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2) +27),
                         map.getObjectWidth(0, i), map.getObjectHeight(0, i)));
+            }
+            if(map.getObjectType(0, i).equals("ScriptActivator")){
+                crts.add(new ScriptActivator(
+                        (map.getObjectX(0, i) - Display.getDesktopDisplayMode().getWidth() / 2) +27,
+                        (map.getObjectY(0, i) - Display.getDesktopDisplayMode().getHeight() / 2) +27,
+                        map.getObjectWidth(0, i), map.getObjectHeight(0, i),
+                        map.getObjectProperty(0,i,"script","test")));
             }
         }
     }catch(Exception e){

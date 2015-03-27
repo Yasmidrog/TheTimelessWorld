@@ -1,5 +1,6 @@
 package TheTimeless.game;
 import TheTimeless.gui.*;
+import TheTimeless.scripts.MainScripts;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -14,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.thoughtworks.xstream.*;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 
 public class WizardGame extends BasicGame {
@@ -121,6 +125,7 @@ public class WizardGame extends BasicGame {
         MainMenu.setShown(true);
         newGame(container);
         container.pause();
+        MainScripts.setCrWorld(world);
     }
 public void newGame(GameContainer container)throws SlickException{
     if(world!=null) {

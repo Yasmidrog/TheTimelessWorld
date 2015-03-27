@@ -2,7 +2,6 @@ package TheTimeless.gui;
 
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -179,4 +178,5 @@ public final class VTextRender {
         return (int)(f.getSize()+f.getSize()/4.6f);
         else return (int)((f.getSize()+f.getSize()/4.6f)*text.split("\n").length);
     }
+
 }
