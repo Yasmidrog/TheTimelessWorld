@@ -10,7 +10,7 @@ class MainScripts {
     static World crWorld;
     public static def test(){
         try {
-          crWorld.startSpeaking(7)
+          crWorld.startSpeaking(6)
         }
       catch (Exception e){
           e.printStackTrace()

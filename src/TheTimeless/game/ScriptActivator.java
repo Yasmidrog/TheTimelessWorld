@@ -2,7 +2,6 @@ package TheTimeless.game;
 
 
 import TheTimeless.scripts.MainScripts;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.lang.reflect.Method;
@@ -28,6 +27,7 @@ public class ScriptActivator extends Entity {
     @Override
     public void onInit(World world) {
         try {
+            renderBehind=false;
             CrWld = world;
             Rect = new Rectangle(x, y, SzW, SzH);
 
@@ -49,6 +49,5 @@ public class ScriptActivator extends Entity {
            }
        }
     }
-
 }
 
