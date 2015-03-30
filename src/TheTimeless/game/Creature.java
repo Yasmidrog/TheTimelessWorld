@@ -15,10 +15,10 @@ public class Creature extends Entity{
     protected float Acceleration;
     public sides Side = sides.RIGHT;
     public float Gravity=5.1f;
-    protected float armorCoef=0.0f;
-    protected float MAXMANA , MAXHEALTH, MAXENERGY;
-    protected float Mana,Energy ;//current mana
-    protected float MANAREGENSTEP,ENERGYREGENSTEP;//shows how fast will mana regenerate
+    public float armorCoef=0.0f;
+    public float MAXMANA , MAXHEALTH, MAXENERGY;
+    public float Mana,Energy ;//current mana
+    public float MANAREGENSTEP,ENERGYREGENSTEP;//shows how fast will mana regenerate
     public float getAccelration() {
         return Acceleration;
     }

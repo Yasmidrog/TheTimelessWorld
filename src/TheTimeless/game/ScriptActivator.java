@@ -1,14 +1,8 @@
 package TheTimeless.game;
-
-
 import TheTimeless.scripts.MainScripts;
 import org.newdawn.slick.geom.Rectangle;
-
 import java.lang.reflect.Method;
 
-/**
- * Created by yasmidrog on 27.03.15.
- */
 public class ScriptActivator extends Entity {
     private Method method;
     public ScriptActivator(float x, float y,int width,int height,String meth) {
@@ -36,7 +30,6 @@ public class ScriptActivator extends Entity {
         }
     }
     @Override
-
     public void onUpdate(int delta) {
        if(CrWld.SpMn.Rect.intersects(this.Rect))
        {

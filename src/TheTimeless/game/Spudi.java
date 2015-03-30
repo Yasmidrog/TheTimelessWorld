@@ -14,6 +14,8 @@ public class Spudi extends Creature implements IControlable {
     private transient Graphics indicators ;
     private transient Image healthImage,manaImage,energyImage,boowIcon;
     private transient  Image rightHand,leftHand;
+    private HashMap<String,Upgrade> AvialibleAbilities;
+    private IShooter Shooter;
     int XP=50;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
@@ -46,6 +48,8 @@ public class Spudi extends Creature implements IControlable {
             }
         });
         //delays between shoots
+        AvialibleAbilities=new HashMap<String,Upgrade>();//list of abilities that you can buy
+       setDefaultShooter();
     }
 
     @Override
@@ -164,29 +168,7 @@ public class Spudi extends Creature implements IControlable {
         try {
             Input input = CrWld.CrCntr.getInput();
             if (input.isMouseButtonDown(0)) {
-                if(Side==sides.RIGHT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2>input.getMouseX()) {
-                    Side = sides.LEFT;
-                }
-                if(Side==sides.LEFT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2<input.getMouseX()) {
-                    Side = sides.RIGHT;
-                }
-                if (Mana > 5) {
-                    if (Counters.get("shoot").is()) {
-                        Bullet bullet = null;
-
-                        if (Side == sides.RIGHT) {
-                            bullet = new HeroBullet(x + SzW/2+17, y,input.getMouseX(),input.getMouseY(),  this, -15);
-                        } else if (Side == sides.LEFT) {
-                            bullet = new HeroBullet(x +SzH/2-17, y,input.getMouseX(),input.getMouseY(),  this, 15);
-                        }
-                        Loader.playSound("shoot", 20, 2,  2, 2, 10);
-                        assert bullet != null;
-                        bullet.onInit(CrWld);
-                        CrWld.Bullets.add(bullet);
-                        Counters.get("shoot").restoreTime();
-                        Mana -= 5;
-                    }
-                }
+            Shooter.Shoot();
             }
 
         } catch (Exception e) {
@@ -236,6 +218,50 @@ public class Spudi extends Creature implements IControlable {
     }
 @Override
     public void onEntityCollide(final Creature ent) {}
+    public void addAvialibleAbility(Upgrade abb,String name){
+        AvialibleAbilities.put(name, abb);
+    }
+    public void applyAndRemoveAbility(String name){
+        AvialibleAbilities.get(name).apply(this);
+        AvialibleAbilities.remove(name);
+    }
+    public void setShooter(IShooter shot){
+        Shooter=shot;
+    }
+    public void setDefaultShooter(){
+        //deafult shooting method
+        final Spudi sp=this;
+        Shooter=new IShooter() {
+            @Override
+            public void Shoot() {
+                Input input = CrWld.CrCntr.getInput();
+                if(Side==sides.RIGHT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2>input.getMouseX()) {
+                    Side = sides.LEFT;
+                }
+                if(Side==sides.LEFT&&CrWld.CrCntr.getWidth() / 2 - SzW / 2<input.getMouseX()) {
+                    Side = sides.RIGHT;
+                }
+                if (Mana > 5) {
+                    if (Counters.get("shoot").is()) {
+                        Bullet bullet = null;
+
+                        if (Side == sides.RIGHT) {
+                            bullet = new HeroBullet(x + SzW/2+17, y,input.getMouseX(),input.getMouseY(),  sp, -15);
+                        } else if (Side == sides.LEFT) {
+                            bullet = new HeroBullet(x +SzH/2-17, y,input.getMouseX(),input.getMouseY(),  sp, 15);
+                        }
+                        Loader.playSound("shoot", 20, 2,  2, 2, 10);
+                        assert bullet != null;
+                        bullet.onInit(CrWld);
+                        CrWld.Bullets.add(bullet);
+                        Counters.get("shoot").restoreTime();
+                        Mana -= 5;
+                    }
+                }
+            }
+        };
+
+    }
 }
 
 
