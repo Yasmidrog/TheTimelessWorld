@@ -15,7 +15,7 @@ public class Spudi extends Creature implements IControlable {
     private transient Image healthImage,manaImage,energyImage,boowIcon;
     private transient  Image rightHand,leftHand;
     private HashMap<String,Upgrade> AvialibleAbilities;
-    private IShooter Shooter;
+    private IShooter Shooter;//Shoot method inside
     int XP=50;
     public Spudi(float X, float Y) {
         Acceleration = 0.4f;
