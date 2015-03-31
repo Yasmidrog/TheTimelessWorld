@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by yasmidrog on 01.03.15.
  */
 public class Lava extends Entity {
-    private  transient ArrayList<Creature> swimmedIn;
+    private transient ArrayList<Creature> swimmedIn;
     private transient Animation topSprite,middleSprite;
     public Lava(float x, float y, int width, int height) {
         this.x = x;
@@ -25,11 +25,10 @@ public class Lava extends Entity {
     public void onInit(World world) {
         try {
             CrWld = world;
-            swimmedIn = new ArrayList<Creature>();
             middleSprite = World.ResLoader.getSprite("Lava");
-            topSprite=World.ResLoader.getSprite("LavaTop");
+            topSprite= World.ResLoader.getSprite("LavaTop");
             Rect = new Rectangle(x, y, SzW, SzH);
-
+            swimmedIn = new ArrayList<Creature>();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -51,10 +50,8 @@ public class Lava extends Entity {
 
     @Override
     public void onUpdate(int delta) {
-
         for (Creature cr : CrWld.Creatures) {
             //add all the creatures in the lava to the list if swimmed and reduce speed
-
             if (cr.Rect.intersects(this.Rect)) {
                 cr.changeHealth(-0.2f);
                 if (!(swimmedIn.contains(cr))) {
@@ -70,7 +67,8 @@ public class Lava extends Entity {
                     }
                 }
             }
-            //all the creatures int the list but not swimming gettheir speed back
+
+            //all the creatures int the list but not swimming get their speed back
             if (!cr.Rect.intersects(this.Rect)) {
                 if (swimmedIn.contains(cr)) {
                     swimmedIn.remove(cr);

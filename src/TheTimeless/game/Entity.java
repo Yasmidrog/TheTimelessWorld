@@ -10,8 +10,8 @@ import java.util.Map;
 public class Entity implements Serializable {
     transient public World CrWld;//current world which the object situated in
     transient public Animation sprite;//the animation of the objects
-    transient protected int SzW;//width of sprite
-    transient protected int SzH;//height of sprite
+    protected int SzW;//width of sprite
+    protected int SzH;//height of sprite
     transient public Shape Rect;//collider
     protected Map<String,Counter> Counters=new HashMap<String, Counter>() {
     };//the counters of an object
