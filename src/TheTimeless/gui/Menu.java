@@ -1,12 +1,9 @@
 package TheTimeless.gui;
 
 import TheTimeless.game.*;
-import org.ietf.jgss.GSSManager;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 
-import java.awt.*;
-import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,7 +21,7 @@ public class Menu {
     public boolean Shown=false;
     private int s_height=Display.getDesktopDisplayMode().getHeight();
     public  Menu(WizardGame game,GameContainer cntr){
-       mainFont = Fonts.mainFont;
+       mainFont = Fonts.MainFont;
         app=cntr;
         Game=game;
         setGui();

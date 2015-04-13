@@ -6,9 +6,6 @@ import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
 
-/**
- * Created by yasmidrog on 01.03.15.
- */
 public class Lava extends Entity {
     private transient ArrayList<Creature> swimmedIn;
     private transient Animation topSprite,middleSprite;

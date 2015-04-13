@@ -119,8 +119,13 @@ public class WizardGame extends BasicGame {
 
         int swidth=Display.getDesktopDisplayMode().getWidth();
         int sheight=Display.getDesktopDisplayMode().getHeight();
-        back=new Image("data/icons/twlogo.png").getScaledCopy(swidth-(int)(swidth/2.5),
-                                                                sheight-(int)(sheight/3.5));
+        try {
+            back = new Image("data/icons/twlogo.png").getScaledCopy(swidth - (int) (swidth / 2.5),
+                    sheight - (int) (sheight / 3.5));
+        }catch (Exception ex){
+            ex.printStackTrace();
+            back=new Image(2,2);
+        }
         MainMenu = new Menu(this, container);
         MainMenu.setShown(true);
         newGame(container);

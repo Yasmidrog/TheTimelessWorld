@@ -11,8 +11,7 @@ class MainScripts {
    static World crWorld;
     public static def test(){
         try {
-            crWorld.SpMn.addAvialibleAbility(new Upgrade("Helth upgrade","Increase health by 50",
-                                                                "data/sprites/Health/health.png"){
+            crWorld.SpMn.addAvialibleAbility(new Upgrade("Helth upgrade","Increase health by 50",10){
                 @Override
                 public void apply(Spudi sp){
                    sp.MAXHEALTH=300;

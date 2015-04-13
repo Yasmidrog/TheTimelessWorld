@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class guiButton extends guiElement {
 
-
+    protected guiButton(){}
     public guiButton(GameContainer cntr, String str, VTextRender vr, int x, int y) {
         this.container = cntr;
         string=str;

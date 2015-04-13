@@ -222,6 +222,7 @@ public class Spudi extends Creature implements IControlable {
         AvialibleAbilities.put(name, abb);
     }
     public void applyAndRemoveAbility(String name){
+        XP-=AvialibleAbilities.get(name).Price;
         AvialibleAbilities.get(name).apply(this);
         AvialibleAbilities.remove(name);
     }

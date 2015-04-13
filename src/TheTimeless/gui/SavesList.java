@@ -7,7 +7,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.openal.Audio;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -22,7 +21,7 @@ import java.util.ConcurrentModificationException;
 public class SavesList extends guiContainer {
     private ArrayList<guiButton> savesButtons;
     private  int elem;
-    private VTextRender Font=Fonts.regulartext;
+    private VTextRender Font=Fonts.RegularText;
     private WizardGame WGame;
     public SavesList(WizardGame game,final Menu menu){
         savesButtons=setSavesButtons(game,menu);

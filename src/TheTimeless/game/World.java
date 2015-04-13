@@ -1,4 +1,5 @@
 package TheTimeless.game;
+import TheTimeless.gui.UpgradeButton;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
@@ -64,10 +65,10 @@ public class World implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void startTimers() {
-
         EntityTimer = new javax.swing.Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
