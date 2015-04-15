@@ -11,11 +11,12 @@ import org.newdawn.slick.geom.Rectangle;
 public class UpgradeButton extends guiButton{
     private Image pic;
     private Upgrade upgrade;
-
-    public UpgradeButton(Upgrade upgr, Image picture, int x, int y,GameContainer cntr){
+    private Shop CrShop;
+    public UpgradeButton(Upgrade upgr, Image picture, int x, int y,GameContainer cntr,Shop shop){
         try {
             upgrade=upgr;
             pic = picture;
+            CrShop=shop;
             this.container = cntr;
             shown=true;
             input = cntr.getInput();
@@ -25,6 +26,8 @@ public class UpgradeButton extends guiButton{
             ex.printStackTrace();
         }
     }
+
+
     @Override
     public void render(){
         try{
@@ -37,8 +40,29 @@ public class UpgradeButton extends guiButton{
             Fonts.RegularText.drawString(upgrade.Name, (int) getX() + 67, (int) getY() + 2, Color.white);
             String desc=Fonts.SmallText.splitString(upgrade.Description,300-67,true);
             Fonts.MediumText.drawString(desc, (int) getX() + 67, (int) getY() + 30, Color.white);
+            Fonts.SmallText.drawString("Price: " + upgrade.Price, (int) getX() + 30,
+                                                     (int) getY() + 67, Color.white);
+            if(upgrade.getType()== Upgrade.UpgradeType.DEVIL){
+             Fonts.SmallText.drawString("Evilness: " + (int)(upgrade.Price*0.3),
+                            (int) getX() + 200, (int) getY() + 52, Color.white);
+            }
+            update();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    @Override
+    protected  void update(){
+        if(mouseClicked()&&active) {
+            onClicked();
+            if(upgrade.getType()== Upgrade.UpgradeType.DEVIL)
+                CrShop.getDevilUpgrades().remove(this);
+            else if(upgrade.getType()== Upgrade.UpgradeType.GOD)
+            CrShop.getGodUpgrades().remove(this);
+        }
+    }
+    @Override
+    public void onClicked() {
+        CrShop.Hero.applyAndRemoveAbility(upgrade.Name);
     }
 }

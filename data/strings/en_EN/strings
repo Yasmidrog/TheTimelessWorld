@@ -18,3 +18,5 @@ Menu- Esc
 Speak- Tab
 Read- E
 Exit dialog- ~;
+DarkTab:Dark Upgrades;
+LightTab:Light Upgrades;

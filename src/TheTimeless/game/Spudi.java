@@ -4,7 +4,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * our main hero
@@ -12,6 +14,7 @@ import java.util.HashMap;
 public class Spudi extends Creature implements IControlable {
 
     private transient Graphics indicators ;
+    private float Evil=80;
     private transient Image healthImage,manaImage,energyImage,boowIcon;
     private transient  Image rightHand,leftHand;
     private HashMap<String,Upgrade> AvialibleAbilities;
@@ -110,7 +113,9 @@ public class Spudi extends Creature implements IControlable {
             indicators.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
             indicators.fillRect(64 + 10, 57, 150 - 44, 13);
             indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12, healthImage,1,1);
-            boowIcon.draw(5,30);
+            boowIcon.draw(5, 30);
+            CrWld.CrCntr.getGraphics().setColor(new Color(64,41,76,(int)Evil));
+            CrWld.CrCntr.getGraphics().fillRect(5,30,64,64);
             indicators.drawImage(World.ResLoader.getSprite("Coin").getImage(0).getScaledCopy(16,16),5,98);
             Fonts.SmallText.drawString("XP: "+XP,23,98,Color.white);
             if (CrWld!=null&&CrWld.CrCntr.getInput().isMouseButtonDown(0)) {
@@ -221,10 +226,21 @@ public class Spudi extends Creature implements IControlable {
     public void addAvialibleAbility(Upgrade abb,String name){
         AvialibleAbilities.put(name, abb);
     }
-    public void applyAndRemoveAbility(String name){
-        XP-=AvialibleAbilities.get(name).Price;
-        AvialibleAbilities.get(name).apply(this);
-        AvialibleAbilities.remove(name);
+    public void applyAndRemoveAbility(String name) {
+        Upgrade up=AvialibleAbilities.get(name);
+        if (XP >= up.Price) {
+            XP -= up.Price;
+            if (up.getType()== Upgrade.UpgradeType.DEVIL&&Evil<80){
+                if(Evil+up.Price*0.3>80)
+                    Evil=80;
+                else Evil+=up.Price*0.3;
+            }
+             up.apply(this);
+            AvialibleAbilities.remove(name);
+        }
+    }
+    public Map<String,Upgrade> getUpgrades(){
+        return AvialibleAbilities;
     }
     public void setShooter(IShooter shot){
         Shooter=shot;

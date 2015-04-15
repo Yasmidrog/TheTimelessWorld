@@ -1,4 +1,5 @@
 package TheTimeless.game;
+import TheTimeless.gui.Shop;
 import TheTimeless.gui.UpgradeButton;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
@@ -29,8 +30,7 @@ public class World implements Serializable {
     transient private Image BackgroundImage;
     public states state;
     public int dialognumber = 0;
-
-    public static enum states {FIGHTING, SPEAKING}//states of the game
+    public static enum states {FIGHTING, SPEAKING,PAUSED}//states of the game
 
     public void init(TiledMap Map, GameContainer Cont, int level) throws SlickException {
         try {
@@ -149,6 +149,7 @@ public class World implements Serializable {
 
     //rendering
     private void renderEntities() {
+
         Creature[] ents = new Creature[Creatures.size()];
         System.arraycopy(Creatures.toArray(), 0, ents, 0, Creatures.size());
         //copy to the local list to avoid ConcurrentModificationException

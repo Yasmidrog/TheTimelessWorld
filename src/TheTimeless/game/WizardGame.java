@@ -2,7 +2,6 @@ package TheTimeless.game;
 import TheTimeless.gui.*;
 import TheTimeless.scripts.MainScripts;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -16,9 +15,6 @@ import java.util.*;
 
 import com.thoughtworks.xstream.*;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 
 public class WizardGame extends BasicGame {
     private Menu MainMenu;
@@ -27,6 +23,7 @@ public class WizardGame extends BasicGame {
     private AppGameContainer app;
     public boolean loaded;
     private Image back;
+    private Shop shop;
     public WizardGame() {
         super("The Timeless");
     }
@@ -131,6 +128,8 @@ public class WizardGame extends BasicGame {
         newGame(container);
         container.pause();
         MainScripts.setCrWorld(world);
+        shop=new Shop(world.SpMn,world.CrCntr,150,150);
+        shop.setShown(false);
     }
 public void newGame(GameContainer container)throws SlickException{
     if(world!=null) {
@@ -190,6 +189,7 @@ public void newGame(GameContainer container)throws SlickException{
                     ,Display.getDesktopDisplayMode().getHeight()/13.5f);
         }
         MainMenu.render();
+        shop.render();
     }//render world&objects or menu
 
     /**
@@ -205,9 +205,6 @@ public void newGame(GameContainer container)throws SlickException{
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        if(loaded) {
-            app.resume();
         }
     }
 
@@ -304,15 +301,23 @@ public void newGame(GameContainer container)throws SlickException{
             if (!container.isPaused()) {
                 container.pause();
                 MainMenu.setShown(true);
+                shop.setShown(false);
             } else {
                 container.setPaused(false);
                 MainMenu.setShown(false);
             }
         }
-        if (MainMenu.isShown()) {
-            if (container.isFullscreen()) {
-                Mouse.setCursorPosition(0, 0);
-            }
+        if (input.isKeyPressed(Input.KEY_J)) {
+          if(!shop.getShown()){
+              shop=new Shop(world.SpMn,world.CrCntr,150,150);
+              shop.setShown(true);
+              world.GetBulletTimer().stop();
+              world.GetEntityTimer().stop();
+          }else{
+              shop.setShown(false);
+              world.GetBulletTimer().start();
+              world.GetEntityTimer().start();
+          }
         }
     }
     /**
