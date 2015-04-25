@@ -12,8 +12,6 @@ import java.util.Map;
  * our main hero
  */
 public class Spudi extends Creature implements IControlable {
-
-    private transient Graphics indicators ;
     private float Evil=80;
     private transient Image healthImage,manaImage,energyImage,boowIcon;
     private transient  Image rightHand,leftHand;
@@ -64,7 +62,6 @@ public class Spudi extends Creature implements IControlable {
             Upright = World.ResLoader.getSprite("BoowJumpRight");
             Left = World.ResLoader.getSprite("BoowLeft");
             Right = World.ResLoader.getSprite("BoowRight");
-            indicators = new org.newdawn.slick.Graphics();
             healthImage = World.ResLoader.getSprite("Health").getImage(0);
             manaImage = World.ResLoader.getSprite("Mana").getImage(0);
             energyImage = World.ResLoader.getSprite("Energy").getImage(0);
@@ -102,21 +99,21 @@ public class Spudi extends Creature implements IControlable {
 
     public void onRender() {
         try {
-            indicators.setColor(new Color(Color.green.getRed(), Color.green.getGreen(), Color.green.getBlue(), 120));
-            indicators.fillRect(64 + 10, 82, 150 - 44, 13);
-            indicators.fillRect(64 + 10, 82, (150 - 44) * Energy / MAXENERGY, 12, energyImage,1,1);
+            Graphics g=CrWld.CrCntr.getGraphics();
+            g.setColor(new Color(Color.green.getRed(), Color.green.getGreen(), Color.green.getBlue(), 120));
+            g.fillRect(64 + 10, 82, 150 - 44, 13);
+            g.fillRect(64 + 10, 82, (150 - 44) * Energy / MAXENERGY, 12, energyImage,1,1);
+            g.setColor(new Color(Color.blue.getRed(), Color.blue.getGreen(), Color.blue.getBlue(), 80));
+            g.fillRect(64 + 10, 30, 150 - 44, 13);
+            g.fillRect(64 + 10, 30, (150 - 44) * Mana / MAXMANA, 12, manaImage,1,1);
 
-            indicators.setColor(new Color(Color.blue.getRed(), Color.blue.getGreen(), Color.blue.getBlue(), 80));
-            indicators.fillRect(64 + 10, 30, 150 - 44, 13);
-            indicators.fillRect(64 + 10, 30, (150 - 44) * Mana / MAXMANA, 12, manaImage,1,1);
-
-            indicators.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
-            indicators.fillRect(64 + 10, 57, 150 - 44, 13);
-            indicators.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12, healthImage,1,1);
+            g.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
+            g.fillRect(64 + 10, 57, 150 - 44, 13);
+            g.fillRect(64+10,57, (150-44) * Health / MAXHEALTH, 12, healthImage,1,1);
             boowIcon.draw(5, 30);
             CrWld.CrCntr.getGraphics().setColor(new Color(64,41,76,(int)Evil));
             CrWld.CrCntr.getGraphics().fillRect(5,30,64,64);
-            indicators.drawImage(World.ResLoader.getSprite("Coin").getImage(0).getScaledCopy(16,16),5,98);
+            g.drawImage(World.ResLoader.getSprite("Coin").getImage(0).getScaledCopy(16,16),5,98);
             Fonts.SmallText.drawString("XP: "+XP,23,98,Color.white);
             if (CrWld!=null&&CrWld.CrCntr.getInput().isMouseButtonDown(0)) {
                 drawShoot();

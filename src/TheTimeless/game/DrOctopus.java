@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class DrOctopus extends Creature implements IAgressive {
-    transient Graphics HealthBack;
-    transient Graphics HealthFore;
     private boolean Following = true;
 
     public DrOctopus(float x, float y) {
@@ -38,8 +36,6 @@ public class DrOctopus extends Creature implements IAgressive {
             Upright = World.ResLoader.getSprite("DrOctUp");
             Left = World.ResLoader.getSprite("DrOctLeft");
             Right = World.ResLoader.getSprite("DrOctRight");
-            HealthFore= new org.newdawn.slick.Graphics();
-            HealthBack= new org.newdawn.slick.Graphics();
             Counters.put("shoot", new Counter("shoot", 100){
                 @Override
                 public void tick() {
@@ -90,13 +86,14 @@ public class DrOctopus extends Creature implements IAgressive {
 
     public void onRender() {
         sprite.update(CrWld.delta);
+        Graphics g=CrWld.CrCntr.getGraphics();
             sprite.draw(-CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
                     -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2);
-            HealthBack.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
-            HealthBack.fillRect((int) -CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
+            g.setColor(new Color(Color.red.getRed(), Color.red.getGreen(), Color.red.getBlue(), 80));
+            g.fillRect((int) -CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
                     (int) -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, SzW, 5);
-            HealthFore.setColor(org.newdawn.slick.Color.red);
-            HealthFore.fillRect((int) -CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
+            g.setColor(org.newdawn.slick.Color.red);
+            g.fillRect((int) -CrWld.SpMn.x + x + CrWld.CrCntr.getWidth() / 2 - CrWld.SpMn.SzW / 2,
                     (int) -CrWld.SpMn.y + y + CrWld.CrCntr.getHeight() / 2 - CrWld.SpMn.SzH / 2, SzW * Health / MAXHEALTH, 5);
 
     }

@@ -40,8 +40,8 @@ public class UpgradeButton extends guiButton{
             Fonts.RegularText.drawString(upgrade.Name, (int) getX() + 67, (int) getY() + 2, Color.white);
             String desc=Fonts.SmallText.splitString(upgrade.Description,300-67,true);
             Fonts.MediumText.drawString(desc, (int) getX() + 67, (int) getY() + 30, Color.white);
-            Fonts.SmallText.drawString("Price: " + upgrade.Price, (int) getX() + 30,
-                                                     (int) getY() + 67, Color.white);
+            Fonts.SmallText.drawString("Price: " + upgrade.Price, (int) getX() + 67,
+                                                     (int) getY() + 49, Color.white);
             if(upgrade.getType()== Upgrade.UpgradeType.DEVIL){
              Fonts.SmallText.drawString("Evilness: " + (int)(upgrade.Price*0.3),
                             (int) getX() + 200, (int) getY() + 52, Color.white);

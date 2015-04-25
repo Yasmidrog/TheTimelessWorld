@@ -13,13 +13,13 @@ class MainScripts {
     public static def test(){
         try {
 
-            crWorld.SpMn.addAvialibleAbility(new Upgrade("Helth upgrade","Increase health by 50",
+            crWorld.SpMn.addAvialibleAbility(new Upgrade("Health upgrade","Increase health by 50",
                                                                       10,Upgrade.UpgradeType.GOD){
                 @Override
                 public void apply(Spudi sp){
                    sp.MAXHEALTH=300;
                 }
-            },"Helth upgrade")
+            },"Health upgrade")
           crWorld.startSpeaking(6)
 
         }
